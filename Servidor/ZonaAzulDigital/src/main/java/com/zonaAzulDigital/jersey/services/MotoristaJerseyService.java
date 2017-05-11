@@ -6,6 +6,7 @@
 package com.zonaAzulDigital.jersey.services;
 
 
+import com.zonaAzulDigital.entidades.Motorista;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,19 +16,19 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Samuel
  */
-@Path("/hello")
-public class HelloJerseyService {
+@Path("/motorista")
+public class MotoristaJerseyService {
     
     
     @GET
-    @Path("/client")
+    @Path("/recuperar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Cliente getCliente(){
-        Cliente cliente =  new Cliente();
+    public Motorista getMotorista(){
+        Motorista motorista =  new Motorista();
         
-        cliente.setNome("Samuel");
+        motorista.setNome("Samuel");
         
-        return cliente;
+        return motorista;
     }
     
     
