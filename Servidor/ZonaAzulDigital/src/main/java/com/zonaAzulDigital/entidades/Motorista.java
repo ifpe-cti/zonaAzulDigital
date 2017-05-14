@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.camilolopes.jersey.services;
+package com.zonaAzulDigital.entidades;
 
 /**
  *
  * @author Samuel
  */
-public class Cliente {
+public class Motorista {
 
     private String nome;
 
