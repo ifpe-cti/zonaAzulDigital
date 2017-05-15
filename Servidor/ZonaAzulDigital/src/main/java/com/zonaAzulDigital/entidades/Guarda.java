@@ -5,21 +5,18 @@
  */
 package com.zonaAzulDigital.entidades;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author Samuel
  */
-public class Motorista {
+public class Guarda {
 
     private String nome;
     private String cpf;
     private String senha;
-    private BigDecimal credito;
 
     public String getNome() {
-        return this.nome;
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -40,14 +37,6 @@ public class Motorista {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public BigDecimal getCredito() {
-        return credito;
-    }
-
-    public void setCredito(BigDecimal credito) {
-        this.credito = credito;
     }
 
 }
