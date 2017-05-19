@@ -5,14 +5,31 @@
  */
 package com.zonaAzulDigital.entidades;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author Samuel
  */
-public class Placa {
-
+@Entity
+public class Placa implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String letras;
-    private int numeros;
+    private String numeros;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getLetras() {
         return letras;
@@ -22,12 +39,19 @@ public class Placa {
         this.letras = letras;
     }
 
-    public int getNumeros() {
+    public String getNumeros() {
         return numeros;
     }
 
-    public void setNumeros(int numeros) {
+    public void setNumeros(String numeros) {
         this.numeros = numeros;
     }
+
+    @Override
+    public String toString() {
+        return letras + "-" + numeros;
+    }
+    
+    
 
 }

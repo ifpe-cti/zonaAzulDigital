@@ -19,10 +19,18 @@ import javax.persistence.OneToOne;
 @Entity
 public class Carro implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne
     private Placa placa;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Placa getPlaca() {
         return placa;
