@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.jersey.services;
+package com.zonaAzulDigital.services;
 
 
 import com.zonaAzulDigital.entidades.Motorista;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
  * @author Samuel
  */
 @Path("/motorista")
-public class MotoristaJerseyService {
+public class MotoristaService {
     
     
     @GET

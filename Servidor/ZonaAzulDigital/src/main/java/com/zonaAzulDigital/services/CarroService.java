@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.jersey.services;
+package com.zonaAzulDigital.services;
 
 import com.zonaAzulDigital.entidades.Carro;
-import com.zonaAzulDigital.entidades.Cartao;
 import com.zonaAzulDigital.entidades.Placa;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,33 +16,27 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Samuel
  */
-@Path("/cartao")
-public class CartaoJerseyService {
-
+@Path("/carro")
+public class CarroService {
+    
     @GET
     @Path("/recuperar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Cartao getCartao() {
-
-        Cartao c = new Cartao();
-        Carro carro = new Carro();
-
+    public Carro getCarro(){
+        Carro c = new Carro();
         Placa p = new Placa();
-        p.setLetras("lala");
-        p.setNumeros(123);
-
-        carro.setPlaca(p);
-        c.setCarro(carro);
-
-        BigDecimal dinheiro;
-
-        dinheiro = null;
-
-        c.setCarro(carro);
-
-        c.setValor(dinheiro);
-
+        
+        p.setLetras("Jonas");
+        p.setNumeros(2424);
+        
+        c.setPlaca(p);
+        
+        
         return c;
+        
+        
     }
-
+    
+    
+    
 }
