@@ -14,16 +14,16 @@ import java.time.LocalDate;
  */
 public class Cartao {
 
-    private Carro carro;
+    private Placa placa;
     private LocalDate data;
     private BigDecimal valor;
 
-    public Carro getCarro() {
-        return carro;
+    public Placa getCarro() {
+        return placa;
     }
 
-    public void setCarro(Carro carro) {
-        this.carro = carro;
+    public void setCarro(Placa placa) {
+        this.placa = placa;
     }
 
     public LocalDate getData() {

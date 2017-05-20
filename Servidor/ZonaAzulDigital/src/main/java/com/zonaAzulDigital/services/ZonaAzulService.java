@@ -5,7 +5,7 @@
  */
 package com.zonaAzulDigital.services;
 
-import com.zonaAzulDigital.entidades.Carro;
+
 import com.zonaAzulDigital.entidades.Cartao;
 import com.zonaAzulDigital.entidades.Placa;
 import java.math.BigDecimal;
@@ -28,20 +28,20 @@ public class ZonaAzulService {
     public Cartao getCartao() {
 
         Cartao c = new Cartao();
-        Carro carro = new Carro();
+       
 
         Placa p = new Placa();
         p.setLetras("lala");
-        p.setNumeros(123);
+       
 
-        carro.setPlaca(p);
-        c.setCarro(carro);
+       
+       
 
         BigDecimal dinheiro;
 
         dinheiro = null;
 
-        c.setCarro(carro);
+       
 
         c.setValor(dinheiro);
 
