@@ -6,7 +6,7 @@
 package com.zonaAzulDigital.services;
 
 
-import com.zonaAzulDigital.entidades.Cartao;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,9 +25,9 @@ public class ZonaAzulService {
     @GET
     @Path("/recuperar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Cartao getCartao() {
+    public CartaoZonaAzul getCartao() {
 
-        Cartao c = new Cartao();
+        CartaoZonaAzul c = new CartaoZonaAzul();
        
 
         Placa p = new Placa();
