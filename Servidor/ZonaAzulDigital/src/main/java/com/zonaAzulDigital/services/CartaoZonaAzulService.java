@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType;
  * @author Samuel
  */
 @Path("/cartao")
-public class ZonaAzulService {
+public class CartaoZonaAzulService {
 
     @GET
     @Path("/recuperar")
