@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 
-import Hibernate.HibernateUtil;
+import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.DAO.DAO;
+import com.zonaAzulDigital.model.DAO.Motoristas;
+import com.zonaAzulDigital.model.DAO.Placas;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,13 +34,20 @@ public class NewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        DAO daoPlaca = new Placas();
         Placa placa = new Placa();
         placa.setLetras("KHX");
         placa.setNumeros("0066");
-        em.getTransaction().begin();
-        em.persist(placa);
-        em.getTransaction().commit();
+        daoPlaca.cadastrar(placa);
+        
+        Motorista motorista = new Motorista();
+        motorista.setCpf("106.549.014-30");
+        motorista.setNome("Jonas Ferreira Leal Junior");
+        motorista.setSenha("1234");
+        motorista.setCredito(new BigDecimal(1000));
+        DAO daoMotorista = new Motoristas();
+        daoMotorista.cadastrar(motorista);
+        
         
         System.out.println(placa);
         response.setContentType("text/html;charset=UTF-8");
