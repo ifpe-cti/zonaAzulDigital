@@ -15,13 +15,13 @@ import javax.persistence.Query;
  *
  * @author JonasJr
  */
-public class Placas implements DAO<Placa>{
+public class Placas implements DAO<Placa> {
 
     @Override
     public Placa cadastrar(Placa placa) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         em.getTransaction().begin();
-        em.persist(em);
+        em.persist(placa);
         em.getTransaction().commit();
         return placa;
     }
@@ -30,8 +30,9 @@ public class Placas implements DAO<Placa>{
     public Placa atualizar(Placa placa) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         em.getTransaction().begin();
-        em.merge(em);
+        em.merge(placa);
         em.getTransaction().commit();
+        em.close();
         return placa;
     }
 
@@ -39,6 +40,7 @@ public class Placas implements DAO<Placa>{
     public Placa recuperarPorId(int id) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         Placa placa = em.find(Placa.class, id);
+        em.close();
         return placa;
     }
 
@@ -48,17 +50,21 @@ public class Placas implements DAO<Placa>{
         em.getTransaction().begin();
         em.remove(placa);
         em.getTransaction().commit();
+        em.close();
         return placa;
     }
 
     @Override
     public List<Placa> listarTudo() {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-     
+
         String hql = "FROM Placas";
         Query query = em.createQuery(hql);
-        return  query.getResultList();
+        List<Placa> listaPlacas = query.getResultList();
+
+        em.close();
+        return listaPlacas;
         
     }
-    
+
 }
