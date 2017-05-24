@@ -5,19 +5,36 @@
  */
 package com.zonaAzulDigital.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Samuel
  */
-public class Motorista {
-
+@Entity
+public class Motorista implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String nome;
     private String cpf;
     private String senha;
     private BigDecimal credito;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
     public String getNome() {
         return this.nome;
     }

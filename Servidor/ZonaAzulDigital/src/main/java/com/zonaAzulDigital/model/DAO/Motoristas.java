@@ -6,65 +6,53 @@
 package com.zonaAzulDigital.model.DAO;
 
 import Hibernate.HibernateUtil;
-import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.entidades.Motorista;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
  *
  * @author JonasJr
  */
-public class Placas implements DAO<Placa> {
+public class Motoristas implements DAO<Motorista>{
 
     @Override
-    public Placa cadastrar(Placa placa) {
+    public Motorista cadastrar(Motorista motorista) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         em.getTransaction().begin();
-        em.persist(placa);
+        em.persist(motorista);
         em.getTransaction().commit();
-        return placa;
+        return  motorista;
     }
 
     @Override
-    public Placa atualizar(Placa placa) {
+    public Motorista atualizar(Motorista motorista) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         em.getTransaction().begin();
-        em.merge(placa);
+        em.merge(motorista);
         em.getTransaction().commit();
-        em.close();
-        return placa;
+        return  motorista;
     }
 
     @Override
-    public Placa recuperarPorId(int id) {
+    public Motorista recuperarPorId(int id) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        Placa placa = em.find(Placa.class, id);
-        em.close();
-        return placa;
+        Motorista motorista = em.find(Motorista.class, id);
+        return motorista;
     }
 
     @Override
-    public Placa deletar(Placa placa) {
+    public Motorista deletar(Motorista motorista) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         em.getTransaction().begin();
-        em.remove(placa);
+        em.remove(motorista);
         em.getTransaction().commit();
-        em.close();
-        return placa;
+        return  motorista;
     }
 
     @Override
-    public List<Placa> listarTudo() {
-        EntityManager em = HibernateUtil.getInstance().getEntityManager();
-
-        String hql = "FROM Placas";
-        Query query = em.createQuery(hql);
-        List<Placa> listaPlacas = query.getResultList();
-
-        em.close();
-        return listaPlacas;
-        
+    public List<Motorista> listarTudo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }
