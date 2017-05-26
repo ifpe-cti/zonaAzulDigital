@@ -6,7 +6,10 @@ local scene = composer.newScene()
 
 local motorista = require("motorista")
 
+local json = require("json_teste")
+
 --local motorista1 = motorista:new()
+
 local nome
 local cpf
 local senha
@@ -69,10 +72,11 @@ function cadastrarMotorista(event)
 
     if event.phase == "began" then
         
-       -- motorista1:init(nome, cpf, senha)
-       local motoristaCadastrado = motorista(nome.text, cpf.text, senha.text)
+        -- motorista1:init(nome, cpf, senha)
+        local motoristaCadastrado = motorista(nome.text, cpf.text, senha.text)
         
-        composer.gotoScene("TelaMotorista",{ params = { motorista = motoristaCadastrado }})
+        
+        json:cadastrar(motoristaCadastrado)
 
     end
 end
@@ -80,4 +84,5 @@ end
 scene:addEventListener("create", scene)
 scene:addEventListener("show", scene)
 scene:addEventListener("hide", scene)
+
 return scene

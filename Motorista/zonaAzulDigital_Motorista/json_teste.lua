@@ -1,11 +1,10 @@
 local json = require("json")
+local motorista
 
-local mime = require("mime")
 
-local function handleResponse(event)
+
+local function recuperarMotorista(event)
     
-    motorista = event.params.motorista
-
     if not event.isError then
         local response = json.decode(event.response)
         print(event.response)
@@ -13,7 +12,17 @@ local function handleResponse(event)
         print("Erro")
     end
     return
+
 end
 
+function cadastrar(motorista)
+     self.motorista = motorista
+
 local headers = {}
-headers["motorista"] = "motorista.nome:motorista.senha"
+headers["motorista"] = json.encode(motorista)
+
+local params = {}
+params.headers = headers
+
+network.request("https://reqres.in/api/users", "GET", recuperaMotorista, params)
+end
