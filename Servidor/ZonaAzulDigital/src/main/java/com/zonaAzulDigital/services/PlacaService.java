@@ -7,7 +7,7 @@ package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
 import com.zonaAzulDigital.entidades.Placa;
-import javax.swing.JOptionPane;
+import com.zonaAzulDigital.model.ModelPlaca;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,39 +22,47 @@ import javax.ws.rs.core.Response;
  */
 @Path("/placa")
 public class PlacaService {
-    
+
     @GET
     @Path("/recuperar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Placa recuperaPlaca(){
+    public Placa recuperaPlaca() {
         Placa p = new Placa();
-        
+
         p.setLetras("alabala");
         p.setNumeros("123");
-        
+
         return p;
-    
+
     }
-    
+
     @POST
     @Path("/salvar")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response salvarPlaca(String json){
-        
-        Gson gson = new Gson();
-        
-        Placa p = gson.fromJson(json, Placa.class);
-        
+    public Response salvarPlaca(String json) {
+
         Response r = Response.serverError().build();
-        
-        if (p!=null){
-            r = Response.ok().build();
+
+        if (json != null && !json.isEmpty()) {
+
+            Gson gson = new Gson();
+
+            ModelPlaca mp = new ModelPlaca();
+
+            Placa p = gson.fromJson(json, Placa.class);
+
+            try {
+
+                mp.cadastrar(p);
+                r = Response.ok().build();
+
+            } catch (Exception e) {
+
+            }
         }
-         
+
         return r;
-        
+
     }
-    
-    
-    
+
 }

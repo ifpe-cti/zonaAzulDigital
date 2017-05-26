@@ -5,21 +5,25 @@
  */
 package com.zonaAzulDigital.services;
 
-
+import com.google.gson.Gson;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
  * @author Samuel
  */
-@Path("/cartao")
+@Path("/cartaozonaazul")
 public class CartaoZonaAzulService {
 
     @GET
@@ -28,24 +32,35 @@ public class CartaoZonaAzulService {
     public CartaoZonaAzul getCartao() {
 
         CartaoZonaAzul c = new CartaoZonaAzul();
-       
-
-        Placa p = new Placa();
-        p.setLetras("lala");
-       
-
-       
-       
-
-        BigDecimal dinheiro;
-
-        dinheiro = null;
-
-       
-
-        c.setValor(dinheiro);
 
         return c;
+    }
+
+    @POST
+    @Path("/salvar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response salvarCartao(String json) {
+
+        Response r = Response.serverError().build();
+
+        if (json != null && !json.isEmpty()) {
+
+            Gson gson = new Gson();
+
+            ModelCartaoZonaAzul mc = new ModelCartaoZonaAzul();
+
+            CartaoZonaAzul c = gson.fromJson(json, CartaoZonaAzul.class);
+
+            try {
+
+                mc.cadastrar(c);
+                r = Response.ok().build();
+
+            } catch (Exception e) {
+
+            }
+        }
+        return r;
     }
 
 }
