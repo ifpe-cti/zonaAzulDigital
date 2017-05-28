@@ -6,8 +6,11 @@
 package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
-import com.zonaAzulDigital.entidades.Motorista;
-import com.zonaAzulDigital.model.ModelMotorista;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
+import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,45 +23,44 @@ import javax.ws.rs.core.Response;
  *
  * @author Samuel
  */
-@Path("/motorista")
-public class MotoristaService {
+@Path("/cartaozonaazul")
+public class CartaoZonaAzulService {
 
     @GET
     @Path("/recuperar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Motorista getMotorista() {
-        Motorista motorista = new Motorista();
+    public CartaoZonaAzul getCartao() {
 
-        motorista.setNome("Samuel");
+        CartaoZonaAzul c = new CartaoZonaAzul();
 
-        return motorista;
+        return c;
     }
 
     @POST
     @Path("/salvar")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response salvarMotorista(String json) {
+    public Response salvarCartao(String json) {
 
         Response r = Response.serverError().build();
 
         if (json != null && !json.isEmpty()) {
-            Gson gson = new Gson();
-            
-            ModelMotorista md = new ModelMotorista();
 
-            Motorista m = gson.fromJson(json, Motorista.class);
+            Gson gson = new Gson();
+
+            ModelCartaoZonaAzul mc = new ModelCartaoZonaAzul();
+
+            CartaoZonaAzul c = gson.fromJson(json, CartaoZonaAzul.class);
 
             try {
-               
-                md.cadastrar(m);
+
+                mc.cadastrar(c);
                 r = Response.ok().build();
-                
+
             } catch (Exception e) {
 
             }
-
         }
-
         return r;
     }
+
 }
