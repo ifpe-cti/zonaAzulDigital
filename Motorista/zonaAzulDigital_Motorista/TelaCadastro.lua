@@ -4,9 +4,9 @@ local widget = require("widget")
 
 local scene = composer.newScene()
 
-local motorista = require("motorista")
+local motorista = require("Motorista")
 
-local json = require("json_teste")
+local json = require("WebServiceComunication")
 
 --local motorista1 = motorista:new()
 
