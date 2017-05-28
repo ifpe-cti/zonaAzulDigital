@@ -5,7 +5,10 @@
  */
 package com.zonaAzulDigital.model;
 
+import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.model.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.model.DAO.interfaces.DAOMotorista;
 
 /**
  *
@@ -14,8 +17,10 @@ import com.zonaAzulDigital.entidades.Motorista;
 public class ModelMotorista implements Model<Motorista>{
 
     @Override
-    public Motorista cadastrar(Motorista objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Motorista cadastrar(Motorista objeto) throws DaoException {
+        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        objeto = (Motorista) daoMotorista.cadastrar(objeto);
+        return objeto;
     }
 
     @Override
@@ -24,8 +29,10 @@ public class ModelMotorista implements Model<Motorista>{
     }
 
     @Override
-    public Motorista recuperar(Motorista objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Motorista recuperar(Motorista objeto) throws DaoException {
+        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        objeto = daoMotorista.recuperar(objeto.getCpf());
+        return objeto;
     }
 
     @Override
