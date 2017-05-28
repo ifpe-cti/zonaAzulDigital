@@ -6,7 +6,10 @@
 package com.zonaAzulDigital.model.DAO;
 
 import Hibernate.HibernateUtil;
+import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
+import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.DAO.interfaces.DAOCartaoZonaAzul;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,32 +18,34 @@ import javax.persistence.Query;
  *
  * @author JonasJr
  */
-public class CartoesZonaAzul implements DAO{
+public class DaoCartoZonaAzulBD implements DAOCartaoZonaAzul {
 
     @Override
-    public Object cadastrar(Object cartao) {
+    public CartaoZonaAzul cadastrar(CartaoZonaAzul cartaoZonaAzul) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        em.getTransaction().begin();
-        em.persist(cartao);
-        em.getTransaction().commit();
-        return cartao;
+        try {
+            em.getTransaction().begin();
+            em.persist(cartaoZonaAzul);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new DaoException(DaoException.NAOCADASTRADO);
+        } finally {
+            em.close();
+        }
+        return cartaoZonaAzul;
     }
 
     @Override
-    public Object atualizar(Object cartao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object recuperarPorId(int id) {
+    public CartaoZonaAzul recuperarUltimo(Placa placa) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        CartaoZonaAzul cartao = em.find(CartaoZonaAzul.class, id);
-        return cartao;
-    }
 
-    @Override
-    public Object deletar(Object cartao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String hql = "FROM CartaoZonaAzul c WHERE c.placa = :p1 ";
+        Query query = em.createQuery(hql);
+        query = query.setParameter("p1", placa);
+        List<CartaoZonaAzul> cartoes = query.getResultList();
+        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) cartoes.get(cartoes.size()-1) ;
+
+        return cartaoZonaAzul;
     }
 
     @Override
@@ -48,8 +53,18 @@ public class CartoesZonaAzul implements DAO{
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "FROM CartaoZonaAzul";
         Query query = em.createQuery(hql);
-        
+
         return query.getResultList();
     }
-    
+
+
+   
+
+    @Override
+    public CartaoZonaAzul recuperarPorId(int id) throws DaoException {
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        CartaoZonaAzul cartaoZonaAzul = em.find(CartaoZonaAzul.class, id);
+        return cartaoZonaAzul;
+    }
+
 }

@@ -6,7 +6,11 @@
 package com.zonaAzulDigital.model.DAO;
 
 import Hibernate.HibernateUtil;
+import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.PlacaException;
+import com.zonaAzulDigital.Excecao.PlacaInvalidaException;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.DAO.interfaces.DAOPlaca;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,29 +19,10 @@ import javax.persistence.Query;
  *
  * @author JonasJr
  */
-public class Placas implements DAO<Placa> {
+public class DaoPlacaBD implements DAOPlaca {
 
     @Override
-    public Placa cadastrar(Placa placa) {
-        EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        em.getTransaction().begin();
-        em.persist(placa);
-        em.getTransaction().commit();
-        return placa;
-    }
-
-    @Override
-    public Placa atualizar(Placa placa) {
-        EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        em.getTransaction().begin();
-        em.merge(placa);
-        em.getTransaction().commit();
-        em.close();
-        return placa;
-    }
-
-    @Override
-    public Placa recuperarPorId(int id) {
+    public Placa recuperarPorId(Object id) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         Placa placa = em.find(Placa.class, id);
         em.close();
@@ -45,12 +30,21 @@ public class Placas implements DAO<Placa> {
     }
 
     @Override
-    public Placa deletar(Placa placa) {
+    public Placa recuperar(String letras, String numeros) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        em.getTransaction().begin();
-        em.remove(placa);
-        em.getTransaction().commit();
-        em.close();
+        String hql = "FROM Placa p WHERE p.letras = :p1 and p.numeros = :p2 ";
+        Query query = em.createQuery(hql);
+
+        query = query.setParameter("p1", letras);
+        query = query.setParameter("p2", numeros);
+        Placa placa = new Placa();
+        try {
+            placa = (Placa) query.getSingleResult();
+        } catch (Exception e) {
+            throw new DaoException(PlacaException.NAOENCONTRADA.msg);
+        } finally {
+            em.close();
+        }
         return placa;
     }
 
@@ -58,13 +52,28 @@ public class Placas implements DAO<Placa> {
     public List<Placa> listarTudo() {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
 
-        String hql = "FROM Placas";
+        String hql = "FROM Placa";
         Query query = em.createQuery(hql);
         List<Placa> listaPlacas = query.getResultList();
 
         em.close();
         return listaPlacas;
-        
+
+    }
+
+    @Override
+    public Placa cadastrar(Placa placa) throws DaoException {
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.persist(placa);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new DaoException(DaoException.NAOCADASTRADO);
+        } finally {
+            em.close();
+        }
+        return placa;
     }
 
 }
