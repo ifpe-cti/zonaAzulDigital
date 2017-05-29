@@ -4,14 +4,22 @@
  * and open the template in the editor.
  */
 
+import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigital.model.DAO.DAO;
-import com.zonaAzulDigital.model.DAO.Motoristas;
-import com.zonaAzulDigital.model.DAO.Placas;
+import com.zonaAzulDigital.model.DAO.DaoCartoZonaAzulBD;
+import com.zonaAzulDigital.model.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.model.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.model.DAO.interfaces.DAOCartaoZonaAzul;
+import com.zonaAzulDigital.model.DAO.interfaces.DAOMotorista;
+import com.zonaAzulDigital.model.DAO.interfaces.DAOPlaca;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,19 +42,47 @@ public class NewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO daoPlaca = new Placas();
+        DAOPlaca daoPlaca = new DaoPlacaBD();
         Placa placa = new Placa();
         placa.setLetras("KHX");
         placa.setNumeros("0066");
-        daoPlaca.cadastrar(placa);
+        try {
+            daoPlaca.cadastrar(placa);
+        } catch (DaoException ex) {
+            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Placa p1 = new Placa();
+        try {
+            p1 = daoPlaca.recuperar(placa.getLetras(),placa.getNumeros());
+        } catch (DaoException ex) {
+            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         Motorista motorista = new Motorista();
         motorista.setCpf("106.549.014-30");
         motorista.setNome("Jonas Ferreira Leal Junior");
         motorista.setSenha("1234");
         motorista.setCredito(new BigDecimal(1000));
-        DAO daoMotorista = new Motoristas();
-        daoMotorista.cadastrar(motorista);
+        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        Motorista m1 = new Motorista();
+        try {
+            daoMotorista.cadastrar(motorista);
+            m1 = daoMotorista.recuperar(motorista.getCpf());
+        } catch (DaoException ex) {
+            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul(p1);
+        DAOCartaoZonaAzul daoCartaoZonaAzul = new  DaoCartoZonaAzulBD();
+        CartaoZonaAzul c1 = new CartaoZonaAzul();
+        try {
+            daoCartaoZonaAzul.cadastrar(cartaoZonaAzul);
+            c1 = daoCartaoZonaAzul.recuperarUltimo(placa);
+        } catch (DaoException ex) {
+            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         
         System.out.println(placa);
@@ -59,7 +95,7 @@ public class NewServlet extends HttpServlet {
             out.println("<title>Servlet NewServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet NewServlet at " + p1.toString() + "</br>"+ m1.getCpf() + "</br>"+ c1.getData() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

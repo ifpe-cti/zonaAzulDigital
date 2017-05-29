@@ -5,13 +5,19 @@
  */
 package com.zonaAzulDigital.model;
 
+import com.zonaAzulDigital.Excecao.DaoException;
+
 /**
  *
  * @author JonasJr
  */
 public interface Model<T> {
-    T cadastrar(T objeto);
-    T atualizar(T objeto);
-    T recuperar(T objeto);
-    T deletar(T objeto);
+
+    T cadastrar(T objeto) throws DaoException;
+
+    T atualizar(T objeto) throws DaoException;
+
+    T recuperar(T objeto) throws DaoException;
+
+    T deletar(T objeto) throws DaoException;
 }
