@@ -3,21 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.model.DAO;
-
-import java.util.List;
-
+package com.zonaAzulDigital.Excecao;
 
 /**
  *
  * @author JonasJr
  */
-public interface DAO <T>{
+public class PlacaInvalidaException extends Exception{
+
     
-    T cadastrar(T placa);
-    T atualizar(T placa);
-    T recuperarPorId(int id);
-    T deletar(T placa);
-    List<T> listarTudo();
+    
+    public PlacaInvalidaException(String msg) {
+        super(msg);
+    }
     
 }

@@ -7,6 +7,7 @@ package com.zonaAzulDigital.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,16 @@ public class CartaoZonaAzul implements Serializable{
     private Date dataEntacionamento;
     private BigDecimal valor;
 
+    public CartaoZonaAzul() {
+    }
+
+    public CartaoZonaAzul(Placa placa) {
+        this.placa = placa;
+        this.dataEntacionamento = new Date();
+    }
+    
+    
+    
     public int getNumero() {
         return numero;
     }
