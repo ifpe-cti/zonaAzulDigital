@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigitall.DAO;
+package com.zonaAzulDigital.DAO;
 
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
@@ -18,7 +18,7 @@ import javax.persistence.Query;
  *
  * @author JonasJr
  */
-public class DaoCartoZonaAzulBD implements DAOCartaoZonaAzul {
+public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
 
     @Override
     public CartaoZonaAzul cadastrar(CartaoZonaAzul cartaoZonaAzul) throws DaoException {

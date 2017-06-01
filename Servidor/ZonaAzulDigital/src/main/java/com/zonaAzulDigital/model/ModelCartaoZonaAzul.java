@@ -8,8 +8,8 @@ package com.zonaAzulDigital.model;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigitall.DAO.DaoCartoZonaAzulBD;
-import com.zonaAzulDigitall.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
 
@@ -21,7 +21,7 @@ public class ModelCartaoZonaAzul implements Model<CartaoZonaAzul>{
 
     @Override
     public CartaoZonaAzul cadastrar(CartaoZonaAzul objeto) throws DaoException {
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartoZonaAzulBD();
+        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartaoZonaAzulBD();
         objeto =(CartaoZonaAzul) daoCartaoZonaAzul.cadastrar(objeto);
         return objeto;
     }
@@ -33,7 +33,7 @@ public class ModelCartaoZonaAzul implements Model<CartaoZonaAzul>{
 
     @Override
     public CartaoZonaAzul recuperar(CartaoZonaAzul objeto) throws DaoException {
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartoZonaAzulBD();
+        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartaoZonaAzulBD();
         objeto = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarPorId(objeto.getNumero());
         return objeto;
     }
@@ -43,7 +43,7 @@ public class ModelCartaoZonaAzul implements Model<CartaoZonaAzul>{
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
         
         CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul();
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartoZonaAzulBD();
+        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartaoZonaAzulBD();
         cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
         return cartaoZonaAzul;
     }
