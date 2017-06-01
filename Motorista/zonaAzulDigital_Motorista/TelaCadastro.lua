@@ -8,8 +8,6 @@ local motorista = require("Motorista")
 
 local webService = require("WebServiceComunication")
 
-
-
 local nome
 local cpf
 local senha
