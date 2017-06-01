@@ -6,6 +6,7 @@
 package com.zonaAzulDigital.interfaces;
 
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface DAOMotorista {
     public Motorista recuperarPorId(int id) throws DaoException;
 
     public Motorista atualizar(Motorista motorista) throws DaoException;
+    
+    public Motorista login(long cpf, String senha) throws LoginException;
 
     public List<Motorista> listarTudo();
 }

@@ -46,8 +46,8 @@ public class ModelMotorista implements ModelMotoristaInterface {
     }
 
     @Override
-    public boolean login(Motorista motorista) throws LoginException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean login(long cpf, String senha) throws LoginException {
+        return true;
     }
 
 }
