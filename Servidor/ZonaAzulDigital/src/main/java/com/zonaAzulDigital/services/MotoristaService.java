@@ -5,9 +5,12 @@
  */
 package com.zonaAzulDigital.services;
 
+import com.zonaAzulDigital.model.Model;
 import com.google.gson.Gson;
+import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -61,7 +64,7 @@ public class MotoristaService {
         if (json != null && !json.isEmpty()) {
             Gson gson = new Gson();
 
-            ModelMotorista md = new ModelMotorista();
+            ModelMotoristaInterface md = new ModelMotorista();
 
             Motorista m = gson.fromJson(json, Motorista.class);
 
@@ -71,6 +74,8 @@ public class MotoristaService {
                 r = Response.ok().build();
 
             } catch (DaoException de) {
+                r = Response.serverError().build();
+            }catch(CpfException ce){
                 r = Response.serverError().build();
             }
 
