@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.model.DAO.interfaces;
+package com.zonaAzulDigital.interfaces;
 
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Motorista;
@@ -16,7 +16,7 @@ import java.util.List;
 public interface DAOMotorista {
     public Motorista cadastrar(Motorista motorista) throws DaoException;
 
-    public Motorista recuperar(String cpf) throws DaoException;
+    public Motorista recuperar(long cpf) throws DaoException;
 
     public Motorista recuperarPorId(int id) throws DaoException;
 
