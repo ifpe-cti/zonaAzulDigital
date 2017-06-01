@@ -68,7 +68,7 @@ function webService:logarMotorista(motorista)
 
 	local motoristaJson = json.encode(motorista)
 
-	local params {}
+	local params = {}
 	
 	params.headers = headers
 
