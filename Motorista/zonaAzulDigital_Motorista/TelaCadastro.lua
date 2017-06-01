@@ -4,11 +4,9 @@ local widget = require("widget")
 
 local scene = composer.newScene()
 
-local motorista = require("motorista")
+local motorista = require("Motorista")
 
-local json = require("json_teste")
-
---local motorista1 = motorista:new()
+local webService = require("WebServiceComunication")
 
 local nome
 local cpf
@@ -72,12 +70,11 @@ function cadastrarMotorista(event)
 
     if event.phase == "began" then
         
-        -- motorista1:init(nome, cpf, senha)
+        
         local motoristaCadastrado = motorista(nome.text, cpf.text, senha.text)
         
-        
-        json:cadastrar(motoristaCadastrado)
-
+        webService:cadastrarMotorista(motoristaCadastrado)
+      
     end
 end
 

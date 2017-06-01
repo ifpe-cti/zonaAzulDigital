@@ -3,6 +3,11 @@ local composer = require("composer")
 local scene = composer.newScene()
 
 local widget = require("widget")
+
+local motorista = require("Motorista")
+
+local webService = require("WebServiceComunication")
+
 local cpf 
 local senha
 
@@ -22,13 +27,14 @@ function scene:create()
 
     local cadastro = widget.newButton({label = "cadastre-se",labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/ 2.6 * 2,shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0.5 }, over={ 0.8, 0.8, 1 } } })
 
-    --login:addEventListener("touch", fazerLogin)
+    entrar:addEventListener("touch", fazerLogin)
 	cadastro:addEventListener("touch", fazerCadastro)
 
     sceneGroup:insert(textCpf)
     sceneGroup:insert(textSenha)
     sceneGroup:insert(entrar)
     sceneGroup:insert(cadastro)
+
 end
 
 function scene:show(event)
@@ -37,6 +43,7 @@ function scene:show(event)
         cpf = native.newTextField(display.contentWidth/2, display.contentHeight/3, 210, 30)
         senha = native.newTextField(display.contentWidth/2, (display.contentHeight/4)*2, 210, 30)
         senha.isSecure = true
+
     end
 end
 
@@ -53,6 +60,15 @@ end
 function fazerCadastro(event)
     if event.phase == "ended" then
         composer.gotoScene("TelaCadastro")
+    end
+end
+
+function fazerLogin(event)
+    if event.phase == "ended" then
+
+        local motoristaLogado = motorista(cpf.text, senha.text)
+
+        webService:logarMotorista(motoristaLogado)
     end
 end
 
