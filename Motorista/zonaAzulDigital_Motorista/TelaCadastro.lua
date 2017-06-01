@@ -71,16 +71,10 @@ function cadastrarMotorista(event)
     if event.phase == "began" then
         
         
-<<<<<<< HEAD
-        --composer.gotoScene("TelaMotorista",{ params = { motorista = motoristaCadastrado }})
-        
-        json_teste:cadastrar(motoristaCadastrado)
-=======
         local motoristaCadastrado = motorista(nome.text, cpf.text, senha.text)
         
         webService:cadastrarMotorista(motoristaCadastrado)
       
->>>>>>> master
     end
 end
 

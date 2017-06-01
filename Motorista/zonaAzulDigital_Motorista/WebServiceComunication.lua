@@ -18,6 +18,17 @@ local function eventoCadastrarMotorista(event)
 
 end
 
+local function eventoLogarMotorista(event)
+	if not event.isError then
+		local response = json.decode(event.response)
+		print(event.response)
+		print(event.status)
+	else
+		print("Erro")
+	end
+	return
+end
+
 function webService:cadastrarMotorista(motorista)
 
 	local headers = {}
@@ -50,10 +61,21 @@ function webService:recuperarMotorista()
 
 end
 
+function webService:logarMotorista(motorista)
+	local headers = {}
 
+	headers["Content-Type"] = "application/json"
 
+	local motoristaJson = json.encode(motorista)
 
+	local params {}
+	
+	params.headers = headers
 
+	params.body = motoristaJson
 
+	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
+
+end
 
 return webService
