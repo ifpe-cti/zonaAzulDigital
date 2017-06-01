@@ -7,6 +7,7 @@ package com.zonaAzulDigital.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,8 +22,11 @@ public class Motorista implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(nullable = false)
     private String nome;
-    private String cpf;
+    @Column(nullable = false, unique = true, length = 11)
+    private long cpf;
+    @Column(nullable = false, length = 40)
     private String senha;
     private BigDecimal credito;
 
@@ -43,11 +47,11 @@ public class Motorista implements Serializable{
         this.nome = nome;
     }
 
-    public String getCpf() {
+    public long getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(long cpf) {
         this.cpf = cpf;
     }
 

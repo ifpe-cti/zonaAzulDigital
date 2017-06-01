@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.model.DAO;
+package com.zonaAzulDigitall.DAO;
 
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.Motorista;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOMotorista;
+import com.zonaAzulDigital.interfaces.DAOMotorista;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -57,7 +58,7 @@ public class DaoMotoristaBD implements DAOMotorista {
         return motorista;
     }
 
-    public Motorista recuperar(String cpf) throws DaoException {
+    public Motorista recuperar(long cpf) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "FROM Motorista m WHERE m.cpf = :p1 ";
         Query query = em.createQuery(hql);
@@ -69,6 +70,26 @@ public class DaoMotoristaBD implements DAOMotorista {
             motorista = (Motorista) query.getSingleResult();
         } catch (Exception e) {
             throw new DaoException(MotoristaException.NAOENCONTRADA.msg);
+        } finally {
+            em.close();
+        }
+        return motorista;
+    }
+    
+    @Override
+    public Motorista login(long cpf, String senha) throws LoginException{
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        String hql = "FROM Motorista m WHERE m.cpf = :p1, m.senha = p2 ";
+        Query query = em.createQuery(hql);
+
+        query = query.setParameter("p1", cpf);
+        query = query.setParameter("p2", senha);
+        Motorista motorista = new Motorista();
+        
+        try {
+            motorista = (Motorista) query.getSingleResult();
+        } catch (Exception e) {
+            throw new LoginException(LoginException.FALHOU);
         } finally {
             em.close();
         }

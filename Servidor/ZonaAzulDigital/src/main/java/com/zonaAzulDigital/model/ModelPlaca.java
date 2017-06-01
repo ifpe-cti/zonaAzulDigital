@@ -7,8 +7,8 @@ package com.zonaAzulDigital.model;
 
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigital.model.DAO.DaoPlacaBD;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOPlaca;
+import com.zonaAzulDigitall.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.interfaces.DAOPlaca;
 
 /**
  *

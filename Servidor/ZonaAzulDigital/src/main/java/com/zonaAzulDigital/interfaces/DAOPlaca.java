@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.model.DAO.interfaces;
+package com.zonaAzulDigital.interfaces;
 
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Placa;

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zonaAzulDigital.model.DAO;
+package com.zonaAzulDigitall.DAO;
 
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOCartaoZonaAzul;
+import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

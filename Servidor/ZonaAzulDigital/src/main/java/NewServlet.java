@@ -8,12 +8,12 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigital.model.DAO.DaoCartoZonaAzulBD;
-import com.zonaAzulDigital.model.DAO.DaoMotoristaBD;
-import com.zonaAzulDigital.model.DAO.DaoPlacaBD;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOCartaoZonaAzul;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOMotorista;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOPlaca;
+import com.zonaAzulDigitall.DAO.DaoCartoZonaAzulBD;
+import com.zonaAzulDigitall.DAO.DaoMotoristaBD;
+import com.zonaAzulDigitall.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
+import com.zonaAzulDigital.interfaces.DAOMotorista;
+import com.zonaAzulDigital.interfaces.DAOPlaca;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -60,7 +60,7 @@ public class NewServlet extends HttpServlet {
         }
         
         Motorista motorista = new Motorista();
-        motorista.setCpf("106.549.014-30");
+        motorista.setCpf(10654901430L);
         motorista.setNome("Jonas Ferreira Leal Junior");
         motorista.setSenha("1234");
         motorista.setCredito(new BigDecimal(1000));

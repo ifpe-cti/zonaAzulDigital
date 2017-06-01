@@ -5,19 +5,24 @@
  */
 package com.zonaAzulDigital.model;
 
+import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
-import com.zonaAzulDigital.model.DAO.DaoMotoristaBD;
-import com.zonaAzulDigital.model.DAO.interfaces.DAOMotorista;
+import com.zonaAzulDigital.validacao.CPF;
+import com.zonaAzulDigitall.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.interfaces.DAOMotorista;
+import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 
 /**
  *
  * @author JonasJr
  */
-public class ModelMotorista implements Model<Motorista>{
+public class ModelMotorista implements ModelMotoristaInterface {
 
     @Override
-    public Motorista cadastrar(Motorista objeto) throws DaoException {
+    public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException {
+        validar(objeto);
         DAOMotorista daoMotorista = new DaoMotoristaBD();
         objeto = (Motorista) daoMotorista.cadastrar(objeto);
         return objeto;
@@ -35,9 +40,14 @@ public class ModelMotorista implements Model<Motorista>{
         return objeto;
     }
 
-    @Override
-    public Motorista deletar(Motorista objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean validar(Motorista motorista) throws DaoException, CpfException {
+        CPF.validarCPF(motorista.getCpf());
+        return true;
     }
-    
+
+    @Override
+    public boolean login(long cpf, String senha) throws LoginException {
+        return true;
+    }
+
 }
