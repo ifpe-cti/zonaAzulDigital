@@ -66,9 +66,9 @@ end
 function fazerLogin(event)
     if event.phase == "ended" then
 
-        local motoristaLogado = motorista(cpf.text, senha.text)
+      -- local motoristaLogado = motorista(cpf.text, senha.text)
 
-        webService:logarMotorista(motoristaLogado)
+        webService:logarMotorista(cpf.text,senha.text)
     end
 end
 
