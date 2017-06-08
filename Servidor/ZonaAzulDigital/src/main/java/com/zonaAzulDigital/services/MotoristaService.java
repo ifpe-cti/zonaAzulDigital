@@ -5,8 +5,12 @@
  */
 package com.zonaAzulDigital.services;
 
+import com.zonaAzulDigital.model.Model;
 import com.google.gson.Gson;
+import com.zonaAzulDigital.Excecao.CpfException;
+import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -23,38 +27,56 @@ import javax.ws.rs.core.Response;
 @Path("/motorista")
 public class MotoristaService {
 
-    @GET
-    @Path("/recuperar")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Motorista getMotorista() {
-        Motorista motorista = new Motorista();
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response fazerLogin(String json) {
 
-        motorista.setNome("Samuel");
+        Response r = null;
 
-        return motorista;
+        if (json != null && !json.isEmpty()) {
+            Gson gson = new Gson();
+
+            ModelMotorista md = new ModelMotorista();
+            Motorista m = gson.fromJson(json, Motorista.class);
+
+            try {
+
+                //md.login(m.getCpf(),m.getSenha());
+                r = Response.ok().build();
+
+            } catch (Exception e) {
+                r = Response.serverError().build();
+            }
+
+        }
+
+        return r;
     }
 
     @POST
     @Path("/salvar")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response salvarMotorista(String json) {
+    public Response salvar(String json) {
 
-        Response r = Response.serverError().build();
+        Response r = null;
 
         if (json != null && !json.isEmpty()) {
             Gson gson = new Gson();
-            
-            ModelMotorista md = new ModelMotorista();
+
+            ModelMotoristaInterface md = new ModelMotorista();
 
             Motorista m = gson.fromJson(json, Motorista.class);
 
             try {
-               
+
                 md.cadastrar(m);
                 r = Response.ok().build();
-                
-            } catch (Exception e) {
 
+            } catch (DaoException de) {
+                r = Response.serverError().build();
+            }catch(CpfException ce){
+                r = Response.serverError().build();
             }
 
         }

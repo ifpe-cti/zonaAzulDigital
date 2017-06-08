@@ -64,11 +64,12 @@ end
 function webService:logarMotorista(motorista)
 	local headers = {}
 
+
 	headers["Content-Type"] = "application/json"
 
 	local motoristaJson = json.encode(motorista)
 
-	local params {}
+	local params = {}
 	
 	params.headers = headers
 

@@ -8,9 +8,9 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigitall.DAO.DaoCartoZonaAzulBD;
-import com.zonaAzulDigitall.DAO.DaoMotoristaBD;
-import com.zonaAzulDigitall.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
@@ -74,7 +74,7 @@ public class NewServlet extends HttpServlet {
         }
         
         CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul(p1);
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new  DaoCartoZonaAzulBD();
+        DAOCartaoZonaAzul daoCartaoZonaAzul = new  DaoCartaoZonaAzulBD();
         CartaoZonaAzul c1 = new CartaoZonaAzul();
         try {
             daoCartaoZonaAzul.cadastrar(cartaoZonaAzul);

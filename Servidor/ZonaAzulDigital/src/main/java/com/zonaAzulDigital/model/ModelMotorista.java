@@ -10,7 +10,7 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.validacao.CPF;
-import com.zonaAzulDigitall.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 
