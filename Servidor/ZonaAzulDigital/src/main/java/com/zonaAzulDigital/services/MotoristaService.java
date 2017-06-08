@@ -42,11 +42,11 @@ public class MotoristaService {
 
             try {
 
-                //md.login(m.getCpf(),m.getSenha());
+                md.login(m.getCpf(), m.getSenha());
                 r = Response.ok().build();
 
             } catch (Exception e) {
-                
+                r = Response.serverError().build();
             }
 
         }
@@ -57,7 +57,6 @@ public class MotoristaService {
     @POST
     @Path("/salvar")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response salvar(String json) {
 
         Response r = Response.serverError().build();
@@ -67,17 +66,14 @@ public class MotoristaService {
 
             ModelMotoristaInterface md = new ModelMotorista();
 
-            Motorista m = gson.fromJson(json, Motorista.class);
-
             try {
-
+                Motorista m = gson.fromJson(json, Motorista.class);
                 md.cadastrar(m);
                 r = Response.ok().build();
 
-            } catch (DaoException de) {
-                
-            } catch (CpfException ce){
-                
+            } catch (Exception de) {
+                r = Response.serverError().build();
+                return r;
             }
 
         }
