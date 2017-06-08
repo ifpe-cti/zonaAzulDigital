@@ -32,7 +32,7 @@ public class MotoristaService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response fazerLogin(String json) {
 
-        Response r = null;
+        Response r = Response.serverError().build();
 
         if (json != null && !json.isEmpty()) {
             Gson gson = new Gson();
@@ -46,7 +46,7 @@ public class MotoristaService {
                 r = Response.ok().build();
 
             } catch (Exception e) {
-                r = Response.serverError().build();
+                
             }
 
         }
@@ -57,9 +57,10 @@ public class MotoristaService {
     @POST
     @Path("/salvar")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response salvar(String json) {
 
-        Response r = null;
+        Response r = Response.serverError().build();
 
         if (json != null && !json.isEmpty()) {
             Gson gson = new Gson();
@@ -74,9 +75,9 @@ public class MotoristaService {
                 r = Response.ok().build();
 
             } catch (DaoException de) {
-                r = Response.serverError().build();
-            }catch(CpfException ce){
-                r = Response.serverError().build();
+                
+            } catch (CpfException ce){
+                
             }
 
         }
