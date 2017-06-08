@@ -79,7 +79,7 @@ public class DaoMotoristaBD implements DAOMotorista {
     @Override
     public Motorista login(long cpf, String senha) throws LoginException{
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Motorista m WHERE m.cpf = :p1 and m.senha = p2 ";
+        String hql = "FROM Motorista m WHERE m.cpf = :p1 and m.senha = :p2 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", cpf);
