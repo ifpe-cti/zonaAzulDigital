@@ -2,6 +2,7 @@ local json = require("json")
 
 local webService = {}
 
+local composer = require("composer")
 
 
 local function eventoCadastrarMotorista(event)
@@ -10,6 +11,10 @@ local function eventoCadastrarMotorista(event)
         local response = json.decode(event.response)
         print(event.response)
         print(event.status)
+
+		if event.status == 200 then
+			composer.gotoScene("TelaLogin")
+		end
 
     else
         print("Erro") 
