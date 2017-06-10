@@ -68,11 +68,13 @@ function webService:recuperarMotorista()
 end
 
 function webService:logarMotorista(cpf,senha)
+
 	local login = {}
 
 	login.cpf = cpf
 	login.senha = senha
 
+	local headers = {}
 
 	local headers = {}
 

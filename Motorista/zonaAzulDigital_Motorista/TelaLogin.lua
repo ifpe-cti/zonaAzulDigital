@@ -6,6 +6,8 @@ local widget = require("widget")
 
 local motorista = require("Motorista")
 
+local crypto = require("crypto")
+
 local webService = require("WebServiceComunication")
 
 local cpf 
@@ -66,9 +68,10 @@ end
 function fazerLogin(event)
     if event.phase == "ended" then
 
-      -- local motoristaLogado = motorista(cpf.text, senha.text)
-
-        webService:logarMotorista(cpf.text,senha.text)
+        local senhaCrypto = crypto.digest(crypto.md5, senha.text)
+        
+        webService:logarMotorista(cpf.text, senhaCrypto)
+        
     end
 end
 
