@@ -68,7 +68,6 @@ end
 function fazerLogin(event)
     if event.phase == "ended" then
 
-      
         local senhaCrypto = crypto.digest(crypto.md5, senha.text)
         
         webService:logarMotorista(cpf.text, senhaCrypto)

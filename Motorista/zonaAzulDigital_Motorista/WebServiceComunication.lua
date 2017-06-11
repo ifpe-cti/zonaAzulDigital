@@ -28,6 +28,7 @@ local function eventoLogarMotorista(event)
 		local response = json.decode(event.response)
 		print(event.response)
 		print(event.status)
+		composer.gotoScene("TelaMotoristaInicial")
 	else
 		print("Erro")
 		print(event.status)
@@ -68,11 +69,13 @@ function webService:recuperarMotorista()
 end
 
 function webService:logarMotorista(cpf,senha)
-	
+
 	local login = {}
 
 	login.cpf = cpf
 	login.senha = senha
+
+	local headers = {}
 
 	local headers = {}
 
