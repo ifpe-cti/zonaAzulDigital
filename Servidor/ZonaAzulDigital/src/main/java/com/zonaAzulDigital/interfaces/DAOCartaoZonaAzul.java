@@ -8,6 +8,7 @@ package com.zonaAzulDigital.interfaces;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ public interface DAOCartaoZonaAzul {
     public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException;
 
     public CartaoZonaAzul recuperarPorId(int id) throws DaoException;
+    
+    public BigDecimal preco(String cidade) throws DaoException;
 
     public List<CartaoZonaAzul> listarTudo();
 }

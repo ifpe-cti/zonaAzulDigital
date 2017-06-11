@@ -53,7 +53,7 @@ public class CartaoZonaAzulService {
 
             try {
 
-                mc.cadastrar(c);
+                mc.comprar(null,null);
                 r = Response.ok().build();
 
             } catch (Exception e) {

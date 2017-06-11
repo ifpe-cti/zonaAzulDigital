@@ -42,6 +42,7 @@ public class ModelMotorista implements ModelMotoristaInterface {
 
     public boolean validar(Motorista motorista) throws DaoException, CpfException {
         CPF.validarCPF(motorista.getCpf());
+        
         return true;
     }
 
