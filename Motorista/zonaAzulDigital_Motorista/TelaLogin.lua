@@ -4,11 +4,13 @@ local scene = composer.newScene()
 
 local widget = require("widget")
 
-local motorista = require("Motorista")
+local motorista = require("motorista")
 
 local crypto = require("crypto")
 
 local webService = require("WebServiceComunication")
+
+local toast = require("plugin.toast")
 
 local cpf 
 local senha
@@ -68,10 +70,17 @@ end
 function fazerLogin(event)
     if event.phase == "ended" then
 
-        local senhaCrypto = crypto.digest(crypto.md5, senha.text)
+        if senha.text == "" or cpf.text == "" then
+            
+            toast.show("Preencha os campos corretamente!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
         
-        webService:logarMotorista(cpf.text, senhaCrypto)
-        
+        else
+           
+            local senhaCrypto = crypto.digest(crypto.md5, senha.text)
+
+            webService:logarMotorista(cpf.text, senhaCrypto)
+
+        end
     end
 end
 
