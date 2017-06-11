@@ -69,7 +69,7 @@ public class DaoMotoristaBD implements DAOMotorista {
         try {
             motorista = (Motorista) query.getSingleResult();
         } catch (Exception e) {
-            throw new DaoException(MotoristaException.NAOENCONTRADA.msg);
+            throw new DaoException(MotoristaException.NAOENCONTRADO);
         } finally {
             em.close();
         }

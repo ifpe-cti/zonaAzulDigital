@@ -10,6 +10,8 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -43,7 +45,7 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
         Query query = em.createQuery(hql);
         query = query.setParameter("p1", placa);
         List<CartaoZonaAzul> cartoes = query.getResultList();
-        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) cartoes.get(cartoes.size()-1) ;
+        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) cartoes.get(cartoes.size() - 1);
 
         return cartaoZonaAzul;
     }
@@ -57,14 +59,26 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
         return query.getResultList();
     }
 
-
-   
-
     @Override
     public CartaoZonaAzul recuperarPorId(int id) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         CartaoZonaAzul cartaoZonaAzul = em.find(CartaoZonaAzul.class, id);
         return cartaoZonaAzul;
+    }
+
+    @Override
+    public BigDecimal preco(String cidade) throws DaoException {
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        BigDecimal preco;
+        try {
+            String hql = "FROM CartaoZonaAzulInfo c WHERE c.cidade = :p1";
+            Query query = em.createQuery(hql);
+            query = query.setParameter("p1", cidade);
+            preco = new BigDecimal((Float)query.getSingleResult());
+        }catch(NumberFormatException ex ){
+            throw new DaoException(ex.getMessage());
+        }
+        return preco;
     }
 
 }
