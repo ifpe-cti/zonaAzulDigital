@@ -6,6 +6,8 @@ local scene = composer.newScene()
 
 local motorista = require("Motorista")
 
+local crypto = require("crypto")
+
 local webService = require("WebServiceComunication")
 
 local nome
@@ -70,8 +72,9 @@ function cadastrarMotorista(event)
 
     if event.phase == "began" then
         
+        local senhaCrypto = crypto.digest(crypto.md5, senha.text)
         
-        local motoristaCadastrado = motorista(nome.text, cpf.text, senha.text)
+        local motoristaCadastrado = motorista(nome.text, cpf.text, senhaCrypto)
         
         webService:cadastrarMotorista(motoristaCadastrado)
       

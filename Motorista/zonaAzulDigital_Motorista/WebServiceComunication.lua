@@ -30,6 +30,7 @@ local function eventoLogarMotorista(event)
 		print(event.status)
 	else
 		print("Erro")
+		print(event.status)
 	end
 	return
 end
@@ -66,19 +67,24 @@ function webService:recuperarMotorista()
 
 end
 
-function webService:logarMotorista(motorista)
-	local headers = {}
+function webService:logarMotorista(cpf,senha)
+	local login = {}
 
+	login.cpf = cpf
+	login.senha = senha
+
+
+	local headers = {}
 
 	headers["Content-Type"] = "application/json"
 
-	local motoristaJson = json.encode(motorista)
+	local motoristaLogin = json.encode(login)
 
 	local params = {}
 	
 	params.headers = headers
 
-	params.body = motoristaJson
+	params.body = motoristaLogin
 
 	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
 
