@@ -65,4 +65,9 @@ settings =
 			"android.permission.INTERNET",
 		},
 	},
+	
+	plugins =
+	{
+		 ["plugin.toast"] = {publisherId = "com.spiralcodestudio"}
+	},
 }
