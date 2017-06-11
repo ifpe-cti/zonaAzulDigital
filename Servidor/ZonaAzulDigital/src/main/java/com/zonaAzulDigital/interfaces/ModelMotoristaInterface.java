@@ -18,5 +18,5 @@ public interface ModelMotoristaInterface {
     Motorista cadastrar(Motorista motorista) throws DaoException, CpfException;
     Motorista atualizar(Motorista motorista) throws DaoException, CpfException;
     Motorista recuperar(Motorista motorista) throws DaoException, CpfException;
-    boolean login(long cpf, String senha) throws LoginException;
+    Motorista login(long cpf, String senha) throws LoginException;
 }
