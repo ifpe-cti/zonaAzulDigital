@@ -14,7 +14,7 @@ function scene:create()
     	data={
         	{text="Home", scene="TelaMotoristaInicial"},
         	{text="States", scene="scene2.lua"},
-        	{text="Countries'", scene="scene3.lua"}
+        	{text="Sair", scene="scene3.lua"}
         }, 
     	containers={
         	topContainerProperties={

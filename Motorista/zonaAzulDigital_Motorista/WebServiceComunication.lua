@@ -4,6 +4,8 @@ local webService = {}
 
 local composer = require("composer")
 
+local toast = require("plugin.toast")
+
 
 local function eventoCadastrarMotorista(event)
     
@@ -25,15 +27,17 @@ end
 
 local function eventoLogarMotorista(event)
 	if not event.isError then
-		local response = json.decode(event.response)
-		print(event.response)
-		print(event.status)
-		composer.gotoScene("TelaMotoristaInicial")
+		
+		if event.status == 200 then
+			composer.gotoScene("TelaMotoristaInicial")
+		else
+			toast.show("E-mail e senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+		end
+
 	else
-		print("Erro")
-		print(event.status)
+		toast.show("E-mail e senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
 	end
-	return
+	return 
 end
 
 function webService:cadastrarMotorista(motorista)
