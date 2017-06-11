@@ -28,6 +28,7 @@ local function eventoLogarMotorista(event)
 		local response = json.decode(event.response)
 		print(event.response)
 		print(event.status)
+		composer.gotoScene("TelaMotoristaInicial")
 	else
 		print("Erro")
 		print(event.status)
