@@ -42,14 +42,14 @@ public class ModelMotorista implements ModelMotoristaInterface {
 
     public boolean validar(Motorista motorista) throws DaoException, CpfException {
         CPF.validarCPF(motorista.getCpf());
+
         return true;
     }
 
     @Override
-    public boolean login(long cpf, String senha) throws LoginException {
+    public Motorista login(long cpf, String senha) throws LoginException {
         DAOMotorista daoMotorista = new DaoMotoristaBD();
-        daoMotorista.login(cpf, senha);
-        return true;
+        return daoMotorista.login(cpf, senha);
     }
 
 }

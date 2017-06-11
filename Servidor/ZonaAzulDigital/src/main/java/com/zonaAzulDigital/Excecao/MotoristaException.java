@@ -9,15 +9,14 @@ package com.zonaAzulDigital.Excecao;
  *
  * @author JonasJr
  */
-public enum MotoristaException {
-    NULL("Motorista é obrigatorio"),
-    CPF("CPF é obrigatorio"),
-    NAOENCONTRADA("Motorista não encontrada");
+public class MotoristaException extends Exception{
+    public static final String NULL = "Motorista é obrigatorio";
+    public static final String NOMEOBRIGATORIO = "Nome é obrigatorio";
+    public static final String CPFOBRIGATORIO = "CPF é obrigatorio";
+    public static final String NAOENCONTRADO = "Motorista não foi encontrado";
     
-    public String msg;
-
-    private MotoristaException(String msg) {
-        this.msg = msg;
+    public MotoristaException(String msg) {
+        super(msg);
     }
     
 }
