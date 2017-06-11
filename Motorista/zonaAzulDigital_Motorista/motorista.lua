@@ -1,4 +1,4 @@
-local class = require("30log")
+local class = require("Bibliotecas.30log")
 
 local motorista = class(
     "motorista",
