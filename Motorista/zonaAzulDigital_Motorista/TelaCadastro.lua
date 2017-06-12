@@ -4,7 +4,7 @@ local widget = require("widget")
 
 local scene = composer.newScene()
 
-local motorista = require("Motorista")
+local motorista = require("motorista")
 
 local crypto = require("crypto")
 
