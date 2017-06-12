@@ -25,8 +25,7 @@ public class CPF {
         return cpfFormatado;
     }
 
-    public static boolean validarCPF(Long cpfl) throws CpfException {
-        String cpf = String.valueOf(cpfl);
+    public static boolean validarCPF(String cpf) throws CpfException {
         if (cpf.equals("00000000000") || cpf.equals("11111111111")
                 || cpf.equals("22222222222") || cpf.equals("33333333333")
                 || cpf.equals("44444444444") || cpf.equals("55555555555")

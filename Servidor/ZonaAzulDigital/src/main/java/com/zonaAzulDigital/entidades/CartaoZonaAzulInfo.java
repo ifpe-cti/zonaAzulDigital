@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * @author JonasJr
  */
 @Entity
-public class CartãoZonaAzulInfo implements Serializable {
+public class CartaoZonaAzulInfo implements Serializable {
     @Id
     private String cidade;
     private BigDecimal preco;
