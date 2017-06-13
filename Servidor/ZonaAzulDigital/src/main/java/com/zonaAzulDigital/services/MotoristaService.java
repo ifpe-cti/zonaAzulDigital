@@ -43,11 +43,13 @@ public class MotoristaService {
             try {
 
                 Motorista m = gson.fromJson(json, Motorista.class);
-                md.login(m.getCpf(), m.getSenha());
-                r = Response.ok().build();
+                Motorista motoristaRetorno = md.login(m.getCpf(), m.getSenha());
+                
+                String jsonRetorno = gson.toJson(motoristaRetorno);
+                r = Response.ok(jsonRetorno).build();
 
             } catch (Exception e) {
-                r = Response.serverError().build();
+                r = Response.status(401).build();
             }
         }
         return r;
@@ -71,7 +73,7 @@ public class MotoristaService {
                 r = Response.ok().build();
 
             } catch (Exception de) {
-                r = Response.serverError().build();
+                 r = Response.status(422).build();
                 return r;
             }
 
