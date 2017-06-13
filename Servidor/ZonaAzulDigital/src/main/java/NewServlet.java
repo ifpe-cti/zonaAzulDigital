@@ -69,7 +69,7 @@ public class NewServlet extends HttpServlet {
         }
 
         Motorista motorista = new Motorista();
-        motorista.setCpf(10654901430L);
+        motorista.setCpf("10654901430");
         motorista.setNome("Jonas Ferreira Leal Junior");
         motorista.setSenha("1234");
         motorista.setCredito(new BigDecimal(1000));

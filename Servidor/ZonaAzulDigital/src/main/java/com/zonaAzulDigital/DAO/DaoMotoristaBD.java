@@ -58,7 +58,8 @@ public class DaoMotoristaBD implements DAOMotorista {
         return motorista;
     }
 
-    public Motorista recuperar(long cpf) throws DaoException {
+    @Override
+    public Motorista recuperar(String cpf) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "FROM Motorista m WHERE m.cpf = :p1 ";
         Query query = em.createQuery(hql);
@@ -77,7 +78,7 @@ public class DaoMotoristaBD implements DAOMotorista {
     }
     
     @Override
-    public Motorista login(long cpf, String senha) throws LoginException{
+    public Motorista login(String cpf, String senha) throws LoginException{
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "FROM Motorista m WHERE m.cpf = :p1 and m.senha = :p2 ";
         Query query = em.createQuery(hql);
@@ -101,5 +102,6 @@ public class DaoMotoristaBD implements DAOMotorista {
     public List<Motorista> listarTudo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

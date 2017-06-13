@@ -47,7 +47,7 @@ public class ModelMotorista implements ModelMotoristaInterface {
     }
 
     @Override
-    public Motorista login(long cpf, String senha) throws LoginException {
+    public Motorista login(String cpf, String senha) throws LoginException {
         DAOMotorista daoMotorista = new DaoMotoristaBD();
         return daoMotorista.login(cpf, senha);
     }
