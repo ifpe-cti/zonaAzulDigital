@@ -8,6 +8,8 @@ package com.zonaAzulDigital.DAO;
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
+import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
+import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import java.math.BigDecimal;
@@ -23,13 +25,15 @@ import javax.persistence.Query;
 public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
 
     @Override
-    public CartaoZonaAzul cadastrar(CartaoZonaAzul cartaoZonaAzul) throws DaoException {
+    public CartaoZonaAzul comprar(CartaoZonaAzul cartaoZonaAzul, Motorista motorista) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(cartaoZonaAzul);
+            em.merge(motorista);
             em.getTransaction().commit();
         } catch (Exception e) {
+            em.getTransaction().rollback();
             throw new DaoException(DaoException.NAOCADASTRADO);
         } finally {
             em.close();
@@ -74,11 +78,26 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
             String hql = "FROM CartaoZonaAzulInfo c WHERE c.cidade = :p1";
             Query query = em.createQuery(hql);
             query = query.setParameter("p1", cidade);
-            preco = new BigDecimal((Float)query.getSingleResult());
-        }catch(NumberFormatException ex ){
+            preco =((CartaoZonaAzulInfo)query.getSingleResult()).getPreco();
+        } catch (NumberFormatException ex) {
             throw new DaoException(ex.getMessage());
         }
         return preco;
+    }
+
+    @Override
+    public CartaoZonaAzulInfo cadastrar(CartaoZonaAzulInfo cartaoZonaAzulInfo) throws DaoException {
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(cartaoZonaAzulInfo);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw new DaoException(DaoException.NAOCADASTRADO);
+        }
+        return cartaoZonaAzulInfo;
     }
 
 }

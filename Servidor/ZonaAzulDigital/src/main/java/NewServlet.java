@@ -11,12 +11,21 @@ import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.Excecao.CpfException;
+import com.zonaAzulDigital.Excecao.LoginException;
+import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
+import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
+import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
+import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
+import com.zonaAzulDigital.model.ModelMotorista;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,51 +60,63 @@ public class NewServlet extends HttpServlet {
         } catch (DaoException ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Placa p1 = new Placa();
         try {
-            p1 = daoPlaca.recuperar(placa.getLetras(),placa.getNumeros());
+            p1 = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
         } catch (DaoException ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Motorista motorista = new Motorista();
         motorista.setCpf(10654901430L);
         motorista.setNome("Jonas Ferreira Leal Junior");
         motorista.setSenha("1234");
         motorista.setCredito(new BigDecimal(1000));
-        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        ModelMotoristaInterface modelMotorista = new ModelMotorista();
         Motorista m1 = new Motorista();
+        String credAnt = "";
         try {
-            daoMotorista.cadastrar(motorista);
-            m1 = daoMotorista.recuperar(motorista.getCpf());
-        } catch (DaoException ex) {
+            modelMotorista.cadastrar(motorista);
+            m1 = modelMotorista.login(motorista.getCpf(), motorista.getSenha());
+
+            credAnt = m1.getCredito().toString();
+        } catch (DaoException | LoginException | CpfException ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul(p1);
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new  DaoCartaoZonaAzulBD();
-        CartaoZonaAzul c1 = new CartaoZonaAzul();
+        DAOCartaoZonaAzul daoZonaAzul = new DaoCartaoZonaAzulBD();
         try {
-            daoCartaoZonaAzul.cadastrar(cartaoZonaAzul);
-            c1 = daoCartaoZonaAzul.recuperarUltimo(placa);
-        } catch (DaoException ex) {
+            CartaoZonaAzulInfo cartaoZonaAzulInfoInfo = new CartaoZonaAzulInfo();
+            cartaoZonaAzulInfoInfo.setCidade("Garanhuns");
+            cartaoZonaAzulInfoInfo.setPreco(new BigDecimal(2));
+            daoZonaAzul.cadastrar(cartaoZonaAzulInfoInfo);
+        } catch (Exception ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        System.out.println(placa);
+        ModelCartaoZonaAzulInterface modelCartaoZonaAzul = new ModelCartaoZonaAzul();
+        CartaoZonaAzul novoCartao = new CartaoZonaAzul();
+        try {
+            novoCartao = modelCartaoZonaAzul.comprar(m1, placa);
+        } catch (MotoristaException | DaoException ex) {
+            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
+            out.println("<title>Servlet NewServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + p1.toString() + "</br>"+ m1.getCpf() + "</br>"+ c1.getData() + "</h1>");
+            out.println("<h1>"
+                    + "Motorista: " + m1.getNome() + "<br/>"
+                    + "Placa no cartão: " + novoCartao.getPlaca() + "<br/>"
+                    + "Data/Hora: " + novoCartao.getData().toString() + "<br/>"
+                    + "Creditos anteriores: " + credAnt + "<br/>"
+                    + "Creditos atuais: " + m1.getCredito().toString() + "<br/>"
+                    + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
