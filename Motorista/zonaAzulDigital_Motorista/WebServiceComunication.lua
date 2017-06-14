@@ -16,7 +16,7 @@ local function eventoCadastrarMotorista(event)
 
 		if event.status == 200 then
 			composer.gotoScene("TelaLogin")
-			toast.show("Cadastro realizado com sucesso!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+			toast.show("Cadastro realizado com sucesso!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 		end
 
     else
@@ -28,20 +28,21 @@ end
 
 local function eventoLogarMotorista(event)
 	if not event.isError then
-
+		
 		if event.status == 200 then
+			
 			composer.gotoScene("TelaMotoristaInicial")
-			print(event.response)
-        	print(event.status)
-		else
-			toast.show("CPF ou senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
-			print(event.response)
-        	print(event.status)
+			
+		elseif event.status == 401 then
+			
+			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
 		end
 		
 	else
-		toast.show("CPF ou senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+		toast.show("Se conecte a internet para fazer login!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 	end
+
 	return 
 end
 
@@ -63,19 +64,6 @@ function webService:cadastrarMotorista(motorista)
 
 end
 
-
-function webService:recuperarMotorista()
-
-
-	local motoristaJson = json.encode(motorista)
-
-	local params = {}
-
-	params.body = motoristaJson
-
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/recuperar", "GET", printEvent,params)
-
-end
 
 function webService:logarMotorista(cpf,senha)
 
