@@ -42,7 +42,6 @@ local function eventoLogarMotorista(event)
 	else
 		toast.show("Se conecte a internet para fazer login!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 	end
-
 	return 
 end
 
@@ -64,6 +63,19 @@ function webService:cadastrarMotorista(motorista)
 
 end
 
+
+function webService:recuperarMotorista()
+
+
+	local motoristaJson = json.encode(motorista)
+
+	local params = {}
+
+	params.body = motoristaJson
+
+	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/recuperar", "GET", printEvent,params)
+
+end
 
 function webService:logarMotorista(cpf,senha)
 
