@@ -51,6 +51,8 @@ public class MotoristaService {
 
             } catch (LoginException le) {
                 r = Response.status(401).build();
+            } catch(Exception e){
+                r = Response.serverError().build();
             }
         }
         return r;
