@@ -75,9 +75,11 @@ public class MotoristaService {
                 md.cadastrar(m);
                 r = Response.ok().build();
 
-            } catch (Exception de) {
+            } catch (DaoException de) {
                  r = Response.status(422).build();
                 return r;
+            } catch (Exception e){
+                r = Response.serverError().build();
             }
 
         }
