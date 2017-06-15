@@ -16,6 +16,7 @@ local function eventoCadastrarMotorista(event)
 
 		if event.status == 200 then
 			composer.gotoScene("TelaLogin")
+			toast.show("Cadastro realizado com sucesso!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
 		end
 
     else
@@ -30,12 +31,16 @@ local function eventoLogarMotorista(event)
 
 		if event.status == 200 then
 			composer.gotoScene("TelaMotoristaInicial")
+			print(event.response)
+        	print(event.status)
 		else
-			toast.show("E-mail e senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+			toast.show("CPF ou senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+			print(event.response)
+        	print(event.status)
 		end
 		
 	else
-		toast.show("E-mail e senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+		toast.show("CPF ou senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
 	end
 	return 
 end

@@ -17,13 +17,13 @@ import java.util.List;
 public interface DAOMotorista {
     public Motorista cadastrar(Motorista motorista) throws DaoException;
 
-    public Motorista recuperar(long cpf) throws DaoException;
+    public Motorista recuperar(String cpf) throws DaoException;
 
     public Motorista recuperarPorId(int id) throws DaoException;
 
     public Motorista atualizar(Motorista motorista) throws DaoException;
     
-    public Motorista login(long cpf, String senha) throws LoginException;
+    public Motorista login(String cpf, String senha) throws LoginException;
 
     public List<Motorista> listarTudo();
 }

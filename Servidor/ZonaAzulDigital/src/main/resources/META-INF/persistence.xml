@@ -5,10 +5,8 @@
     <class>com.zonaAzulDigital.entidades.Placa</class>
     <class>com.zonaAzulDigital.entidades.CartaoZonaAzul</class>
     <class>com.zonaAzulDigital.entidades.Motorista</class>
-    <class>com.zonaAzulDigital.entidades.CartaoZonaAzulInfo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/zonaazuldigital?zeroDateTimeBehavior=convertToNull"/>

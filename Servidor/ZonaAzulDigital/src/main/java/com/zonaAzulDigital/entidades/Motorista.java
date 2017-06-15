@@ -25,7 +25,7 @@ public class Motorista implements Serializable{
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false, unique = true, length = 11)
-    private long cpf;
+    private String cpf;
     @Column(nullable = false, length = 40)
     private String senha;
     private BigDecimal credito;
@@ -59,11 +59,11 @@ public class Motorista implements Serializable{
         this.nome = nome;
     }
 
-    public long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
