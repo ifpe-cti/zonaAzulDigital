@@ -18,8 +18,8 @@ function scene:create()
         }, 
     	containers={
         	topContainerProperties={
-            	bgColor={0.5,0.5,1}, 
-            	strokeColor={1,1,0.8}, 
+            	bgColor={1,1,1}, 
+            	strokeColor={0.3, 0.4, 1}, 
             	text="Bem vindo!",
         }
     }

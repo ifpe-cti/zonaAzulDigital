@@ -88,6 +88,7 @@ function menu:createTopContainer(options)
         
         self.menuTopContainer:setFillColor(unpack(options.bgColor))
         self.menuTopContainer.text = display.newText({text=options.text, x=self.menuTopContainer.width*0.5, y=self.menuTopContainer.height*0.5, font=native.systemFontBold, fontSize=20})
+        self.menuTopContainer.text:setFillColor(0.3, 0.4, 1)
     else
         if options.imageHeight == nil or options.imageWidth == nil then
             error("If using image you must specify imageHeight and imageWidth")
@@ -121,7 +122,8 @@ function menu:createTopContainer(options)
     self.menuTopContainer.trigger:insert(dashOne)
     self.menuTopContainer.trigger:insert(dashTwo)
     self.menuTopContainer.trigger:insert(dashThree)
-
+    
+    self.menuTopGroup:insert(self.menuTopContainer.text)
     self.menuTopGroup:insert(self.menuTopContainer.trigger)
     -- its just a transparent rect to wrap the dashs and receive touch events
     local triggerRect = display.newRect(xBase, yBase, triggerWidth, 25)
