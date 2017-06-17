@@ -78,20 +78,6 @@ function webService:cadastrarMotorista(motorista)
 
 end
 
-
-function webService:recuperarMotorista()
-
-
-	local motoristaJson = json.encode(motorista)
-
-	local params = {}
-
-	params.body = motoristaJson
-
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/recuperar", "GET", printEvent,params)
-
-end
-
 function webService:logarMotorista(cpf,senha)
 
 	local login = {}
