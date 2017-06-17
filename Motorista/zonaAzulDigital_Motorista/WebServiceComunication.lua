@@ -35,17 +35,9 @@ end
 
 local function eventoLogarMotorista(event)
 	if not event.isError then
-		local motoristaLogado = json.decode(event.response)
-
-		print(motoristaLogado.nome)
-		print(motoristaLogado.cpf)
-		print(motoristaLogado.credito)
-		print(motoristaLogado.senha)
-
 		
-
 		if event.status == 200 then
-			
+			local motoristaLogado = json.decode(event.response)
 			composer.gotoScene("TelaMotoristaInicial", { params = { motorista = motoristaLogado }})
 			
 		elseif event.status == 401 then
