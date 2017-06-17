@@ -85,7 +85,7 @@ function fazerLogin(event)
 
         if senha.text == "" or cpf.text == "" then
             
-            toast.show("Preencha os campos corretamente!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+            toast.show("Preencha os campos corretamente!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
         
         else
            

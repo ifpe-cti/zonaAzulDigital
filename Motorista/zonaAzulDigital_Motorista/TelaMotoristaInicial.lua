@@ -6,10 +6,11 @@ local menu = require("Bibliotecas.menu_slider")
 
 
 
-function scene:create()
+function scene:create(event)
 
 	local sceneGroup = self.view
 
+    
 	local newMenu = menu:new({
     	data={
         	{text="Inicio", scene="TelaMotoristaInicial"},
@@ -18,18 +19,13 @@ function scene:create()
         }, 
     	containers={
         	topContainerProperties={
-            	bgColor={1,1,1}, 
-            	strokeColor={0.3, 0.4, 1}, 
-            	text="Bem vindo!",
+            	bgColor={0.5,0.5,1}, 
+            	strokeColor={1,1,0.8}, 
+            	text="Bem vindo "..event.params.motorista.nome.."!",
+
         }
     }
 })
-
-
-
-
-
-
 
 end
 

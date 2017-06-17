@@ -34,7 +34,8 @@ public class Motorista implements Serializable{
         this.credito = new BigDecimal(0);
     }
 
-    public Motorista(String nome, long cpf, String senha) {
+
+    public Motorista(String nome, String cpf, String senha) {
         this();
         this.nome = nome;
         this.cpf = cpf;

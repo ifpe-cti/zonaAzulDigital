@@ -11,16 +11,23 @@ local function eventoCadastrarMotorista(event)
     
     if not event.isError then
         local response = json.decode(event.response)
-        print(event.response)
-        print(event.status)
+        
 
 		if event.status == 200 then
 			composer.gotoScene("TelaLogin")
-			toast.show("Cadastro realizado com sucesso!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+			toast.show("Cadastro realizado com sucesso!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+		
+		elseif event.status == 422 then
+			
+			toast.show("CPF já cadastrado!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
 		end
 
     else
-        print("Erro") 
+    	toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})
+    	print("erro interno no servidor")
+    	print(event.response)
+        print(event.status)
     end
     return
 
@@ -28,19 +35,27 @@ end
 
 local function eventoLogarMotorista(event)
 	if not event.isError then
+		local motoristaLogado = json.decode(event.response)
+
+		print(motoristaLogado.nome)
+		print(motoristaLogado.cpf)
+		print(motoristaLogado.credito)
+		print(motoristaLogado.senha)
+
+		
 
 		if event.status == 200 then
-			composer.gotoScene("TelaMotoristaInicial")
-			print(event.response)
-        	print(event.status)
-		else
-			toast.show("CPF ou senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
-			print(event.response)
-        	print(event.status)
+			
+			composer.gotoScene("TelaMotoristaInicial", { params = { motorista = motoristaLogado }})
+			
+		elseif event.status == 401 then
+			
+			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
 		end
 		
 	else
-		toast.show("CPF ou senha inválidos", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+		toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 	end
 	return 
 end
@@ -60,20 +75,6 @@ function webService:cadastrarMotorista(motorista)
 	params.body = motoristaJson
 
 	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/salvar", "POST", eventoCadastrarMotorista, params)
-
-end
-
-
-function webService:recuperarMotorista()
-
-
-	local motoristaJson = json.encode(motorista)
-
-	local params = {}
-
-	params.body = motoristaJson
-
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/recuperar", "GET", printEvent,params)
 
 end
 

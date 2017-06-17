@@ -9,6 +9,7 @@ import com.zonaAzulDigital.model.Model;
 import com.google.gson.Gson;
 import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
@@ -45,11 +46,15 @@ public class MotoristaService {
                 Motorista m = gson.fromJson(json, Motorista.class);
                 Motorista motoristaRetorno = md.login(m.getCpf(), m.getSenha());
                 
+                motoristaRetorno.setSenha(null);
+                
                 String jsonRetorno = gson.toJson(motoristaRetorno);
                 r = Response.ok(jsonRetorno).build();
 
-            } catch (Exception e) {
+            } catch (LoginException le) {
                 r = Response.status(401).build();
+            } catch(Exception e){
+                r = Response.serverError().build();
             }
         }
         return r;
@@ -72,9 +77,11 @@ public class MotoristaService {
                 md.cadastrar(m);
                 r = Response.ok().build();
 
-            } catch (Exception de) {
+            } catch (DaoException de) {
                  r = Response.status(422).build();
                 return r;
+            } catch (Exception e){
+                r = Response.serverError().build();
             }
 
         }
