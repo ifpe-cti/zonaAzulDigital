@@ -35,8 +35,8 @@ function scene:create(event)
             	strokeColor={1,1,0.8}, 
             	text="Bem vindo ".. motorista.nome.."!",
                 }
-        }
-    })
+            }
+        })
     
     
     sceneGroup:insert(caixaSaldo)
