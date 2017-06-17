@@ -15,8 +15,8 @@ function scene:create(event)
 
     motorista = event.params.motorista
 
-    local caixaSaldo = display.newRect(  display.contentWidth/2,  display.contentHeight/7 * 2, 170, 70 )
-    caixaSaldo:setFillColor( 0.5,0.5,1 )
+    local caixaSaldo = display.newRoundedRect(  display.contentWidth/2,  display.contentHeight/7 * 2, 170, 70, 12 )
+    caixaSaldo:setFillColor( 0.2, 0.2, 1, 1 )
     local textSaldo = display.newText({text = "Seu saldo é de:", x = display.contentWidth/2,y = display.contentHeight/7  * 1.75, fontSize = 20})
     local saldo = display.newText({text = "R$ ".. motorista.credito, x = display.contentWidth/2,y = display.contentHeight/7  * 2.1, fontSize = 20})
 
@@ -31,12 +31,14 @@ function scene:create(event)
         }, 
     	containers={
         	topContainerProperties={
-            	bgColor={0.5,0.5,1}, 
+            	bgColor={0.2, 0.2, 1, 1}, 
             	strokeColor={1,1,0.8}, 
             	text="Bem vindo ".. motorista.nome.."!",
                 }
             }
         })
+
+    
     
     
     sceneGroup:insert(caixaSaldo)
