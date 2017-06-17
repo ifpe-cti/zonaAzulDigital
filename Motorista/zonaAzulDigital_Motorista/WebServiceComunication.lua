@@ -21,22 +21,27 @@ local function eventoCadastrarMotorista(event)
 			
 			toast.show("CPF já cadastrado!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
+		else
+			print(event.response)
+        	print(event.status)
+        	print("erro interno no servidor")
 		end
 
     else
+
     	toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})
-    	print("erro interno no servidor")
-    	print(event.response)
-        print(event.status)
+
     end
     return
-
 end
 
 local function eventoLogarMotorista(event)
 	if not event.isError then
+
+		local response = json.decode(event.response)
 		
 		if event.status == 200 then
+			
 			local motoristaLogado = json.decode(event.response)
 			composer.gotoScene("TelaMotoristaInicial", { params = { motorista = motoristaLogado }})
 			
@@ -44,6 +49,10 @@ local function eventoLogarMotorista(event)
 			
 			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
+		else
+			print(event.response)
+        	print(event.status)
+        	print("erro interno no servidor")
 		end
 		
 	else
