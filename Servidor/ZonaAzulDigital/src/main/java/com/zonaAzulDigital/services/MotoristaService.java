@@ -46,6 +46,8 @@ public class MotoristaService {
                 Motorista m = gson.fromJson(json, Motorista.class);
                 Motorista motoristaRetorno = md.login(m.getCpf(), m.getSenha());
                 
+                motoristaRetorno.setSenha(null);
+                
                 String jsonRetorno = gson.toJson(motoristaRetorno);
                 r = Response.ok(jsonRetorno).build();
 
