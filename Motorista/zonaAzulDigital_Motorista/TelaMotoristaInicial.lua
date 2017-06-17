@@ -13,8 +13,8 @@ function scene:create(event)
     
 	local newMenu = menu:new({
     	data={
-        	{text="Home", scene="TelaMotoristaInicial"},
-        	{text="States", scene="scene2.lua"},
+        	{text="Inicio", scene="TelaMotoristaInicial"},
+        	{text="Status", scene="scene2.lua"},
         	{text="Sair", scene="scene3.lua"}
         }, 
     	containers={
