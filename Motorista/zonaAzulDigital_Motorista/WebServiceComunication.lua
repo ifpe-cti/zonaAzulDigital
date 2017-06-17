@@ -11,16 +11,23 @@ local function eventoCadastrarMotorista(event)
     
     if not event.isError then
         local response = json.decode(event.response)
-        print(event.response)
-        print(event.status)
+        
 
 		if event.status == 200 then
 			composer.gotoScene("TelaLogin")
-			toast.show("Cadastro realizado com sucesso!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+			toast.show("Cadastro realizado com sucesso!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+		
+		elseif event.status == 422 then
+			
+			toast.show("CPF já cadastrado!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
 		end
 
     else
-        print("Erro") 
+    	toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})
+    	print("erro interno no servidor")
+    	print(event.response)
+        print(event.status)
     end
     return
 
@@ -28,10 +35,18 @@ end
 
 local function eventoLogarMotorista(event)
 	if not event.isError then
+		local motoristaLogado = json.decode(event.response)
+
+		print(motoristaLogado.nome)
+		print(motoristaLogado.cpf)
+		print(motoristaLogado.credito)
+		print(motoristaLogado.senha)
+
 		
+
 		if event.status == 200 then
 			
-			composer.gotoScene("TelaMotoristaInicial")
+			composer.gotoScene("TelaMotoristaInicial", { params = { motorista = motoristaLogado }})
 			
 		elseif event.status == 401 then
 			
@@ -40,7 +55,7 @@ local function eventoLogarMotorista(event)
 		end
 		
 	else
-		toast.show("Se conecte a internet para fazer login!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+		toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 	end
 	return 
 end
