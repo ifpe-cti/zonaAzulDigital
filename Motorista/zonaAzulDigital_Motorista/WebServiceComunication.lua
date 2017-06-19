@@ -7,6 +7,11 @@ local composer = require("composer")
 local toast = require("plugin.toast")
 
 
+
+
+
+-- Rest de Cadastro de Motorista
+--================================================================================================================================================================
 local function eventoCadastrarMotorista(event)
     
     if not event.isError then
@@ -35,6 +40,31 @@ local function eventoCadastrarMotorista(event)
     return
 end
 
+
+
+function webService:cadastrarMotorista(motorista)
+
+	local headers = {}
+
+	headers["Content-Type"] = "application/json"
+
+	local motoristaJson = json.encode(motorista)
+
+	local params = {}
+
+	params.headers = headers
+
+	params.body = motoristaJson
+
+	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/salvar", "POST", eventoCadastrarMotorista, params)
+
+end
+--================================================================================================================================================================
+
+
+
+-- Rest de Logar o Motorista
+--================================================================================================================================================================
 local function eventoLogarMotorista(event)
 	if not event.isError then
 
@@ -61,24 +91,6 @@ local function eventoLogarMotorista(event)
 	return 
 end
 
-function webService:cadastrarMotorista(motorista)
-
-	local headers = {}
-
-	headers["Content-Type"] = "application/json"
-
-	local motoristaJson = json.encode(motorista)
-
-	local params = {}
-
-	params.headers = headers
-
-	params.body = motoristaJson
-
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/salvar", "POST", eventoCadastrarMotorista, params)
-
-end
-
 function webService:logarMotorista(cpf,senha)
 
 	local login = {}
@@ -103,5 +115,6 @@ function webService:logarMotorista(cpf,senha)
 	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
 
 end
+--================================================================================================================================================================
 
 return webService
