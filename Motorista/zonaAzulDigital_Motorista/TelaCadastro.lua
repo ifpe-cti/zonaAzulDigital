@@ -30,15 +30,7 @@ function scene:create()
     local linha3 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 4.5, display.contentWidth/6 * 5, display.contentHeight/7 * 4.5)
     linha3:setStrokeColor(0.2, 0.2, 1, 1)
     linha3.strokeWidth = 2.65
-    --local textNome = display.newText({text = "Nome:", x = display.contentWidth/2, y = display.contentHeight/7  * 1.75, fontSize = 20})
-    --textNome:setFillColor(0,0,0)
-
-    --local textCpf = display.newText({text = "CPF:", x = display.contentWidth/2, y = (display.contentHeight/7) * 2.75, fontSize = 20})
-    --textCpf:setFillColor(0,0,0)
-
-    --local textSenha = display.newText({text = "Senha:", x = display.contentWidth/2, y = (display.contentHeight/7) * 3.75, fontSize = 20})
-    --textSenha:setFillColor(0,0,0)
-
+    
     local voltar = widget.newButton({label = "voltar",labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/4, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
     
     local cadastrar = widget.newButton({label = "cadastrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} },x = display.contentWidth/4 * 3, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13,shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
@@ -46,9 +38,7 @@ function scene:create()
     voltar:addEventListener("touch", voltarTelaLogin)
     cadastrar:addEventListener("touch", cadastrarMotorista)
 
-    --sceneGroup:insert(textNome)
-    --sceneGroup:insert(textCpf)
-    --sceneGroup:insert(textSenha)
+    
     sceneGroup:insert(linha1)
     sceneGroup:insert(linha2)
     sceneGroup:insert(linha3)
