@@ -26,12 +26,7 @@ function scene:create()
     local linha2 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 3.5, display.contentWidth/6 * 5, display.contentHeight/7 * 3.5)
     linha2:setStrokeColor(0.2, 0.2, 1, 1)
     linha2.strokeWidth = 2.65
-   
-   -- local textCpf = display.newText({text = "CPF:", x = display.contentWidth/2, y = display.contentHeight/4, fontSize = 25})
-    --textCpf:setFillColor(0,0,0)
     
-    --local textSenha = display.newText({text = "Senha:", x = display.contentWidth/2, y = (display.contentHeight/4.7) * 2, fontSize = 25})
-    --textSenha:setFillColor(0,0,0)
 
     local entrar = widget.newButton({label = "entrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
 
@@ -40,8 +35,6 @@ function scene:create()
     entrar:addEventListener("touch", fazerLogin)
 	cadastro:addEventListener("touch", fazerCadastro)
 
-    --sceneGroup:insert(textCpf)
-    --sceneGroup:insert(textSenha)
     sceneGroup:insert(linha1)
     sceneGroup:insert(linha2)
     sceneGroup:insert(entrar)
