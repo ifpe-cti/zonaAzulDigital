@@ -10,6 +10,8 @@ local crypto = require("crypto")
 
 local webService = require("WebServiceComunication")
 
+local toast = require("plugin.toast")
+
 local nome
 local cpf
 local senha
@@ -83,13 +85,41 @@ function cadastrarMotorista(event)
 
     if event.phase == "began" then
         
-        local senhaCrypto = crypto.digest(crypto.md5, senha.text)
+        local validacaoCampos = validaCampos(nome.text,cpf.text,senha.text)
+
+        if validacaoCampos == false then
+
+            local senhaCrypto = crypto.digest(crypto.md5, senha.text)
         
-        local motoristaCadastrado = motorista(nome.text, cpf.text, senhaCrypto)
+            local motoristaCadastrado = motorista(nome.text, cpf.text, senhaCrypto)
         
-        webService:cadastrarMotorista(motoristaCadastrado)
+            webService:cadastrarMotorista(motoristaCadastrado)
+        end
       
     end
+end
+
+
+function validaCampos(nome,cpf,senha)
+
+    if nome == "" then
+        
+        toast.show("Nome inválido", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}}) 
+        return true 
+
+    elseif cpf == "" then
+        
+        toast.show("CPF inválido", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+        return true
+
+    elseif senha == "" then
+        
+        toast.show("Senha inválida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+        return true
+
+    end
+
+    return false
 end
 
 scene:addEventListener("create", scene)
