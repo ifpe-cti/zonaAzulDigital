@@ -268,7 +268,7 @@ function menu:setData()
     local rowHeight = 30
     local rowWidth = 200
     
-    
+   
 
     for i = 1, #self.data do
         
@@ -278,6 +278,14 @@ function menu:setData()
 
         totalHeight = totalHeight + rowHeight
 
+    if self.data[i].params ~= nil then
+        for k,v in ipairs(self.data[i].params) do
+            print("valor")
+            print(k)
+        end
+
+    end
+
         self.dataTable:insertRow{
             rowHeight = rowHeight,
             rowWidth= rowWidth,
@@ -285,7 +293,8 @@ function menu:setData()
             lineColor = { 0.90, 0.90, 0.90 },
             params = { 
                 text = self.data[i].text,
-                scene = self.data[i].scene
+                scene = self.data[i].scene,
+                params = self.data[i].params
             }
         }
     end
@@ -327,6 +336,8 @@ function menu:new(options)
     options.containers.topContainerProperties.strokeColor = options.containers.topContainerProperties.strokeColor or {}
     options.containers.topContainerProperties.text = options.containers.topContainerProperties.text or ""
 
+    --print(options.data[3].params.nome)
+
     self:createContainers(options.containers)
     self:createDataTable(options.data)
     
@@ -348,8 +359,10 @@ function onRowTouch( event )
     
     
 
+    local options = { params = {params = event.row.params.params }}
+
     if event.row.scene ~= nil then
-        composer.gotoScene(event.row.scene)
+        composer.gotoScene(event.row.scene,options)
         menu:hide()
     else -- this touch was not made on a list item
 
