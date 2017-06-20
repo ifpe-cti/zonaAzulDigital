@@ -8,11 +8,14 @@ package com.zonaAzulDigital.DAO;
 
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -40,12 +43,26 @@ public class DaoCompraCartaoZADB implements DAOCompraCartaoZA{
 
     @Override
     public CompraCartaoZA recuperarPor(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        return em.find(CompraCartaoZA.class, id);
     }
 
     @Override
-    public List<CompraCartaoZA> recuperarPor(Motorista motorista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<CompraCartaoZA> recuperarPor(Motorista motorista) throws DaoException{
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        String hql = "FROM CompraCartaoZA c WHERE c.motorista = :p1 ";
+        Query query = em.createQuery(hql);
+
+        query = query.setParameter("p1", motorista);
+        List<CompraCartaoZA> lista = new ArrayList<>();
+        try {
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw new DaoException(MotoristaException.NAOENCONTRADO);
+        } finally {
+            em.close();
+        }
+        return lista;
     }
     
 }

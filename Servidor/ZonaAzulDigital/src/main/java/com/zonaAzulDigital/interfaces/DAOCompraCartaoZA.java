@@ -17,6 +17,6 @@ import java.util.List;
 public interface DAOCompraCartaoZA {
     public CompraCartaoZA comprar(CompraCartaoZA compraCartaoZA)throws DaoException;
     public CompraCartaoZA recuperarPor(int id);
-    public List<CompraCartaoZA> recuperarPor(Motorista motorista);
+    public List<CompraCartaoZA> recuperarPor(Motorista motorista)throws DaoException;
     
 }
