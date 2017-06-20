@@ -8,6 +8,6 @@
 
 local composer = require("composer")
 
-composer.gotoScene("TelaLogin")
+composer.gotoScene("TelaGuarda")
 
 display.setDefault("background", 0.3, 0.6, 1)
