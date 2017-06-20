@@ -101,6 +101,12 @@ public class NewServlet extends HttpServlet {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        try {
+            m1 = modelMotorista.recuperar(m1);
+        } catch (CpfException | DaoException ex) {
+            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
