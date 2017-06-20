@@ -11,6 +11,11 @@ local widget = require("widget")
 local menuMotorista
 
 
+function algo(event)
+    print("maoe")
+    print(event)
+end
+
 function scene:create(event)
 
 	local sceneGroup = self.view
@@ -28,7 +33,7 @@ function scene:create(event)
         	{text="Status", scene="scene2.lua"},
             {text="Comprar cartão", scene="TelaCompraMotorista"},
             {text="Relátorio de Compras", scene="scene2.lua"},
-        	{text="Sair", scene="telaLogin"}
+        	{text="Sair",scene = "telaLogin", callback=algo}
         }, 
     	containers={
         	topContainerProperties={
@@ -52,13 +57,6 @@ function scene:create(event)
 
 end
 
-
-
-function compraCartao(event)
-
-    composer.gotoScene("TelaCompraMotorista",{ params = { motorista = motorista }})
-
-end
 
 
 scene:addEventListener("create", scene)
