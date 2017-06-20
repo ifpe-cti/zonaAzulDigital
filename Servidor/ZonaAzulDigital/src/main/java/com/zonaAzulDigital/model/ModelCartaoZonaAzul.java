@@ -9,11 +9,14 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
+import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
@@ -29,7 +32,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException {
         DAOMotorista daoMotorista = new DaoMotoristaBD();
         try {
-            daoMotorista.recuperarPorId(motorista.getId());
+            motorista = daoMotorista.recuperarPorId(motorista.getId());
         } catch (NullPointerException ex) {
             throw new MotoristaException(MotoristaException.NULL);
         }
@@ -39,7 +42,10 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         if (motorista.debitar(preco)) {
             novoCartaoZA = new CartaoZonaAzul(placa);
             novoCartaoZA.setValor(preco);
-            novoCartaoZA = (CartaoZonaAzul) daoCartaoZonaAzul.comprar(novoCartaoZA, motorista);
+            CompraCartaoZA compraCartaoZA = new CompraCartaoZA(motorista, novoCartaoZA);
+            DAOCompraCartaoZA daoCompraCartaoZA = new DaoCompraCartaoZADB();
+            daoCompraCartaoZA.comprar(compraCartaoZA);
+            
         }
         return novoCartaoZA;
     }
