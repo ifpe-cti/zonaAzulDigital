@@ -72,6 +72,62 @@ local function eventoLogarMotorista(event)
 		
 		if event.status == 200 then
 			
+			local motoristaJson = json.decode(event.response)
+			motoristaLogado = motoristaJson
+			composer.gotoScene("TelaMotoristaInicial")
+			
+		elseif event.status == 401 then
+			
+			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
+		else
+			print(event.response)
+        	print(event.status)
+        	print("erro interno no servidor")
+		end
+		
+	else
+		toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+	end
+	return 
+end
+
+function webService:logarMotorista(cpf,senha)
+
+	local login = {}
+
+	login.cpf = cpf
+	login.senha = senha
+
+	local headers = {}
+
+	local headers = {}
+
+	headers["Content-Type"] = "application/json"
+
+	local motoristaLogin = json.encode(login)
+
+	local params = {}
+	
+	params.headers = headers
+
+	params.body = motoristaLogin
+
+	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
+
+end
+--================================================================================================================================================================
+
+
+--Rest de compra de cartão
+--================================================================================================================================================================
+local function eventoCompraCartao(event)
+	if not event.isError then
+
+		local response = json.decode(event.response)
+		
+		if event.status == 200 then
+			
 			local motoristaLogado = json.decode(event.response)
 			composer.gotoScene("TelaMotoristaInicial", { params = { motorista = motoristaLogado }})
 			
@@ -91,7 +147,7 @@ local function eventoLogarMotorista(event)
 	return 
 end
 
-function webService:logarMotorista(cpf,senha)
+function webService:comprarCartao(placa,motorista)
 
 	local login = {}
 
