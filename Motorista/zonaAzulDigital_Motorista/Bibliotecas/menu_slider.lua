@@ -372,6 +372,12 @@ function onRowTouch( event )
     end
 end
 
+function menu:destroy()
+
+    self.menuTopGroup:removeSelf()
+    self.menuLeftGroup:removeSelf()
+
+end
 
 
 
