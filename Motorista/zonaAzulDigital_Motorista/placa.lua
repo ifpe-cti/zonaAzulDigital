@@ -13,4 +13,4 @@ function placa:init(letras, numeros)
 end
 
 
-return motorista
+return placa
