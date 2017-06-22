@@ -44,7 +44,8 @@ public class Motorista implements Serializable{
         
     }
     
-    public Motorista(String nome, String cpf,BigDecimal credito,String senha){
+    public Motorista(int id,String nome, String cpf,BigDecimal credito,String senha){
+        this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.credito = credito;
