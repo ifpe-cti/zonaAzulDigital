@@ -46,6 +46,8 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
             DAOCompraCartaoZA daoCompraCartaoZA = new DaoCompraCartaoZADB();
             daoCompraCartaoZA.comprar(compraCartaoZA);
             
+        }else{
+            throw new MotoristaException(MotoristaException.CREDITOINSUFICIENTE);
         }
         return novoCartaoZA;
     }
