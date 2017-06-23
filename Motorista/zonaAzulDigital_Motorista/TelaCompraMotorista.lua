@@ -4,16 +4,25 @@ local scene = composer.newScene()
 
 local widget = require("widget")
 
+local placaObject = require("placa")
+
+local webServiceComunication = require("WebServiceComunication")
+
+local senha
+local letras
+local numeros
 
 function scene:create(event )
 	
 	local sceneGroup = self.view
-	local comprar = widget.newButton({label = "Comprar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
+	local comprar = widget.newButton({label = "Comprar",onRelease = compraCartao, labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
 	
-    local linhaPlaca = display.newLine( display.contentWidth/10*4.9, display.contentHeight/7 *2.9, display.contentWidth/10 * 4.9 + 10, display.contentHeight/7 *2.9)
+    local hifen = display.newLine( display.contentWidth/10*4.9, display.contentHeight/7 *2.9, display.contentWidth/10 * 4.9 + 10, display.contentHeight/7 *2.9)
+    local txtPlaca  = display.newText({text = "Placa:", x = display.contentWidth/2, y = display.contentHeight/7 * 2.3, fontSize = 25})
 
 	sceneGroup:insert(comprar)
-    sceneGroup:insert(linhaPlaca)
+    sceneGroup:insert(hifen)
+    sceneGroup:insert(txtPlaca)
 end
 
 
@@ -47,6 +56,37 @@ function scene:hide(event)
     end
 end
 
+
+function compraCartao(event)
+ 
+    local b = true
+
+    if letras.text == "" or numeros.text == "" then
+        b = false
+        toast.show("Placa vazia!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+    
+    end
+    
+    if senha.text == "" then
+        b= false
+        toast.show("Senha é obrigátoria", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
+    end
+
+    if b == true then
+        
+        local senhaCrypto = crypto.digest(crypto.md5, senha.text)
+        motoristaLogado.senha = senhaCrypto
+        
+
+        local placaCompra = placaObject(letras.text,numeros.text)
+
+        webServiceComunication:compraCartao(motoristaLogado,placaCompra)
+        motoristaLogado.senha = nil
+    end
+
+
+end
 
 
 scene:addEventListener("create", scene)
