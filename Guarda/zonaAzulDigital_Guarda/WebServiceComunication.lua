@@ -14,9 +14,12 @@ local function eventoConsultarPlaca(event)
     return
 end
 
-function webService:consultarPlaca(placa)
+function webService:consultarPlaca(letras, numeros)
     
-   
+    local placa = {}
+
+    placa.letras = letras
+    placa.numeros = numeros
 
 	local placaJson = json.encode(placa)
 
