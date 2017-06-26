@@ -168,7 +168,6 @@ function webService:compraCartao(motorista,placa)
 	params.body =  json.encode(dados)
 
 	
-	
 	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/comprar", "POST", eventoCompraCartao, params)
 
 end
