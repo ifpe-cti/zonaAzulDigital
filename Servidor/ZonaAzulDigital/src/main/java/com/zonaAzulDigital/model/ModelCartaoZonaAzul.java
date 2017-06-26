@@ -8,10 +8,6 @@ package com.zonaAzulDigital.model;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
-import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
-import com.zonaAzulDigital.DAO.DaoMotoristaBD;
-import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
@@ -27,44 +23,53 @@ import java.math.BigDecimal;
  * @author JonasJr
  */
 public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
-
+    private final DAOMotorista daoMotorista;
+    private final DAOCartaoZonaAzul daoCartaoZonaAzul;
+    private final DAOCompraCartaoZA daoCompraCartaoZA;
+    private final DAOPlaca daoPlaca;
+    
+    public ModelCartaoZonaAzul(DAOMotorista daoMotorista, DAOCartaoZonaAzul daoCartaoZonaAzul, 
+            DAOCompraCartaoZA daoCompraCartaoZA, DAOPlaca daoPlaca) {
+        this.daoMotorista = daoMotorista;
+        this.daoCartaoZonaAzul = daoCartaoZonaAzul;
+        this.daoCompraCartaoZA = daoCompraCartaoZA;
+        this.daoPlaca = daoPlaca;
+    }
+    
     @Override
     public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException {
-        DAOMotorista daoMotorista = new DaoMotoristaBD();
         try {
-            motorista = daoMotorista.recuperarPorId(motorista.getId());
+            motorista = this.daoMotorista.recuperarPorId(motorista.getId());
         } catch (NullPointerException ex) {
             throw new MotoristaException(MotoristaException.NULL);
         }
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartaoZonaAzulBD();
         BigDecimal preco = daoCartaoZonaAzul.preco("Garanhuns");
         CartaoZonaAzul novoCartaoZA = null;
         if (motorista.debitar(preco)) {
             novoCartaoZA = new CartaoZonaAzul(placa);
             novoCartaoZA.setValor(preco);
             CompraCartaoZA compraCartaoZA = new CompraCartaoZA(motorista, novoCartaoZA);
-            DAOCompraCartaoZA daoCompraCartaoZA = new DaoCompraCartaoZADB();
             daoCompraCartaoZA.comprar(compraCartaoZA);
             
+        }else{
+            throw new MotoristaException(MotoristaException.CREDITOINSUFICIENTE);
         }
         return novoCartaoZA;
     }
 
     @Override
     public CartaoZonaAzul recuperar(CartaoZonaAzul cartaoZA) throws DaoException {
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartaoZonaAzulBD();
         cartaoZA = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarPorId(cartaoZA.getNumero());
         return cartaoZA;
     }
 
     @Override
     public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException {
-        DAOPlaca daoPlaca = new DaoPlacaBD();
+        
 
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
         CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul();
-        DAOCartaoZonaAzul daoCartaoZonaAzul = new DaoCartaoZonaAzulBD();
         cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
         return cartaoZonaAzul;
     }

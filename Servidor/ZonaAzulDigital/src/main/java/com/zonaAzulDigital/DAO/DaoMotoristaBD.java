@@ -66,7 +66,7 @@ public class DaoMotoristaBD implements DAOMotorista {
 
         query = query.setParameter("p1", cpf);
         Motorista motorista = new Motorista();
-        
+
         try {
             motorista = (Motorista) query.getSingleResult();
         } catch (Exception e) {
@@ -76,9 +76,9 @@ public class DaoMotoristaBD implements DAOMotorista {
         }
         return motorista;
     }
-    
+
     @Override
-    public Motorista login(String cpf, String senha) throws LoginException{
+    public Motorista login(String cpf, String senha) throws LoginException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "FROM Motorista m WHERE m.cpf = :p1 and m.senha = :p2 ";
         Query query = em.createQuery(hql);
@@ -86,7 +86,7 @@ public class DaoMotoristaBD implements DAOMotorista {
         query = query.setParameter("p1", cpf);
         query = query.setParameter("p2", senha);
         Motorista motorista = new Motorista();
-        
+
         try {
             motorista = (Motorista) query.getSingleResult();
         } catch (Exception e) {
@@ -97,11 +97,14 @@ public class DaoMotoristaBD implements DAOMotorista {
         return motorista;
     }
 
-    
     @Override
     public List<Motorista> listarTudo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        String hql = "FROM Motorista";
+        Query query = em.createQuery(hql);
 
+        return (List<Motorista>) query.getResultList();
+
+    }
 
 }

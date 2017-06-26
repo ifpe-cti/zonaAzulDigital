@@ -6,6 +6,11 @@
 package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
+import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
+
 import com.google.gson.GsonBuilder;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
@@ -39,14 +44,16 @@ public class CartaoZonaAzulService {
 
         if (json != null && !json.isEmpty()) {
 
+
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Placa.class, new PlacaDeserializer());
             gsonBuilder.registerTypeAdapter(Motorista.class, new MotoristaDeserializer());
 
             Gson gson = gsonBuilder.create();
 
-            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul();
-            ModelMotoristaInterface mc =  new ModelMotorista();
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
+                    new DaoCompraCartaoZADB(), new DaoPlacaBD());
+            ModelMotoristaInterface mc =  new ModelMotorista( new DaoMotoristaBD());
               
             Motorista m = gson.fromJson(json, Motorista.class);
             Placa p = gson.fromJson(json, Placa.class);

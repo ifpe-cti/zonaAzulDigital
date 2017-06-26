@@ -18,7 +18,8 @@ import javax.persistence.Id;
  * @author Samuel
  */
 @Entity
-public class Motorista implements Serializable{
+public class Motorista implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -34,17 +35,15 @@ public class Motorista implements Serializable{
         this.credito = new BigDecimal(0);
     }
 
-
-
     public Motorista(String nome, String cpf, String senha) {
         this();
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
-        
+
     }
-    
-    public Motorista(int id,String nome, String cpf,BigDecimal credito,String senha){
+
+    public Motorista(int id, String nome, String cpf, BigDecimal credito, String senha) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -60,7 +59,6 @@ public class Motorista implements Serializable{
         this.id = id;
     }
 
-    
     public String getNome() {
         return this.nome;
     }
@@ -92,13 +90,26 @@ public class Motorista implements Serializable{
     public void setCredito(BigDecimal credito) {
         this.credito = credito;
     }
-    
-    public boolean debitar(BigDecimal valor){
-        if(credito.compareTo(valor)>-1){
+
+    public boolean debitar(BigDecimal valor) {
+        if (credito.compareTo(valor) > -1) {
             this.credito = this.credito.subtract(valor);
             return true;
+        } else {
+
+            return false;
         }
-        return false;
+    }
+
+    public boolean creditar(BigDecimal valor) {
+        BigDecimal creditoAnt = this.credito;
+        this.credito.add(valor);
+        if (this.credito.compareTo(creditoAnt) == 1) {
+            return true;
+        } else {
+            this.credito = creditoAnt;
+            return false;
+        }
     }
 
 }

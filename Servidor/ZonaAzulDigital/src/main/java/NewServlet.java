@@ -9,6 +9,7 @@ import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.Excecao.CpfException;
@@ -73,7 +74,7 @@ public class NewServlet extends HttpServlet {
         motorista.setNome("Jonas Ferreira Leal Junior");
         motorista.setSenha("1234");
         motorista.setCredito(new BigDecimal(1000));
-        ModelMotoristaInterface modelMotorista = new ModelMotorista();
+        ModelMotoristaInterface modelMotorista = new ModelMotorista(new DaoMotoristaBD());
         Motorista m1 = new Motorista();
         String credAnt = "";
         try {
@@ -93,7 +94,8 @@ public class NewServlet extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ModelCartaoZonaAzulInterface modelCartaoZonaAzul = new ModelCartaoZonaAzul();
+        ModelCartaoZonaAzulInterface modelCartaoZonaAzul = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
+                new DaoCompraCartaoZADB(), new DaoPlacaBD());
         CartaoZonaAzul novoCartao = new CartaoZonaAzul();
         try {
             novoCartao = modelCartaoZonaAzul.comprar(m1, placa);
