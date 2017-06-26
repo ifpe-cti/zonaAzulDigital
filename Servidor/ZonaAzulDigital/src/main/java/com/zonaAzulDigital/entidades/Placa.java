@@ -16,12 +16,22 @@ import javax.persistence.Id;
  * @author Samuel
  */
 @Entity
-public class Placa implements Serializable{
+public class Placa implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String letras;
     private String numeros;
+
+    public Placa() {
+
+    }
+
+    public Placa(String letras, String numeros) {
+        this.letras = letras;
+        this.numeros = numeros;
+    }
 
     public int getId() {
         return id;
@@ -51,7 +61,5 @@ public class Placa implements Serializable{
     public String toString() {
         return letras + "-" + numeros;
     }
-    
-    
 
 }

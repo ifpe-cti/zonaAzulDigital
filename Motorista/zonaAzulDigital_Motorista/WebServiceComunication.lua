@@ -101,8 +101,6 @@ function webService:logarMotorista(cpf,senha)
 
 	local headers = {}
 
-	local headers = {}
-
 	headers["Content-Type"] = "application/json"
 
 	local motoristaLogin = json.encode(login)
@@ -128,12 +126,11 @@ local function eventoCompraCartao(event)
 		
 		if event.status == 200 then
 			
-			local motoristaLogado = json.decode(event.response)
-			composer.gotoScene("TelaMotoristaInicial", { params = { motorista = motoristaLogado }})
-			
+			print("retornouOk")
+
 		elseif event.status == 401 then
-			
-			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
+			toast.show("Senha invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
 		else
 			print(event.response)
@@ -147,28 +144,32 @@ local function eventoCompraCartao(event)
 	return 
 end
 
-function webService:comprarCartao(placa,motorista)
-
-	local login = {}
-
-	login.cpf = cpf
-	login.senha = senha
-
-	local headers = {}
+function webService:compraCartao(motorista,placa)
 
 	local headers = {}
 
 	headers["Content-Type"] = "application/json"
 
-	local motoristaLogin = json.encode(login)
-
+	
 	local params = {}
 	
 	params.headers = headers
 
-	params.body = motoristaLogin
+	local motoristaPlaca = motorista
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
+	motoristaPlaca.numeros = placa.numeros
+	motoristaPlaca.letras = placa.letras
+
+	local dados = motoristaPlaca
+
+
+
+
+	params.body =  json.encode(dados)
+
+	
+	print(params.body)
+	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/comprar", "POST", eventoCompraCartao, params)
 
 end
 --================================================================================================================================================================

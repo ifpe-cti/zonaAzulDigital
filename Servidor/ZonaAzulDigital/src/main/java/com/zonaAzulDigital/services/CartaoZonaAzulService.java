@@ -6,16 +6,20 @@
 package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
-import com.zonaAzulDigital.entidades.CartaoZonaAzul;
+import com.google.gson.GsonBuilder;
+import com.zonaAzulDigital.Excecao.LoginException;
+import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
+import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
+import com.zonaAzulDigital.json.MotoristaDeserializer;
+import com.zonaAzulDigital.json.PlacaDeserializer;
 import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import com.zonaAzulDigital.model.ModelMotorista;
+import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -26,41 +30,42 @@ import javax.ws.rs.core.Response;
 @Path("/cartaozonaazul")
 public class CartaoZonaAzulService {
 
-    @GET
-    @Path("/recuperar")
-    @Produces(MediaType.APPLICATION_JSON)
-    public CartaoZonaAzul getCartao() {
-
-        CartaoZonaAzul c = new CartaoZonaAzul();
-
-        return c;
-    }
-
     @POST
-    @Path("/salvar")
+    @Path("/comprar")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response salvarCartao(String json) {
+    public Response comprarCartao(String json) {
 
         Response r = Response.serverError().build();
 
         if (json != null && !json.isEmpty()) {
 
-            Gson gson = new Gson();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(Placa.class, new PlacaDeserializer());
+            gsonBuilder.registerTypeAdapter(Motorista.class, new MotoristaDeserializer());
 
-            ModelCartaoZonaAzul mc = new ModelCartaoZonaAzul();
+            Gson gson = gsonBuilder.create();
 
-            CartaoZonaAzul c = gson.fromJson(json, CartaoZonaAzul.class);
-
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul();
+            ModelMotoristaInterface mc =  new ModelMotorista();
+              
+            Motorista m = gson.fromJson(json, Motorista.class);
+            Placa p = gson.fromJson(json, Placa.class);
+            JOptionPane.showMessageDialog(null, m.getCredito());
             try {
-
-                mc.comprar(null,null);
+                
+                mc.login(m.getCpf(), m.getSenha());
+                
+                mcza.comprar(m, p);
                 r = Response.ok().build();
 
-            } catch (Exception e) {
-
+            }
+            catch(LoginException le){
+                 r = Response.status(401).build();
+            }
+            catch (Exception e) {
+                r = Response.serverError().build();
             }
         }
         return r;
     }
-
 }
