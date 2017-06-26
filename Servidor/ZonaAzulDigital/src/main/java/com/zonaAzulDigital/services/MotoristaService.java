@@ -5,20 +5,16 @@
  */
 package com.zonaAzulDigital.services;
 
-import com.zonaAzulDigital.model.Model;
 import com.google.gson.Gson;
-import com.zonaAzulDigital.Excecao.CpfException;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
-import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,27 +29,27 @@ public class MotoristaService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response fazerLogin(String json) {
-        
+
         Response r = Response.serverError().build();
 
         if (json != null && !json.isEmpty()) {
             Gson gson = new Gson();
 
-            ModelMotoristaInterface md = new ModelMotorista();
+            ModelMotoristaInterface md = new ModelMotorista(new DaoMotoristaBD());
 
             try {
 
                 Motorista m = gson.fromJson(json, Motorista.class);
                 Motorista motoristaRetorno = md.login(m.getCpf(), m.getSenha());
-                
+
                 motoristaRetorno.setSenha(null);
-                
+
                 String jsonRetorno = gson.toJson(motoristaRetorno);
                 r = Response.ok(jsonRetorno).build();
 
             } catch (LoginException le) {
                 r = Response.status(401).build();
-            } catch(Exception e){
+            } catch (Exception e) {
                 r = Response.serverError().build();
             }
         }
@@ -70,7 +66,7 @@ public class MotoristaService {
         if (json != null && !json.isEmpty()) {
             Gson gson = new Gson();
 
-            ModelMotoristaInterface md = new ModelMotorista();
+            ModelMotoristaInterface md = new ModelMotorista(new DaoMotoristaBD());
 
             try {
                 Motorista m = gson.fromJson(json, Motorista.class);
@@ -78,9 +74,9 @@ public class MotoristaService {
                 r = Response.ok().build();
 
             } catch (DaoException de) {
-                 r = Response.status(422).build();
+                r = Response.status(422).build();
                 return r;
-            } catch (Exception e){
+            } catch (Exception e) {
                 r = Response.serverError().build();
             }
 

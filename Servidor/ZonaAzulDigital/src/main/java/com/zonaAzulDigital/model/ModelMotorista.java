@@ -13,17 +13,23 @@ import com.zonaAzulDigital.validacao.CPF;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
+import java.util.List;
 
 /**
  *
  * @author JonasJr
  */
 public class ModelMotorista implements ModelMotoristaInterface {
+    private DAOMotorista daoMotorista;
 
+    public ModelMotorista(DAOMotorista daoMotorista) {
+        this.daoMotorista = daoMotorista;
+    }
+    
     @Override
     public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException {
         validar(objeto);
-        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        
         objeto = (Motorista) daoMotorista.cadastrar(objeto);
         return objeto;
     }
@@ -48,8 +54,13 @@ public class ModelMotorista implements ModelMotoristaInterface {
 
     @Override
     public Motorista login(String cpf, String senha) throws LoginException {
-        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        
         return daoMotorista.login(cpf, senha);
+    }
+
+    @Override
+    public List<Motorista> listarTodos() {
+        return daoMotorista.listarTudo();
     }
 
 }

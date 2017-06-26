@@ -9,6 +9,7 @@ import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
+import java.util.List;
 
 /**
  *
@@ -19,4 +20,5 @@ public interface ModelMotoristaInterface {
     Motorista atualizar(Motorista motorista) throws DaoException, CpfException;
     Motorista recuperar(Motorista motorista) throws DaoException, CpfException;
     Motorista login(String cpf, String senha) throws LoginException;
+    List<Motorista> listarTodos();
 }

@@ -16,26 +16,32 @@ import com.zonaAzulDigital.interfaces.ModelPlacaInterface;
  * @author JonasJr
  */
 public class ModelPlaca implements ModelPlacaInterface {
+    private DAOPlaca daoPlaca;
 
+    public ModelPlaca(DAOPlaca daoPlaca) {
+        this.daoPlaca = daoPlaca;
+    }
+    
+    
     @Override
     public Placa cadastrar(Placa objeto) throws DaoException {
-        DAOPlaca daoPlaca = new DaoPlacaBD();
-        objeto = (Placa) daoPlaca.cadastrar(objeto);
+        
+        objeto = (Placa) this.daoPlaca.cadastrar(objeto);
         return objeto;
     }
 
     @Override
     public Placa recuperar(Placa placa) throws DaoException {
-        DAOPlaca daoPlaca = new DaoPlacaBD();
-        placa = (Placa) daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
+        
+        placa = (Placa) this.daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
         return placa;
     }
 
     @Override
     public Placa recuperarId(int id) throws DaoException{
-        DAOPlaca dAOPlaca = new DaoPlacaBD();
-        return dAOPlaca.recuperarPorId(id);
+       
+        return this.daoPlaca.recuperarPorId(id);
     }
 
 }

@@ -6,6 +6,10 @@
 package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
+import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
@@ -47,7 +51,8 @@ public class CartaoZonaAzulService {
 
             Gson gson = new Gson();
 
-            ModelCartaoZonaAzul mc = new ModelCartaoZonaAzul();
+            ModelCartaoZonaAzul mc = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
+                    new DaoCompraCartaoZADB(), new DaoPlacaBD());
 
             CartaoZonaAzul c = gson.fromJson(json, CartaoZonaAzul.class);
 
