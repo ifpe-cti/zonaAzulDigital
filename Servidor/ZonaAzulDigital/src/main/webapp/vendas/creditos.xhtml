@@ -8,41 +8,41 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="/WEB-INF/template/templateLogado.xhtml">
+      xmlns:p="http://primefaces.org/ui">
+      <ui:composition template="/WEB-INF/template/templateLogado.xhtml">
         <ui:define name="titulo">Vendas de credito</ui:define>
         <ui:define name="corpo">
             <div id="titulo"><h3>Venda de creditos</h3></div>
             <div id="conteudo">
                 <h:form id="formCredito">
+                    <p:messages/>
                     <p:wizard>
                         <p:tab id="motorista" title="Motorista">
                             <p:panel header="Selecione o motorista">
-                                <p:messages/>
+                                
                                 <p:dataTable id="listaMotoristas" var="motorista" value="#{venderCredito.listarTodos()}"
                                              selectionMode="single" selection="#{venderCredito.motorista}" rowKey="#{motorista.cpf}">
-<!--                                    <f:facet name="header">
-                                        Motoristas
-                                    </f:facet>-->
+                                    <!--                                    <f:facet name="header">
+                                                                            Motoristas
+                                                                        </f:facet>-->
                                     <p:column headerText="CPF">
                                         <h:outputText value="#{motorista.cpf}"/>
                                     </p:column>
-                                    
+
                                     <p:column headerText="Nome">
                                         <h:outputText value="#{motorista.nome}"/>
                                     </p:column>
                                 </p:dataTable>
                             </p:panel>
                         </p:tab>
-                         <p:tab id="valorCredito" title="Credito">
+                        <p:tab id="valorCredito" title="Credito">
                             <p:panel header="Valor a ser adicionado">
-                                <p:messages/>
+                                
                             </p:panel>
                         </p:tab>
-                         <p:tab id="confirmacao" title="Confirmação">
+                        <p:tab id="confirmacao" title="Confirmação">
                             <p:panel header="Confirme os dados">
-                                <p:messages/>
+                                
                             </p:panel>
                         </p:tab>
                     </p:wizard>
