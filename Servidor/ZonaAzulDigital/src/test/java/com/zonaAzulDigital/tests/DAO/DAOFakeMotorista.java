@@ -21,7 +21,8 @@ public class DAOFakeMotorista implements DAOMotorista {
     
     @Override
     public Motorista cadastrar(Motorista motorista) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.motoristas.add(motorista);
+        return motorista; 
     }
 
     @Override
