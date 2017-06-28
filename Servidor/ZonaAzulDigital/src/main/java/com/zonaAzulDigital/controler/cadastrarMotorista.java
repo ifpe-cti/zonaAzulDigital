@@ -8,6 +8,7 @@ package com.zonaAzulDigital.controler;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
@@ -41,7 +42,7 @@ public class cadastrarMotorista {
             motorista = this.modelMotorista.cadastrar(motorista);
             context.addMessage(null, new FacesMessage("Sucesso", motorista.getNome() + " foi cadastrado com sucesso!"));
 
-        } catch (DaoException | CpfException ex) {
+        } catch (DaoException | CpfException | MotoristaException ex) {
             Logger.getLogger(cadastrarMotorista.class.getName()).log(Level.SEVERE, null, ex);
 
         }
