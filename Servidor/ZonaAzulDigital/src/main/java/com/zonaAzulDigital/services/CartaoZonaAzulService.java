@@ -44,7 +44,6 @@ public class CartaoZonaAzulService {
 
         if (json != null && !json.isEmpty()) {
 
-
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Placa.class, new PlacaDeserializer());
             gsonBuilder.registerTypeAdapter(Motorista.class, new MotoristaDeserializer());
@@ -54,17 +53,16 @@ public class CartaoZonaAzulService {
             ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
                     new DaoCompraCartaoZADB(), new DaoPlacaBD());
             ModelMotoristaInterface mc =  new ModelMotorista( new DaoMotoristaBD());
-              
-            Motorista m = gson.fromJson(json, Motorista.class);
-            Placa p = gson.fromJson(json, Placa.class);
-            JOptionPane.showMessageDialog(null, m.getCredito());
-            try {
+            
+            try {    
                 
-                mc.login(m.getCpf(), m.getSenha());
+                Motorista m = gson.fromJson(json, Motorista.class);
+                Placa p = gson.fromJson(json, Placa.class);
                 
-                mcza.comprar(m, p);
+                Motorista motorista = mc.login(m.getCpf(), m.getSenha());
+                
+                mcza.comprar(motorista, p);
                 r = Response.ok().build();
-
             }
             catch(LoginException le){
                  r = Response.status(401).build();
