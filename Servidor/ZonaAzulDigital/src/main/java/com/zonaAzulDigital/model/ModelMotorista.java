@@ -11,6 +11,7 @@ import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.validacao.CPF;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ModelMotorista implements ModelMotoristaInterface {
     }
     
     @Override
-    public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException {
+    public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException,MotoristaException {
         validar(objeto);
         
         objeto = (Motorista) daoMotorista.cadastrar(objeto);
@@ -46,8 +47,20 @@ public class ModelMotorista implements ModelMotoristaInterface {
         return objeto;
     }
 
-    public boolean validar(Motorista motorista) throws DaoException, CpfException {
+    public boolean validar(Motorista motorista) throws DaoException, CpfException, MotoristaException {
+        if (motorista == null){
+            throw new MotoristaException(MotoristaException.NULL);
+        }
+        
+        if(motorista.getNome() == null|| motorista.getNome().isEmpty()){
+            throw new MotoristaException(MotoristaException.NOMEOBRIGATORIO);
+        }
+        
+        //if (motorista.ge)
+        
         CPF.validarCPF(motorista.getCpf());
+        
+        
 
         return true;
     }
