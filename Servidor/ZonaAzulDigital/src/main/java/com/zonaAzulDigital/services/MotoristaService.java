@@ -7,6 +7,7 @@ package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
@@ -73,6 +74,8 @@ public class MotoristaService {
                 md.cadastrar(m);
                 r = Response.ok().build();
 
+            } catch (CpfException ce) {
+                r =  Response.status(400).build();
             } catch (DaoException de) {
                 r = Response.status(422).build();
                 return r;
