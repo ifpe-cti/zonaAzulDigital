@@ -155,18 +155,14 @@ function webService:compraCartao(motorista,placa)
 	
 	params.headers = headers
 
-	local motoristaPlaca = motorista
+	local tabelaMotorista = motorista
 
-	motoristaPlaca.numeros = placa.numeros
-	motoristaPlaca.letras = placa.letras
+	tabelaMotorista.numeros = placa.numeros
+	tabelaMotorista.letras = placa.letras
 
-	local dados = motoristaPlaca
-
-
-
+	local dados = tabelaMotorista
 
 	params.body =  json.encode(dados)
-
 	
 	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/comprar", "POST", eventoCompraCartao, params)
 

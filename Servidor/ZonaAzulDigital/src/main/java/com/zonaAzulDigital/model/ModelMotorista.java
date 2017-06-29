@@ -11,8 +11,10 @@ import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.validacao.CPF;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -20,16 +22,17 @@ import java.util.List;
  * @author JonasJr
  */
 public class ModelMotorista implements ModelMotoristaInterface {
+
     private DAOMotorista daoMotorista;
 
     public ModelMotorista(DAOMotorista daoMotorista) {
         this.daoMotorista = daoMotorista;
     }
-    
+
     @Override
-    public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException {
+    public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException, MotoristaException {
         validar(objeto);
-        
+
         objeto = (Motorista) daoMotorista.cadastrar(objeto);
         return objeto;
     }
@@ -46,7 +49,19 @@ public class ModelMotorista implements ModelMotoristaInterface {
         return objeto;
     }
 
-    public boolean validar(Motorista motorista) throws DaoException, CpfException {
+    public boolean validar(Motorista motorista) throws DaoException, CpfException, MotoristaException {
+        if (motorista == null) {
+            throw new MotoristaException(MotoristaException.NULL);
+        }
+
+        if (motorista.getNome() == null || motorista.getNome().isEmpty()) {
+            throw new MotoristaException(MotoristaException.NOMEOBRIGATORIO);
+        }
+
+        if (motorista.getSenha() == null || motorista.getSenha().isEmpty()) {
+            throw new MotoristaException(MotoristaException.SENHAOBRIGATORIA);
+        }
+
         CPF.validarCPF(motorista.getCpf());
 
         return true;
@@ -54,7 +69,7 @@ public class ModelMotorista implements ModelMotoristaInterface {
 
     @Override
     public Motorista login(String cpf, String senha) throws LoginException {
-        
+
         return daoMotorista.login(cpf, senha);
     }
 

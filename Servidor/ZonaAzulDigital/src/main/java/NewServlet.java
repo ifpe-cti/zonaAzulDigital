@@ -82,7 +82,7 @@ public class NewServlet extends HttpServlet {
             m1 = modelMotorista.login(motorista.getCpf(), motorista.getSenha());
 
             credAnt = m1.getCredito().toString();
-        } catch (DaoException | LoginException | CpfException ex) {
+        } catch (DaoException | LoginException | CpfException | MotoristaException ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         DAOCartaoZonaAzul daoZonaAzul = new DaoCartaoZonaAzulBD();
