@@ -26,10 +26,16 @@ local function eventoCadastrarMotorista(event)
 			
 			toast.show("CPF já cadastrado!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
+		elseif event.status == 400 then
+			
+			toast.show("CPF inválido!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  			
+
 		else
+			
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
+        	
 		end
 
     else
