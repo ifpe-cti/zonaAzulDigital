@@ -21,6 +21,8 @@ import com.zonaAzulDigital.json.MotoristaDeserializer;
 import com.zonaAzulDigital.json.PlacaDeserializer;
 import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import com.zonaAzulDigital.model.ModelMotorista;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -66,9 +68,11 @@ public class CartaoZonaAzulService {
             }
             catch(LoginException le){
                  r = Response.status(401).build();
+                 Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, le);
             }
             catch (Exception e) {
                 r = Response.serverError().build();
+                Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         return r;
