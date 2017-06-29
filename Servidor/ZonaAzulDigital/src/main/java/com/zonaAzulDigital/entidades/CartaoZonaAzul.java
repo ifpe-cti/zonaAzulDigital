@@ -41,8 +41,6 @@ public class CartaoZonaAzul implements Serializable{
         this.dataEntacionamento = new Date();
     }
     
-    
-    
     public int getNumero() {
         return numero;
     }
