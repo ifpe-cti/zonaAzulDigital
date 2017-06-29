@@ -6,6 +6,7 @@
 package com.zonaAzulDigital.entidades;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,14 +19,18 @@ import javax.persistence.OneToOne;
  * @author JonasJr
  */
 @Entity
-public class CompraCartaoZA implements Serializable{
+public class CompraCartaoZA implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Motorista motorista;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private CartaoZonaAzul cartaoZonaAzul;
+
+    public CompraCartaoZA() {
+    }
 
     public CompraCartaoZA(Motorista motorista, CartaoZonaAzul cartaoZonaAzul) {
         this.motorista = motorista;
@@ -55,6 +60,5 @@ public class CompraCartaoZA implements Serializable{
     public void setCartaoZonaAzul(CartaoZonaAzul cartaoZonaAzul) {
         this.cartaoZonaAzul = cartaoZonaAzul;
     }
-    
-    
+
 }

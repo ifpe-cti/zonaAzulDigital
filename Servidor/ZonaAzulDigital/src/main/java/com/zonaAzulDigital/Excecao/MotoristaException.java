@@ -9,14 +9,16 @@ package com.zonaAzulDigital.Excecao;
  *
  * @author JonasJr
  */
-public class MotoristaException extends Exception{
+public class MotoristaException extends Exception {
+
     public static final String NULL = "Motorista é obrigatorio";
     public static final String NOMEOBRIGATORIO = "Nome é obrigatorio";
-    public static final String CPFOBRIGATORIO = "CPF é obrigatorio";
     public static final String NAOENCONTRADO = "Motorista não foi encontrado";
-    
+    public static final String CREDITOINSUFICIENTE = "Creditos insuficiente";
+    public static final String SENHAOBRIGATORIA = "Senha é obrigatoria";
+
     public MotoristaException(String msg) {
         super(msg);
     }
-    
+
 }

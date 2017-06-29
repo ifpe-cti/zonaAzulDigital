@@ -18,6 +18,19 @@ local senha
 function scene:create()
 
     local sceneGroup = self.view
+
+    local iconeCar = display.newImage("Imagens/Car.png")
+
+    iconeCar:translate( display.contentWidth/2, display.contentHeight/10 + 10 )
+
+    iconeCar:scale(0.05,0.05)
+
+    local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
+
+    iconeTxt:translate( display.contentWidth/2, display.contentHeight/10 + 55)
+
+    iconeTxt:scale(0.3,0.3)
+
     
     local linha1 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 2.5, display.contentWidth/6 * 5, display.contentHeight/7 * 2.5)
     linha1:setStrokeColor(0.2, 0.2, 1, 1)
@@ -28,9 +41,9 @@ function scene:create()
     linha2.strokeWidth = 2.65
     
 
-    local entrar = widget.newButton({label = "entrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
+    local entrar = widget.newButton({label = "Entrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
 
-    local cadastro = widget.newButton({label = "cadastre-se",labelColor = { default={ 0.2, 0.2, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/ 2.6 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0 }, over={ 0.8, 0.8, 1 } } })
+    local cadastro = widget.newButton({label = "Cadastre-se",labelColor = { default={ 0.2, 0.2, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/ 2.6 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0 }, over={ 0.8, 0.8, 1 } } })
 
     entrar:addEventListener("touch", fazerLogin)
 	cadastro:addEventListener("touch", fazerCadastro)
@@ -39,6 +52,8 @@ function scene:create()
     sceneGroup:insert(linha2)
     sceneGroup:insert(entrar)
     sceneGroup:insert(cadastro)
+    sceneGroup:insert(iconeTxt)
+    sceneGroup:insert(iconeCar)
 
 end
 

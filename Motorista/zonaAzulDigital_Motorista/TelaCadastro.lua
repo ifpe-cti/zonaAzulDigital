@@ -20,6 +20,21 @@ function scene:create()
 
     local sceneGroup = self.view
 
+    local iconeCar = display.newImage("Imagens/Car.png")
+
+    iconeCar:translate( display.contentWidth/2, display.contentHeight/10 + 10 )
+
+    iconeCar:scale(0.05,0.05)
+
+
+
+    local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
+
+    iconeTxt:translate( display.contentWidth/2, display.contentHeight/10 + 55)
+
+    iconeTxt:scale(0.3,0.3)
+
+
     local linha1 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 2.5, display.contentWidth/6 * 5, display.contentHeight/7 * 2.5)
     linha1:setStrokeColor(0.2, 0.2, 1, 1)
     linha1.strokeWidth = 2.65
@@ -33,9 +48,9 @@ function scene:create()
     linha3:setStrokeColor(0.2, 0.2, 1, 1)
     linha3.strokeWidth = 2.65
     
-    local voltar = widget.newButton({label = "voltar",labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/4, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
+    local voltar = widget.newButton({label = "Voltar",labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/4, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
     
-    local cadastrar = widget.newButton({label = "cadastrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} },x = display.contentWidth/4 * 3, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13,shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
+    local cadastrar = widget.newButton({label = "Cadastrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} },x = display.contentWidth/4 * 3, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13,shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
     
     voltar:addEventListener("touch", voltarTelaLogin)
     cadastrar:addEventListener("touch", cadastrarMotorista)
@@ -46,6 +61,8 @@ function scene:create()
     sceneGroup:insert(linha3)
     sceneGroup:insert(voltar)
     sceneGroup:insert(cadastrar)
+    sceneGroup:insert(iconeTxt)
+    sceneGroup:insert(iconeCar)
 end
 
 function scene:show(event)

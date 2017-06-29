@@ -26,10 +26,16 @@ local function eventoCadastrarMotorista(event)
 			
 			toast.show("CPF já cadastrado!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
+		elseif event.status == 400 then
+			
+			toast.show("CPF inválido!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  			
+
 		else
+			toast.show("Não foi possivel realizar o cadastro!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
+        	
 		end
 
     else
@@ -81,6 +87,7 @@ local function eventoLogarMotorista(event)
 			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
 		else
+			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
@@ -133,6 +140,7 @@ local function eventoCompraCartao(event)
 			toast.show("Senha invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
 		else
+			toast.show("Não foi possivel realizar compra!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
@@ -155,18 +163,14 @@ function webService:compraCartao(motorista,placa)
 	
 	params.headers = headers
 
-	local motoristaPlaca = motorista
+	local tabelaMotorista = motorista
 
-	motoristaPlaca.numeros = placa.numeros
-	motoristaPlaca.letras = placa.letras
+	tabelaMotorista.numeros = placa.numeros
+	tabelaMotorista.letras = placa.letras
 
-	local dados = motoristaPlaca
-
-
-
+	local dados = tabelaMotorista
 
 	params.body =  json.encode(dados)
-
 	
 	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/comprar", "POST", eventoCompraCartao, params)
 

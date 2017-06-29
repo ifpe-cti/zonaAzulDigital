@@ -6,6 +6,7 @@
 package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.model.ModelPlaca;
 import javax.ws.rs.Consumes;
@@ -47,7 +48,7 @@ public class PlacaService {
 
             Gson gson = new Gson();
 
-            ModelPlaca mp = new ModelPlaca();
+            ModelPlaca mp = new ModelPlaca(new DaoPlacaBD());
 
             Placa p = gson.fromJson(json, Placa.class);
 

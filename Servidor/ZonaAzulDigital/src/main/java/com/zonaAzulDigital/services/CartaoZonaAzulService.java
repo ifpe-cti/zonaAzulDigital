@@ -6,17 +6,25 @@
 package com.zonaAzulDigital.services;
 
 import com.google.gson.Gson;
+import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
+
 import com.google.gson.GsonBuilder;
+import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.json.MotoristaDeserializer;
 import com.zonaAzulDigital.json.PlacaDeserializer;
 import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import com.zonaAzulDigital.model.ModelMotorista;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -47,20 +55,21 @@ public class CartaoZonaAzulService {
 
             Gson gson = gsonBuilder.create();
 
-            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul();
-            ModelMotoristaInterface mc =  new ModelMotorista();
-              
-            Motorista m = gson.fromJson(json, Motorista.class);
-            Placa p = gson.fromJson(json, Placa.class);
-            
-            JOptionPane.showMessageDialog(null, m.getCredito());
-            try {
-                
-                mc.login(m.getCpf(), m.getSenha());
-                
-                mcza.comprar(m, p);
-                r = Response.ok().build();
 
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
+                    new DaoCompraCartaoZADB(), new DaoPlacaBD());
+            ModelMotoristaInterface mc =  new ModelMotorista( new DaoMotoristaBD());
+            
+            try {    
+                
+                Motorista m = gson.fromJson(json, Motorista.class);
+                Placa p = gson.fromJson(json, Placa.class);
+
+                
+                Motorista motorista = mc.login(m.getCpf(), m.getSenha());
+                
+                mcza.comprar(motorista, p);
+                r = Response.ok().build();
             }
             catch(LoginException le){
                  r = Response.status(401).build();
@@ -87,11 +96,11 @@ public class CartaoZonaAzulService {
             
             Gson gson = gsonBuilder.create();
             
-            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul();
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(), new DaoCompraCartaoZADB(), new DaoPlacaBD()); 
             
             Placa p = gson.fromJson(json, Placa.class);
             
-            try {
+            try{
                 
                 CartaoZonaAzul cza = mcza.recuperarUltimo(p);
                 
@@ -101,7 +110,7 @@ public class CartaoZonaAzulService {
                 r = Response.ok(jsonRetorno).build();
 
             }
-            catch (Exception e) {
+            catch(Exception e){
                 r = Response.serverError().build();
             }
             
