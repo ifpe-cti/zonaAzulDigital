@@ -8,6 +8,7 @@ package com.zonaAzulDigital.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zonaAzulDigital.Excecao.LoginException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
@@ -18,6 +19,7 @@ import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import com.zonaAzulDigital.model.ModelMotorista;
 import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -50,6 +52,7 @@ public class CartaoZonaAzulService {
               
             Motorista m = gson.fromJson(json, Motorista.class);
             Placa p = gson.fromJson(json, Placa.class);
+            
             JOptionPane.showMessageDialog(null, m.getCredito());
             try {
                 
@@ -66,6 +69,44 @@ public class CartaoZonaAzulService {
                 r = Response.serverError().build();
             }
         }
+        return r;
+    }
+    
+    @GET
+    @Path("/consultar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response consultarCartao(String json){
+        
+        Response r = Response.serverError().build();
+        
+        if(json != null || !json.isEmpty()){
+            
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            
+            gsonBuilder.registerTypeAdapter(Placa.class, new PlacaDeserializer());
+            
+            Gson gson = gsonBuilder.create();
+            
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul();
+            
+            Placa p = gson.fromJson(json, Placa.class);
+            
+            try {
+                
+                CartaoZonaAzul cza = mcza.recuperarUltimo(p);
+                
+                
+                String jsonRetorno = gson.toJson(cza);
+                
+                r = Response.ok(jsonRetorno).build();
+
+            }
+            catch (Exception e) {
+                r = Response.serverError().build();
+            }
+            
+        }
+        
         return r;
     }
 }
