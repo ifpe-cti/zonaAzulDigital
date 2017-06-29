@@ -31,7 +31,7 @@ local function eventoCadastrarMotorista(event)
 			toast.show("CPF inválido!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  			
 
 		else
-			
+			toast.show("Não foi possivel realizar o cadastro!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
@@ -87,6 +87,7 @@ local function eventoLogarMotorista(event)
 			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
 		else
+			toast.show("Não foi possivel fazer login, CPF ou senha inválidos!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
@@ -139,6 +140,7 @@ local function eventoCompraCartao(event)
 			toast.show("Senha invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
 		else
+			toast.show("Não foi possivel realizar compra!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 			print(event.response)
         	print(event.status)
         	print("erro interno no servidor")
