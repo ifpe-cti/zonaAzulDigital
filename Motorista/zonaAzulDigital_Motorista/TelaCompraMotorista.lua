@@ -8,6 +8,8 @@ local placaObject = require("placa")
 
 local webServiceComunication = require("WebServiceComunication")
 
+local toast = require("plugin.toast")
+
 local senha
 local letras
 local numeros
@@ -36,6 +38,7 @@ function scene:show(event)
         numeros = native.newTextField(display.contentWidth/10 * 6.7, display.contentHeight/7 *2.9, display.contentWidth/10 * 2.6, 30)
         numeros.placeholder = "Números"
         numeros.align = "center"
+        numeros.inputType = "number"
         
         senha = native.newTextField(display.contentWidth/2, (display.contentHeight/7)*3.70, display.contentWidth/1.5, 30)
         senha.isSecure = true
