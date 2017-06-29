@@ -18,6 +18,19 @@ local senha
 function scene:create()
 
     local sceneGroup = self.view
+
+    local iconeCar = display.newImage("Imagens/Car.png")
+
+    iconeCar:translate( display.contentWidth/2, display.contentHeight/10 + 10 )
+
+    iconeCar:scale(0.05,0.05)
+
+    local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
+
+    iconeTxt:translate( display.contentWidth/2, display.contentHeight/10 + 55)
+
+    iconeTxt:scale(0.3,0.3)
+
     
     local linha1 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 2.5, display.contentWidth/6 * 5, display.contentHeight/7 * 2.5)
     linha1:setStrokeColor(0.2, 0.2, 1, 1)
@@ -39,6 +52,8 @@ function scene:create()
     sceneGroup:insert(linha2)
     sceneGroup:insert(entrar)
     sceneGroup:insert(cadastro)
+    sceneGroup:insert(iconeTxt)
+    sceneGroup:insert(iconeCar)
 
 end
 
