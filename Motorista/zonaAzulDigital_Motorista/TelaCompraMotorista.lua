@@ -51,7 +51,6 @@ end
 function scene:hide(event)
     if event.phase == "will" then
         
-        display.remove(placa)
         display.remove(senha)
         display.remove(letras)
         display.remove(numeros)
@@ -68,9 +67,7 @@ function compraCartao(event)
         b = false
         toast.show("Placa vazia!!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
     
-    end
-    
-    if senha.text == "" then
+    elseif senha.text == "" then
         b= false
         toast.show("Senha é obrigátoria", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
