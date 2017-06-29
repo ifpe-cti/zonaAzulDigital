@@ -9,6 +9,10 @@
         <servlet-name>CadastrarCidade</servlet-name>
         <servlet-class>CadastrarCidade</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>testeCompra</servlet-name>
+        <servlet-class>testeCompra</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -20,6 +24,10 @@
     <servlet-mapping>
         <servlet-name>CadastrarCidade</servlet-name>
         <url-pattern>/CadastrarCidade</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testeCompra</servlet-name>
+        <url-pattern>/testeCompra</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
