@@ -16,6 +16,7 @@ import com.zonaAzulDigital.tests.DAO.DAOFakeMotorista;
 import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -55,6 +56,7 @@ public class MotoristaTest {
         md.cadastrar(m);
     }
     
+    @Ignore
     @Test
     public void deveDispararExcecaoDeMotoristaVazio() throws DaoException, CpfException, MotoristaException{
         excecao.expect(DaoException.class);
