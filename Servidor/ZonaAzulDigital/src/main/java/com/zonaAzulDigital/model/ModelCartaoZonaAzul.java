@@ -23,19 +23,20 @@ import java.math.BigDecimal;
  * @author JonasJr
  */
 public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
+
     private final DAOMotorista daoMotorista;
     private final DAOCartaoZonaAzul daoCartaoZonaAzul;
     private final DAOCompraCartaoZA daoCompraCartaoZA;
     private final DAOPlaca daoPlaca;
-    
-    public ModelCartaoZonaAzul(DAOMotorista daoMotorista, DAOCartaoZonaAzul daoCartaoZonaAzul, 
+
+    public ModelCartaoZonaAzul(DAOMotorista daoMotorista, DAOCartaoZonaAzul daoCartaoZonaAzul,
             DAOCompraCartaoZA daoCompraCartaoZA, DAOPlaca daoPlaca) {
         this.daoMotorista = daoMotorista;
         this.daoCartaoZonaAzul = daoCartaoZonaAzul;
         this.daoCompraCartaoZA = daoCompraCartaoZA;
         this.daoPlaca = daoPlaca;
     }
-    
+
     @Override
     public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException {
         try {
@@ -43,6 +44,14 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         } catch (NullPointerException ex) {
             throw new MotoristaException(MotoristaException.NULL);
         }
+        try {
+
+           placa = this.daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+
         BigDecimal preco = daoCartaoZonaAzul.preco("Garanhuns");
         CartaoZonaAzul novoCartaoZA = null;
         if (motorista.debitar(preco)) {
@@ -50,8 +59,8 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
             novoCartaoZA.setValor(preco);
             CompraCartaoZA compraCartaoZA = new CompraCartaoZA(motorista, novoCartaoZA);
             daoCompraCartaoZA.comprar(compraCartaoZA);
-            
-        }else{
+
+        } else {
             throw new MotoristaException(MotoristaException.CREDITOINSUFICIENTE);
         }
         return novoCartaoZA;
@@ -65,7 +74,6 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
 
     @Override
     public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException {
-        
 
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 

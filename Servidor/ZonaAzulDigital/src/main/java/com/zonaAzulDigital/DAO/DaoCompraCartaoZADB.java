@@ -9,8 +9,10 @@ package com.zonaAzulDigital.DAO;
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,12 @@ public class DaoCompraCartaoZADB implements DAOCompraCartaoZA{
     public CompraCartaoZA comprar(CompraCartaoZA compraCartaoZA)throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         try{
+           
             em.getTransaction().begin();
-            em.persist(compraCartaoZA.getCartaoZonaAzul());
-            em.merge(compraCartaoZA.getMotorista());
+            Motorista motorista = em.merge(compraCartaoZA.getMotorista());
+            compraCartaoZA.setMotorista(motorista);
+            CartaoZonaAzul cartao = em.merge(compraCartaoZA.getCartaoZonaAzul());
+            compraCartaoZA.setCartaoZonaAzul(cartao);
             em.persist(compraCartaoZA);
             em.getTransaction().commit();
         }catch(Exception e){

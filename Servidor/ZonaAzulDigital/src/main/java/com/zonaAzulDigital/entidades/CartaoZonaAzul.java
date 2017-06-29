@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class CartaoZonaAzul implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int numero;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Placa placa;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataEntacionamento;
