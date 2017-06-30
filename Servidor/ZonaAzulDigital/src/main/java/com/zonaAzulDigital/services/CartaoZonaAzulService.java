@@ -14,6 +14,7 @@ import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.google.gson.GsonBuilder;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
+import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
@@ -71,7 +72,15 @@ public class CartaoZonaAzulService {
                 Motorista motorista = mc.login(m.getCpf(), m.getSenha());
                 
                 mcza.comprar(motorista, p);
-                r = Response.ok().build();
+                
+                Motorista motoristaRetorno = mc.login(m.getCpf(), m.getSenha());
+               
+                motoristaRetorno.setSenha("");
+                String jsonRetorno  = gson.toJson(motoristaRetorno);
+                
+                r = Response.ok(jsonRetorno).build();
+            }catch(MotoristaException me ){
+                r = Response.status(406).build();
             }
             catch(LoginException le){
                  r = Response.status(401).build();
