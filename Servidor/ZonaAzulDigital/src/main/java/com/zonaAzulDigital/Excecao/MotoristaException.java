@@ -16,6 +16,7 @@ public class MotoristaException extends Exception {
     public static final String NAOENCONTRADO = "Motorista não foi encontrado";
     public static final String CREDITOINSUFICIENTE = "Creditos insuficiente";
     public static final String SENHAOBRIGATORIA = "Senha é obrigatoria";
+    public static final String CREDITOINVALIDO = "Crédito Invalido";
 
     public MotoristaException(String msg) {
         super(msg);
