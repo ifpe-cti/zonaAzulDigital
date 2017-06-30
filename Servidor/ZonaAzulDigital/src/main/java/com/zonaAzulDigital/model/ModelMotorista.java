@@ -60,6 +60,10 @@ public class ModelMotorista implements ModelMotoristaInterface {
         if (motorista.getSenha() == null || motorista.getSenha().isEmpty()) {
             throw new MotoristaException(MotoristaException.SENHAOBRIGATORIA);
         }
+        
+        if (motorista.getCredito() == null || motorista.getCredito().compareTo(BigDecimal.ZERO)< 0){
+            throw new MotoristaException(MotoristaException.CREDITOINVALIDO);
+        }
 
         CPF.validarCPF(motorista.getCpf());
 

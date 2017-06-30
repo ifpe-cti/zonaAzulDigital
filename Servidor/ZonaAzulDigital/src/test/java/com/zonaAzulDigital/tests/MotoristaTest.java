@@ -105,4 +105,16 @@ public class MotoristaTest {
         
         md.cadastrar(new Motorista(1, "Samuel", "11791558402", BigDecimal.ZERO, null));
     }
+    @Test
+    public void deveDispararExcecaoDeMotoristaComCreditoNull() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        
+        md.cadastrar(new Motorista(1, "Samuel", "11791558402", null, "Samuel"));
+    }
+    @Test
+    public void deveDispararExcecaoDeMotoristaComCreditoNegativo() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        
+        md.cadastrar(new Motorista(1, "Samuel", "11791558402", new BigDecimal(-1), "Samuel"));
+    }
 }
