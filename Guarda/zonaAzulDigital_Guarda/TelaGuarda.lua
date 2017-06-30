@@ -13,19 +13,31 @@ local letras, numeros
 function scene:create()
     local sceneGroup = self.view
 
-    local linha1 = display.newLine(display.contentWidth/6 * 1.3, display.contentHeight/4* 1.59, display.contentWidth/6 * 2.73, display.contentHeight/4 * 1.59)
+    local iconeCar = display.newImage("Imagens/Car.png")
+
+    iconeCar:translate(display.contentWidth/2, display.contentHeight/10)
+
+    iconeCar:scale(0.05,0.05)
+
+    local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
+
+    iconeTxt:translate( display.contentWidth/2, display.contentHeight/10 * 1.75)
+
+    iconeTxt:scale(0.3,0.3)
+
+    local linha1 = display.newLine(display.contentWidth/6 * 1.3, display.contentHeight/10 * 4.1, display.contentWidth/6 * 2.73, display.contentHeight/10 * 4.1)
     linha1:setStrokeColor(0.2, 0.2, 1, 1)
     linha1.strokeWidth = 2.65
 
-    local linha2 = display.newLine(display.contentWidth/6 * 3.29, display.contentHeight/4* 1.59, display.contentWidth/6 * 4.73, display.contentHeight/4 * 1.59)
+    local linha2 = display.newLine(display.contentWidth/6 * 3.29, display.contentHeight/10 * 4.1, display.contentWidth/6 * 4.73, display.contentHeight/10 * 4.1)
     linha2:setStrokeColor(0.2, 0.2, 1, 1)
     linha2.strokeWidth = 2.65
     
-    local hifen = display.newLine(display.contentWidth/2.1, display.contentHeight/2.8, display.contentWidth/1.95, display.contentHeight/2.8)
+    local hifen = display.newLine(display.contentWidth/2.1, display.contentHeight/2.7, display.contentWidth/1.95, display.contentHeight/2.7)
     hifen:setStrokeColor(0, 0, 0)
     hifen.strokeWidth = 2.65
 
-    local placa = display.newText({text = "Placa", x = display.contentWidth/2, y = display.contentHeight/4, fontSize = 25})
+    local placa = display.newText({text = "Placa", x = display.contentWidth/2, y = display.contentHeight/10 * 2.75, fontSize = 25})
     placa:setFillColor( 0.2, 0.2, 1, 1)
 
     local consultar = widget.newButton({label = "consultar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/2* 1, width = display.contentWidth/1.5, height = display.contentHeight/12,  shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0.5 }, over={ 0.8, 0.8, 1} } })
@@ -36,13 +48,13 @@ function scene:create()
     linha3:setStrokeColor(0.2, 0.2, 1, 1)
     linha3.strokeWidth = 2.65
 
-    local cartaoText = display.newText({text = "CARTÃO", x = display.contentWidth/2, y = display.contentHeight/10 * 6.5, whidth = display.contentWidth/2, height = display.contentHeight/10 * 2, fontSize = 20, align = "center"})
+    local cartaoText = display.newText({text = "CARTÃO", x = display.contentWidth/2, y = display.contentHeight/10 * 6.5, whidth = display.contentWidth/2, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "center"})
     cartaoText:setFillColor(0.2, 0.2, 1, 1)
-    local numeroText = display.newText({text = "Numero: 1", x = display.contentWidth/2, y = display.contentHeight/10 * 7.5, whidth = display.contentWidth/2, height = display.contentHeight/10 * 2, fontSize = 20, align = "left"})
+    local numeroText = display.newText({text = "Numero: ", x = display.contentWidth/2, y = display.contentHeight/10 * 7.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
     
-    local placaText = display.newText({text = "Placa: KKZ-2443", x = display.contentWidth/2, y = display.contentHeight/10 * 8.5,whidth = display.contentWidth/2, height = display.contentHeight/10 * 2, fontSize = 20, align = "left"})
+    local placaText = display.newText({text = "Placa: ", x = display.contentWidth/2, y = display.contentHeight/10 * 8.5,whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
     
-    local dataText = display.newText({text = "Horário: 14:35", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/2, height = display.contentHeight/10 * 2, fontSize = 20, align = "left"})
+    local dataText = display.newText({text = "Horário: ", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
    
     
 
@@ -58,7 +70,10 @@ function scene:create()
     end
 
     consultar:addEventListener("touch", consultarPlaca)
-    
+
+
+    sceneGroup:insert(iconeTxt)
+    sceneGroup:insert(iconeCar)
     sceneGroup:insert(numeroText)
     sceneGroup:insert(placaText)
     sceneGroup:insert(dataText)
@@ -71,11 +86,11 @@ end
 
 function scene:show(event)
     if event.phase == "did" then
-        letras = native.newTextField(display.contentWidth/3, display.contentHeight/2.8, display.contentWidth/4, display.contentHeight/15)
+        letras = native.newTextField(display.contentWidth/3, display.contentHeight/2.7, display.contentWidth/4, display.contentHeight/15)
         letras.placeholder = "letras"
         letras.align = "center"
       
-        numeros = native.newTextField(display.contentWidth/3 * 2, display.contentHeight/2.8, display.contentWidth/4, display.contentHeight/15)
+        numeros = native.newTextField(display.contentWidth/3 * 2, display.contentHeight/2.7, display.contentWidth/4, display.contentHeight/15)
         numeros.placeholder = "numeros"
         numeros.align = "center"
         numeros.inputType = "number"
