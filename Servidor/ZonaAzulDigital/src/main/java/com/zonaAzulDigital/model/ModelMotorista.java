@@ -14,7 +14,6 @@ import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**

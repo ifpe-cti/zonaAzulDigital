@@ -8,8 +8,9 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-      <ui:composition template="/WEB-INF/template/templateLogado.xhtml">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/template/templateLogado.xhtml">
         <ui:define name="titulo">Vendas de credito</ui:define>
         <ui:define name="corpo">
             <div id="titulo"><h3>Venda de creditos</h3></div>
@@ -19,8 +20,8 @@ and open the template in the editor.
                     <p:wizard>
                         <p:tab id="motorista" title="Motorista">
                             <p:panel header="Selecione o motorista">
-                                
-                                <p:dataTable id="listaMotoristas" var="motorista" value="#{venderCredito.listarTodos()}"
+
+                                <p:dataTable id="listaMotoristas" var="motorista" value="#{venderCredito.listarTodosMotorista()}"
                                              selectionMode="single" selection="#{venderCredito.motorista}" rowKey="#{motorista.cpf}">
                                     <!--                                    <f:facet name="header">
                                                                             Motoristas
@@ -37,12 +38,20 @@ and open the template in the editor.
                         </p:tab>
                         <p:tab id="valorCredito" title="Credito">
                             <p:panel header="Valor a ser adicionado">
-                                
+                                <p:selectOneRadio id="valor" value="#{venderCredito.valor}">
+
+                                    <f:selectItem itemLabel="R$ 2,00" itemValue="2.00" />
+                                    <f:selectItem itemLabel="R$ 5,00" itemValue="5.00" />
+                                    <f:selectItem itemLabel="R$ 10,00" itemValue="10.00" />
+                                    <f:selectItem itemLabel="R$ 20,00" itemValue="20.00" />
+                                    <f:selectItem itemLabel="R$ 50,00" itemValue="50.00" />
+
+                                </p:selectOneRadio>
                             </p:panel>
                         </p:tab>
                         <p:tab id="confirmacao" title="Confirmação">
                             <p:panel header="Confirme os dados">
-                                
+
                             </p:panel>
                         </p:tab>
                     </p:wizard>

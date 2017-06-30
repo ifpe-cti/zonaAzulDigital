@@ -12,7 +12,7 @@ import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
-import com.zonaAzulDigital.tests.DAO.DAOFakeMotorista;
+import com.zonaAzulDigital.tests.DAO.DAOMotoristaFake;
 import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class MotoristaTest {
     
     @Before
     public void before(){
-        md = new ModelMotorista(new DAOFakeMotorista());
+        md = new ModelMotorista(new DAOMotoristaFake());
         
     }
     

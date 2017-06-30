@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Samuel
  */
-public class DAOFakeMotorista implements DAOMotorista {
+public class DAOMotoristaFake implements DAOMotorista {
     List <Motorista> motoristas = new ArrayList<>();
     
     @Override

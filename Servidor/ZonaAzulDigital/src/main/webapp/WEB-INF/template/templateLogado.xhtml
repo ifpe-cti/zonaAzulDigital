@@ -5,6 +5,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
+<!--<p:menuitem value="Motorista" url="/cadastrar/motorista.xhtml"  icon="ui-icon-bullet" />
+<p:menuitem value="Cartao"  url="/vendas/cartao.xhtml" icon="ui-icon-bullet"/>
+<p:submenu label="Gerenciar">
+                                <p:menuitem value="Motoristas"  url="/gerenciar/motorista.xhtml"  ajax="false" icon="ui-icon-bullet"/>
+                            </p:submenu>
+-->
 
     <h:head>
         <title><ui:insert name="titulo">Titulo da pagina</ui:insert></title>
@@ -22,16 +28,14 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Cadastrar">
-                                <p:menuitem value="Motorista" url="/cadastrar/motorista.xhtml"  icon="ui-icon-bullet" />
+                                
                                 <p:menuitem value="Administrador"  url="/cadastrar/administrador.xhtml" icon="ui-icon-bullet"/>
                             </p:submenu>
                             <p:submenu label="Vendas">
                                 <p:menuitem value="Credito" url="/vendas/creditos.xhtml"  icon="ui-icon-bullet" />
-                                <p:menuitem value="Cartao"  url="/vendas/cartao.xhtml" icon="ui-icon-bullet"/>
+                                
                             </p:submenu>
-                            <p:submenu label="Gerenciar">
-                                <p:menuitem value="Motoristas"  url="/gerenciar/motorista.xhtml"  ajax="false" icon="ui-icon-bullet"/>
-                            </p:submenu>
+                            
                             <p:submenu label="Relatorios">
                                 <p:menuitem value="Cartão" url="/relatorios/cartoes.xhtml"  icon="ui-icon-bullet"/>
                                 <p:menuitem value="Motorista" url="/relatorios/motoristas.xhtml"  icon="ui-icon-bullet"/>

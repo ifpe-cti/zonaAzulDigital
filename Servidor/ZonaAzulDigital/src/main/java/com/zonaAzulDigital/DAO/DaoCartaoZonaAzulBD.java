@@ -24,22 +24,22 @@ import javax.persistence.Query;
  */
 public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
 
-    @Override
-    public CartaoZonaAzul comprar(CartaoZonaAzul cartaoZonaAzul, Motorista motorista) throws DaoException {
-        EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(cartaoZonaAzul);
-            em.merge(motorista);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw new DaoException(DaoException.NAOCADASTRADO);
-        } finally {
-            em.close();
-        }
-        return cartaoZonaAzul;
-    }
+//    @Override
+//    public CartaoZonaAzul comprar(CartaoZonaAzul cartaoZonaAzul, Motorista motorista) throws DaoException {
+//        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+//        try {
+//            em.getTransaction().begin();
+//            em.persist(cartaoZonaAzul);
+//            em.merge(motorista);
+//            em.getTransaction().commit();
+//        } catch (Exception e) {
+//            em.getTransaction().rollback();
+//            throw new DaoException(DaoException.NAOCADASTRADO);
+//        } finally {
+//            em.close();
+//        }
+//        return cartaoZonaAzul;
+//    }
 
     @Override
     public CartaoZonaAzul recuperarUltimo(Placa placa) {

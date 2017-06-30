@@ -49,7 +49,7 @@ public class venderCredito {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    public List<Motorista> listarTodos(){
+    public List<Motorista> listarTodosMotorista(){
         return modelMotorista.listarTodos();
     }
     
