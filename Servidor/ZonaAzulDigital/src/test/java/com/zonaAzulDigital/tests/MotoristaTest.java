@@ -50,18 +50,59 @@ public class MotoristaTest {
     }
     
     @Test
-    public void deveDispararExcecaoDeCPFNoCadastro() throws CpfException, DaoException, MotoristaException{
+    public void deveDispararExcecaoDeCPFVazio() throws CpfException, DaoException, MotoristaException{
         excecao.expect(CpfException.class);
         m = new Motorista(1, "Samuel", "", BigDecimal.ZERO, "alabala");
         md.cadastrar(m);
     }
-    
     @Ignore
     @Test
+    public void deveDispararExcecaoDeCPFNull() throws CpfException, DaoException, MotoristaException{
+        excecao.expect(CpfException.class);
+        m = new Motorista(1, "Samuel", null, BigDecimal.ZERO, "alabala");
+        md.cadastrar(m);
+    }
+    
+    @Test
     public void deveDispararExcecaoDeMotoristaVazio() throws DaoException, CpfException, MotoristaException{
-        excecao.expect(DaoException.class);
+        excecao.expect(MotoristaException.class);
         m = new Motorista();
         md.cadastrar(m);
     }
     
+    @Test
+    public void deveDispararExcecaoDeMotoristaNull() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        m = null;
+        md.cadastrar(m);
+    }
+    
+    @Test
+    public void deveDispararExcecaoDeMotoristaComNomeVazio() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        
+        md.cadastrar(new Motorista(1, "", "11791558402", BigDecimal.ZERO, "samuel"));
+    }
+    
+    @Test
+    public void deveDispararExcecaoDeMotoristaComNomeNull() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        
+        md.cadastrar(new Motorista(1, null, "11791558402", BigDecimal.ZERO, "samuel"));
+    }
+    
+    
+    @Test
+    public void deveDispararExcecaoDeMotoristaComSenhaVazia() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        
+        md.cadastrar(new Motorista(1, "Samuel", "11791558402", BigDecimal.ZERO, ""));
+    }
+    
+    @Test
+    public void deveDispararExcecaoDeMotoristaComSenhaNull() throws DaoException, CpfException, MotoristaException{
+        excecao.expect(MotoristaException.class);
+        
+        md.cadastrar(new Motorista(1, "Samuel", "11791558402", BigDecimal.ZERO, null));
+    }
 }
