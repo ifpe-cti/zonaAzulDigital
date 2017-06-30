@@ -134,11 +134,17 @@ local function eventoCompraCartao(event)
 		
 		if event.status == 200 then
 			
-			print("retornouOk")
+			motoristaLogado.credito = response.credito
+			toast.show("Compra efetuada com sucesso", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+			composer.gotoScene("TelaMotoristaInicial")
 
 		elseif event.status == 401 then
 
 			toast.show("Senha invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+
+		elseif event.status == 406 then
+
+			toast.show("Saldo insuficiente!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  			
 
 		else
 			toast.show("Não foi possivel realizar compra!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
