@@ -53,7 +53,7 @@ settings =
 	--
 	plugins =
 	{
-
+		 ["plugin.toast"] = {publisherId = "com.spiralcodestudio"}
 	},
 
 	--

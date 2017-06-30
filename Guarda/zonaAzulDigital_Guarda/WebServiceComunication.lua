@@ -7,6 +7,13 @@ local composer = require("composer")
 local function eventoConsultarPlaca(event)
     if not event.isError then
         local response = json.decode(event.response)
+        
+        if event.status == 200 then
+
+            local cartaoJson = json.decode(event.response)
+            cartaoConsultado = cartaoJson
+
+        end
         print(event.response)
     else
         print("Erro")
@@ -27,7 +34,7 @@ function webService:consultarPlaca(letras, numeros)
 
 	params.body = placaJson
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/guarda/buscar", "GET", eventoConsultarPlaca, params)
+	network.request("http://localhost:8084/TesteZonaAzul/rest/guarda/consultar", "GET", eventoConsultarPlaca, params)
 
 end
 

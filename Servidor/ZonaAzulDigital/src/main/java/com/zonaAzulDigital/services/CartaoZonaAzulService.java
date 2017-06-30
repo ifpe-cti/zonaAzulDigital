@@ -12,19 +12,25 @@ import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.DAO.DaoPlacaBD;
 
 import com.google.gson.GsonBuilder;
+import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
+import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.json.MotoristaDeserializer;
 import com.zonaAzulDigital.json.PlacaDeserializer;
 import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import com.zonaAzulDigital.model.ModelMotorista;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -52,6 +58,7 @@ public class CartaoZonaAzulService {
 
             Gson gson = gsonBuilder.create();
 
+
             ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
                     new DaoCompraCartaoZADB(), new DaoPlacaBD());
             ModelMotoristaInterface mc =  new ModelMotorista( new DaoMotoristaBD());
@@ -60,11 +67,20 @@ public class CartaoZonaAzulService {
                 
                 Motorista m = gson.fromJson(json, Motorista.class);
                 Placa p = gson.fromJson(json, Placa.class);
+
                 
                 Motorista motorista = mc.login(m.getCpf(), m.getSenha());
                 
                 mcza.comprar(motorista, p);
-                r = Response.ok().build();
+                
+                Motorista motoristaRetorno = mc.login(m.getCpf(), m.getSenha());
+               
+                motoristaRetorno.setSenha("");
+                String jsonRetorno  = gson.toJson(motoristaRetorno);
+                
+                r = Response.ok(jsonRetorno).build();
+            }catch(MotoristaException me ){
+                r = Response.status(406).build();
             }
             catch(LoginException le){
                  r = Response.status(401).build();
@@ -75,6 +91,44 @@ public class CartaoZonaAzulService {
                 Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+        return r;
+    }
+    
+    @GET
+    @Path("/consultar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response consultarCartao(String json){
+        
+        Response r = Response.serverError().build();
+        
+        if(json != null || !json.isEmpty()){
+            
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            
+            gsonBuilder.registerTypeAdapter(Placa.class, new PlacaDeserializer());
+            
+            Gson gson = gsonBuilder.create();
+            
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(), new DaoCompraCartaoZADB(), new DaoPlacaBD()); 
+            
+            Placa p = gson.fromJson(json, Placa.class);
+            
+            try{
+                
+                CartaoZonaAzul cza = mcza.recuperarUltimo(p);
+                
+                
+                String jsonRetorno = gson.toJson(cza);
+                
+                r = Response.ok(jsonRetorno).build();
+
+            }
+            catch(Exception e){
+                r = Response.serverError().build();
+            }
+            
+        }
+        
         return r;
     }
 }
