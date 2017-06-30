@@ -5,7 +5,8 @@ local webService = {}
 local composer = require("composer")
 
 local toast = require("plugin.toast")
-
+local endereco = "localhost"
+local porta = "8084"
 
 
 
@@ -62,7 +63,7 @@ function webService:cadastrarMotorista(motorista)
 
 	params.body = motoristaJson
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/salvar", "POST", eventoCadastrarMotorista, params)
+	network.request("http://"..endereco..":"..porta.."/TesteZonaAzul/rest/motorista/salvar", "POST", eventoCadastrarMotorista, params)
 
 end
 --================================================================================================================================================================
@@ -118,7 +119,7 @@ function webService:logarMotorista(cpf,senha)
 
 	params.body = motoristaLogin
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
+	network.request("http://"..endereco..":"..porta.."/TesteZonaAzul/rest/motorista/login", "POST", eventoLogarMotorista, params)
 
 end
 --================================================================================================================================================================
@@ -172,7 +173,7 @@ function webService:compraCartao(motorista,placa)
 
 	params.body =  json.encode(dados)
 	
-	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/comprar", "POST", eventoCompraCartao, params)
+	network.request("http://"..endereco..":"..porta.."/TesteZonaAzul/rest/cartaozonaazul/comprar", "POST", eventoCompraCartao, params)
 
 end
 --================================================================================================================================================================
