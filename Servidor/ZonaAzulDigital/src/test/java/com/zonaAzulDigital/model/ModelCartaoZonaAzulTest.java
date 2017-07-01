@@ -38,16 +38,8 @@ public class ModelCartaoZonaAzulTest {
   
 
     @Test
-    public void testComprar() throws Exception {
-        System.out.println("comprar");
-        Motorista motorista = null;
-        Placa placa = null;
-        ModelCartaoZonaAzul instance = null;
-        CartaoZonaAzul expResult = null;
-        CartaoZonaAzul result = instance.comprar(motorista, placa);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void deveCadastrar() throws Exception {
+        
     }
 
     @Test

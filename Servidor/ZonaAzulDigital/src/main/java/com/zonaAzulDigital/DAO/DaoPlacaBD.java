@@ -22,7 +22,7 @@ import javax.persistence.Query;
 public class DaoPlacaBD implements DAOPlaca {
 
     @Override
-    public Placa recuperarPorId(Object id) {
+    public Placa recuperarPorId(int id) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         Placa placa = em.find(Placa.class, id);
         em.close();

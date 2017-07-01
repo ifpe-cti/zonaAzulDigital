@@ -8,6 +8,7 @@ package com.zonaAzulDigital.tests.DAO;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,25 +16,46 @@ import java.util.List;
  * @author JonasJr
  */
 public class DAOPlacaFake implements DAOPlaca{
+    private List<Placa> placas;
+
+    public DAOPlacaFake() {
+        placas = new ArrayList<>();
+    }
+    
+    
 
     @Override
     public Placa cadastrar(Placa objeto) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        objeto.setId(placas.size() + 1);
+        placas.add(objeto);
+        return objeto;
     }
 
     @Override
     public Placa recuperar(String letras, String numeros) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Placa returno = null;
+        for (Placa placa : placas) {
+            if (placa.getLetras().equals(letras) && placa.getNumeros().equals(numeros)) {
+                returno = placa;
+            }
+        }
+        return returno;
     }
 
     @Override
-    public Placa recuperarPorId(Object objeto) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Placa recuperarPorId(int id) throws DaoException {
+        Placa returno = null;
+        for (Placa placa : placas) {
+            if (placa.getId() == id) {
+                returno = placa;
+            }
+        }
+        return returno;
     }
 
     @Override
     public List<Placa> listarTudo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return placas;
     }
     
 }

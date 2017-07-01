@@ -9,6 +9,7 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,20 +17,36 @@ import java.util.List;
  * @author JonasJr
  */
 public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
+    private List<CompraCartaoZA> compraCartaoZAs;
+    
 
+    public DAOCompraCartaoZAFake() {
+        compraCartaoZAs = new ArrayList<>();
+    }
+    
+    
+    
     @Override
     public CompraCartaoZA comprar(CompraCartaoZA compraCartaoZA) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        compraCartaoZA.setId(compraCartaoZAs.size() + 1);
+        compraCartaoZAs.add(compraCartaoZA);
+        return compraCartaoZA;
     }
 
     @Override
     public CompraCartaoZA recuperarPor(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return  compraCartaoZAs.get(id);
     }
 
     @Override
     public List<CompraCartaoZA> recuperarPor(Motorista motorista) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<CompraCartaoZA> returno = new ArrayList<>();
+        for (CompraCartaoZA compraCartaoZA : compraCartaoZAs) {
+            if(compraCartaoZA.getMotorista().equals(motorista)){
+                returno.add(compraCartaoZA);
+            }
+        }
+        return returno;
     }
     
 }
