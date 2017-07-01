@@ -30,9 +30,9 @@ function scene:create()
 
     local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
 
-    iconeTxt:translate( display.contentWidth/2, display.contentHeight/10 + 55)
+    iconeTxt:translate( display.contentWidth/2*1.014, display.contentHeight/10 + 55)
 
-    iconeTxt:scale(0.3,0.3)
+    iconeTxt:scale(0.5,0.5)
 
 
     local linha1 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 2.5, display.contentWidth/6 * 5, display.contentHeight/7 * 2.5)
