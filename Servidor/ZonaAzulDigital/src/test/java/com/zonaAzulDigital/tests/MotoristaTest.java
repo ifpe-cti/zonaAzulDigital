@@ -31,6 +31,7 @@ public class MotoristaTest {
     public ModelMotoristaInterface md;
     
     public Motorista m;
+    public Motorista m1,m2,m3;
     
     @Rule
     public ExpectedException excecao = ExpectedException.none();
@@ -38,7 +39,9 @@ public class MotoristaTest {
     @Before
     public void before(){
         md = new ModelMotorista(new DAOMotoristaFake());
-        
+        m1 = new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
+        m2 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "cadu");
+        m3 = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "xonas");
     }
     
     
@@ -55,7 +58,7 @@ public class MotoristaTest {
         m = new Motorista(1, "Samuel", "", BigDecimal.ZERO, "alabala");
         md.cadastrar(m);
     }
-    @Ignore
+    
     @Test
     public void deveDispararExcecaoDeCPFNull() throws CpfException, DaoException, MotoristaException{
         excecao.expect(CpfException.class);
@@ -116,5 +119,16 @@ public class MotoristaTest {
         excecao.expect(MotoristaException.class);
         
         md.cadastrar(new Motorista(1, "Samuel", "11791558402", new BigDecimal(-1), "Samuel"));
+    }
+    
+    @Test
+    public void deveRecuperarMotoristaPorCpf() throws DaoException, CpfException, MotoristaException{
+        md.cadastrar(m1);
+        md.cadastrar(m2);
+        md.cadastrar(m3);
+        
+        Motorista motoristaRecuperado = md.recuperar(m1);
+        
+        assertEquals("Samuel",motoristaRecuperado.getNome());
     }
 }
