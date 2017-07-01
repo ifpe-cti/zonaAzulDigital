@@ -9,6 +9,7 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,37 +18,51 @@ import java.util.List;
  * @author Samuel
  */
 public class DAOMotoristaFake implements DAOMotorista {
-    List <Motorista> motoristas = new ArrayList<>();
+
+    List<Motorista> motoristas = new ArrayList<>();
     
     @Override
     public Motorista cadastrar(Motorista motorista) throws DaoException {
+        motorista.setId(motoristas.size() + 1);
         this.motoristas.add(motorista);
-        return motorista; 
+        return motorista;        
     }
-
+    
     @Override
     public Motorista recuperar(String cpf) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Motorista m = null;
+        for (Motorista motorista : motoristas) {
+            if (motorista.getCpf().equals(cpf)) {
+                m = motorista;
+            }
+        }
+        return m;
     }
-
+    
     @Override
     public Motorista recuperarPorId(int id) throws DaoException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Motorista atualizar(Motorista motorista) throws DaoException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Motorista login(String cpf, String senha) throws LoginException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Motorista m = null;
+        for (Motorista motorista : motoristas) {
+            if (motorista.getCpf().equals(cpf) && motorista.getSenha().equals(senha)) {
+                m = motorista;
+            }
+        }
+        return m;
     }
-
+    
     @Override
     public List<Motorista> listarTudo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return motoristas;
     }
     
 }
