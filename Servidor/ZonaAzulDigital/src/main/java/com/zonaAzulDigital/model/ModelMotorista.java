@@ -44,7 +44,7 @@ public class ModelMotorista implements ModelMotoristaInterface {
 
     @Override
     public Motorista recuperar(Motorista objeto) throws DaoException {
-        DAOMotorista daoMotorista = new DaoMotoristaBD();
+        
         objeto = daoMotorista.recuperar(objeto.getCpf());
         return objeto;
     }
