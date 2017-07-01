@@ -41,7 +41,13 @@ public class DAOMotoristaFake implements DAOMotorista {
     
     @Override
     public Motorista recuperarPorId(int id) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          Motorista m = null;
+        for (Motorista motorista : motoristas) {
+            if (motorista.getId() == id) {
+                m = motorista;
+            }
+        }
+        return m;
     }
     
     @Override

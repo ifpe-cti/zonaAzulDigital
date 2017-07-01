@@ -87,4 +87,41 @@ public class MotoristaService {
 
         return r;
     }
+    
+    @POST
+    @Path("/atualizar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response atualizarMotoristaMobile(String json) {
+
+        Response r = Response.serverError().build();
+
+        if (json != null && !json.isEmpty()) {
+            Gson gson = new Gson();
+
+            ModelMotoristaInterface md = new ModelMotorista(new DaoMotoristaBD());
+
+            try {
+                Motorista m = gson.fromJson(json, Motorista.class);
+                
+                Motorista motoristaRetorno = md.recuperar(m);
+                
+                motoristaRetorno.setSenha("");
+                
+                String jsonRetorno = gson.toJson(motoristaRetorno);
+                
+                r = Response.ok(jsonRetorno).build();
+
+            } catch (DaoException de) {
+                return r;
+            } catch (Exception e) {
+                r = Response.serverError().build();
+            }
+
+        }
+
+        return r;
+    }
+    
+    
+    
 }

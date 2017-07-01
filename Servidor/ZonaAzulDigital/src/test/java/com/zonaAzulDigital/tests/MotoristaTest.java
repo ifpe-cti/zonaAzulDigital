@@ -7,6 +7,7 @@ package com.zonaAzulDigital.tests;
 
 import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
@@ -128,6 +129,17 @@ public class MotoristaTest {
         md.cadastrar(m3);
         
         Motorista motoristaRecuperado = md.recuperar(m1);
+        
+        assertEquals("Samuel",motoristaRecuperado.getNome());
+    }
+    
+    @Test
+    public void deveFazerLoginDoMotorista() throws DaoException, CpfException, MotoristaException, LoginException{
+        md.cadastrar(m1);
+        md.cadastrar(m2);
+        md.cadastrar(m3);
+        
+        Motorista motoristaRecuperado = md.login(m1.getCpf(),m1.getSenha());
         
         assertEquals("Samuel",motoristaRecuperado.getNome());
     }

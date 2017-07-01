@@ -184,4 +184,50 @@ function webService:compraCartao(motorista,placa)
 end
 --================================================================================================================================================================
 
+
+
+--Rest para atualizar dados do motorista
+--================================================================================================================================================================
+local function eventoAtualizarMotorista(event)
+	if not event.isError then
+
+		local response = json.decode(event.response)
+		
+		if event.status == 200 then
+			
+			motoristaLogado = json.decode(event.response)
+			print(motoristaLogado.senha)
+		else
+			toast.show("Não foi possivel atualizar, verifique a conexão com a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+			print(event.response)
+        	print(event.status)
+        	print("erro interno no servidor")
+		end
+		
+	else
+		toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+	end
+	return 
+end
+
+
+
+function webService:atualizarMotorista(motorista)
+	
+	local headers = {}
+
+	headers["Content-Type"] = "application/json"
+
+	local dados = json.encode(motorista)
+
+	local params = {}
+	
+	params.headers = headers
+
+	params.body = dados
+	
+	network.request("http://"..endereco..":"..porta.."/TesteZonaAzul/rest/motorista/atualizar", "POST", eventoAtualizarMotorista, params)
+
+end
+--================================================================================================================================================================
 return webService
