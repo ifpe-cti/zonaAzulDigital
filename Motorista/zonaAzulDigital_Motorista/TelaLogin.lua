@@ -48,6 +48,17 @@ function scene:create()
     entrar:addEventListener("touch", fazerLogin)
 	cadastro:addEventListener("touch", fazerCadastro)
 
+    local botaoLocked = widget.newButton(
+    {
+        width = 20,
+        height = 20,
+        x = display.contentWidth/7 * 6.1,
+        y = display.contentHeight/7 * 3.23,
+        defaultFile = "Imagens/KeyLocked.png",
+        onEvent = lockedFunctionLogin
+    }
+)
+    sceneGroup:insert(botaoLocked)
     sceneGroup:insert(linha1)
     sceneGroup:insert(linha2)
     sceneGroup:insert(entrar)
@@ -56,6 +67,20 @@ function scene:create()
     sceneGroup:insert(iconeCar)
 
 end
+
+
+function lockedFunctionLogin( event )
+    if event.phase == "began" then
+        if senha.text ~="" then
+            if senha.isSecure == false then
+                senha.isSecure = true
+            else
+                senha.isSecure = false
+           end
+        end   
+    end
+end
+
 
 function scene:show(event)
     if event.phase == "did" then
