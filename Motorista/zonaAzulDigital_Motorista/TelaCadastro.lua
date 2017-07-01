@@ -55,7 +55,18 @@ function scene:create()
     voltar:addEventListener("touch", voltarTelaLogin)
     cadastrar:addEventListener("touch", cadastrarMotorista)
 
+    local botaoLocked = widget.newButton(
+        {
+            width = 20,
+            height = 20,
+            x = display.contentWidth/7 * 6.1,
+            y = display.contentHeight/7 * 4.24,
+            defaultFile = "Imagens/KeyLocked.png",
+            onEvent = lockedFunctionCadastro
+        }
+    )
     
+    sceneGroup:insert(botaoLocked)
     sceneGroup:insert(linha1)
     sceneGroup:insert(linha2)
     sceneGroup:insert(linha3)
@@ -63,6 +74,18 @@ function scene:create()
     sceneGroup:insert(cadastrar)
     sceneGroup:insert(iconeTxt)
     sceneGroup:insert(iconeCar)
+end
+
+function lockedFunctionCadastro( event )
+    if event.phase == "began" then
+        if senha.text ~="" then
+            if senha.isSecure == false then
+                senha.isSecure = true
+            else
+                senha.isSecure = false
+           end
+        end   
+    end
 end
 
 function scene:show(event)

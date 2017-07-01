@@ -49,15 +49,17 @@ function scene:create()
 	cadastro:addEventListener("touch", fazerCadastro)
 
     local botaoLocked = widget.newButton(
-    {
-        width = 20,
-        height = 20,
-        x = display.contentWidth/7 * 6.1,
-        y = display.contentHeight/7 * 3.23,
-        defaultFile = "Imagens/KeyLocked.png",
-        onEvent = lockedFunctionLogin
-    }
-)
+        {
+            width = 20,
+            height = 20,
+            x = display.contentWidth/7 * 6.1,
+            y = display.contentHeight/7 * 3.23,
+            defaultFile = "Imagens/KeyLocked.png",
+            onEvent = lockedFunctionLogin
+        }
+    )
+
+    
     sceneGroup:insert(botaoLocked)
     sceneGroup:insert(linha1)
     sceneGroup:insert(linha2)

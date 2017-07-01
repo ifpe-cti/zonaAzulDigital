@@ -27,8 +27,21 @@ function scene:create(event )
     caixaSaldo:setFillColor( 0.2, 0.2, 1, 1 )
     local textSaldo = display.newText({text = "Seu saldo é de:", x = display.contentWidth/2,y = display.contentHeight/7  * 1.3, fontSize = 15})
     saldo = display.newText({text = "R$ ".. motoristaLogado.credito..".00", x = display.contentWidth/2,y = display.contentHeight/7  * 1.65, fontSize = 15})
+    
 
+    local botaoLocked = widget.newButton(
+        {
+            width = 20,
+            height = 20,
+            x = display.contentWidth/7 * 6.1,
+            y = display.contentHeight/7 * 4,
+            defaultFile = "Imagens/KeyLocked.png",
+            onEvent = lockedFunctionCompra
+        }
+    )
+    
 
+    sceneGroup:insert(botaoLocked)
 	sceneGroup:insert(comprar)
     sceneGroup:insert(hifen)
     sceneGroup:insert(txtPlaca)
@@ -37,6 +50,18 @@ function scene:create(event )
     sceneGroup:insert(saldo)
 end
 
+
+function lockedFunctionCompra( event )
+    if event.phase == "began" then
+        if senha.text ~="" then
+            if senha.isSecure == false then
+                senha.isSecure = true
+            else
+                senha.isSecure = false
+           end
+        end   
+    end
+end
 
 function scene:show(event)
     if event.phase == "did" then
