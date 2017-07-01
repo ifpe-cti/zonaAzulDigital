@@ -6,11 +6,14 @@ local menu = require("Bibliotecas.menu_slider")
 
 local widget = require("widget")
 
+local webServiceComunication = require("webServiceComunication")
+
 local menuMotorista
 
 function scene:create(event)
 
 	local sceneGroup = self.view
+    
 
     menuMotorista = menu:new({
         data={
@@ -28,8 +31,30 @@ function scene:create(event)
                 }
             }
         })
+    local botaoAtualizar = widget.newButton(
+        {
+            width = 50,
+            height = 40,
+            x = display.contentWidth/7 * 6.4 ,
+            y = display.contentHeight/7 ,
+            defaultFile = "Imagens/AtualizarApp.png",
+            onEvent = atualizaDados
+        }
+    )
+    
+    sceneGroup:insert(botaoAtualizar)
     
 end
+
+
+function atualizaDados(event)
+    if event.phase == "began" then
+
+        webServiceComunication:atualizarMotorista(motoristaLogado)
+    end
+end
+
+
 
 function destroyMenu(event)
     menuMotorista:destroy()
