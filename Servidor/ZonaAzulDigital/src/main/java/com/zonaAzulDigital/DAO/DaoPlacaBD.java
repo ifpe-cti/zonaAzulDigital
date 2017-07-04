@@ -41,7 +41,7 @@ public class DaoPlacaBD implements DAOPlaca {
         try {
             placa = (Placa) query.getSingleResult();
         } catch (Exception e) {
-            throw new DaoException(PlacaException.NAOENCONTRADA.msg);
+            throw new DaoException(PlacaException.NAOENCONTRADA);
         } finally {
             em.close();
         }
