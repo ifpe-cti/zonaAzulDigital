@@ -1,4 +1,4 @@
-local class = require("Bibliotecas.30log")
+local class = require("bibliotecas.30log")
 
 local placa = class(
     "placa",
