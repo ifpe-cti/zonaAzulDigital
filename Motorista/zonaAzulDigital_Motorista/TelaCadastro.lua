@@ -20,7 +20,7 @@ function scene:create()
 
     local sceneGroup = self.view
 
-    local iconeCar = display.newImage("Imagens/Car.png")
+    local iconeCar = display.newImage("imagens/car.png")
 
     iconeCar:translate( display.contentWidth/2, display.contentHeight/10 + 10 )
 
@@ -28,11 +28,12 @@ function scene:create()
 
 
 
-    local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
+    local iconeTxt = display.newImage("imagens/zonaAzulLogo.png")
 
     iconeTxt:translate( display.contentWidth/2*1.014, display.contentHeight/10 + 55)
 
     iconeTxt:scale(0.5,0.5)
+   
 
 
     local linha1 = display.newLine(display.contentWidth/6, display.contentHeight/7 * 2.5, display.contentWidth/6 * 5, display.contentHeight/7 * 2.5)
@@ -61,7 +62,7 @@ function scene:create()
             height = 20,
             x = display.contentWidth/7 * 6.1,
             y = display.contentHeight/7 * 4.24,
-            defaultFile = "Imagens/KeyLocked.png",
+            defaultFile = "imagens/keyLocked.png",
             onEvent = lockedFunctionCadastro
         }
     )
