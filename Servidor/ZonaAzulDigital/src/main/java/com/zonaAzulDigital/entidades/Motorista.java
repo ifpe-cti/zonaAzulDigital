@@ -103,7 +103,7 @@ public class Motorista implements Serializable {
 
     public boolean creditar(BigDecimal valor) {
         BigDecimal creditoAnt = this.credito;
-        this.credito.add(valor);
+        this.credito = this.credito.add(valor);
         if (this.credito.compareTo(creditoAnt) == 1) {
             return true;
         } else {

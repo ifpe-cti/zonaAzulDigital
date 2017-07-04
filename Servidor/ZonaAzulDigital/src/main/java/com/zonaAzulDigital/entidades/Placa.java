@@ -29,7 +29,7 @@ public class Placa implements Serializable {
     }
 
     public Placa(String letras, String numeros) {
-        this.letras = letras;
+        this.letras = letras.toUpperCase();
         this.numeros = numeros;
     }
 
@@ -46,7 +46,7 @@ public class Placa implements Serializable {
     }
 
     public void setLetras(String letras) {
-        this.letras = letras;
+        this.letras = letras.toUpperCase();
     }
 
     public String getNumeros() {

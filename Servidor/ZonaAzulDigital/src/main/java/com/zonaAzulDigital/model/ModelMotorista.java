@@ -22,64 +22,66 @@ import java.util.List;
  * @author JonasJr
  */
 public class ModelMotorista implements ModelMotoristaInterface {
-
+    
     private DAOMotorista daoMotorista;
-
+    
     public ModelMotorista(DAOMotorista daoMotorista) {
         this.daoMotorista = daoMotorista;
     }
-
+    
     @Override
-    public Motorista cadastrar(Motorista objeto) throws DaoException, CpfException, MotoristaException {
-        validar(objeto);
-
-        objeto = (Motorista) daoMotorista.cadastrar(objeto);
-        return objeto;
-    }
-
-    @Override
-    public Motorista atualizar(Motorista objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Motorista recuperar(Motorista objeto) throws DaoException {
+    public Motorista cadastrar(Motorista motorista) throws DaoException, CpfException, MotoristaException {
+        validar(motorista);
         
-        objeto = daoMotorista.recuperar(objeto.getCpf());
-        return objeto;
+        motorista = daoMotorista.cadastrar(motorista);
+        return motorista;
     }
-
+    
+    @Override
+    public Motorista atualizar(Motorista motorista) throws CpfException, MotoristaException,DaoException{
+        validar(motorista);
+        motorista = daoMotorista.atualizar(motorista);
+        return motorista;
+    }
+    
+    @Override
+    public Motorista recuperar(Motorista motorista) throws DaoException {
+        
+        motorista = daoMotorista.recuperar(motorista.getCpf());
+        return motorista;
+    }
+    
     public boolean validar(Motorista motorista) throws DaoException, CpfException, MotoristaException {
         if (motorista == null) {
             throw new MotoristaException(MotoristaException.NULL);
         }
-
+        
         if (motorista.getNome() == null || motorista.getNome().isEmpty()) {
             throw new MotoristaException(MotoristaException.NOMEOBRIGATORIO);
         }
-
+        
         if (motorista.getSenha() == null || motorista.getSenha().isEmpty()) {
             throw new MotoristaException(MotoristaException.SENHAOBRIGATORIA);
         }
         
-        if (motorista.getCredito() == null || motorista.getCredito().compareTo(BigDecimal.ZERO)< 0){
+        if (motorista.getCredito() == null || motorista.getCredito().compareTo(BigDecimal.ZERO) < 0) {
             throw new MotoristaException(MotoristaException.CREDITOINVALIDO);
         }
-
+        
         CPF.validarCPF(motorista.getCpf());
-
+        
         return true;
     }
-
+    
     @Override
     public Motorista login(String cpf, String senha) throws LoginException {
-
+        
         return daoMotorista.login(cpf, senha);
     }
-
+    
     @Override
     public List<Motorista> listarTodos() {
         return daoMotorista.listarTudo();
     }
-
+    
 }

@@ -51,7 +51,17 @@ and open the template in the editor.
                         </p:tab>
                         <p:tab id="confirmacao" title="Confirmação">
                             <p:panel header="Confirme os dados">
-
+                                <p:panelGrid columns="2">
+                                    <h:outputText value="CPF:"/>
+                                    <h:outputText value="#{venderCredito.motorista.cpf}"/>
+                                    <h:outputText value="Nome:"/>
+                                    <h:outputText value="#{venderCredito.motorista.nome}"/>
+                                    <h:outputText value="Saldo:"/>
+                                    <h:outputText value="R$ #{venderCredito.motorista.credito}"/>
+                                    <h:outputText value="Credito:"/>
+                                    <h:outputText value="R$ #{venderCredito.valor}"/>
+                                    <p:commandButton value="Comfirmar" actionListener="#{venderCredito.comcluir()}" update="formCredito" />
+                                </p:panelGrid>
                             </p:panel>
                         </p:tab>
                     </p:wizard>

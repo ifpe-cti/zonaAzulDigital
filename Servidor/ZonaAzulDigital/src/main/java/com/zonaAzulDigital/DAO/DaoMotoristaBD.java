@@ -29,7 +29,7 @@ public class DaoMotoristaBD implements DAOMotorista {
             em.persist(motorista);
             em.getTransaction().commit();
         } catch (Exception e) {
-            throw new DaoException(DaoException.NAOCADASTRADO);
+            throw new DaoException(DaoException.NAOCADASTRADO,e);
         } finally {
             em.close();
         }
@@ -44,7 +44,7 @@ public class DaoMotoristaBD implements DAOMotorista {
             em.merge(motorista);
             em.getTransaction().commit();
         } catch (Exception e) {
-            throw new DaoException(DaoException.NAOATUALIZADO);
+            throw new DaoException(DaoException.NAOATUALIZADO, e);
         } finally {
             em.close();
         }
@@ -70,7 +70,7 @@ public class DaoMotoristaBD implements DAOMotorista {
         try {
             motorista = (Motorista) query.getSingleResult();
         } catch (Exception e) {
-            throw new DaoException(MotoristaException.NAOENCONTRADO);
+            throw new DaoException(MotoristaException.NAOENCONTRADO, e);
         } finally {
             em.close();
         }
@@ -90,7 +90,7 @@ public class DaoMotoristaBD implements DAOMotorista {
         try {
             motorista = (Motorista) query.getSingleResult();
         } catch (Exception e) {
-            throw new LoginException(LoginException.FALHOU);
+            throw new LoginException(LoginException.FALHOU, e);
         } finally {
             em.close();
         }

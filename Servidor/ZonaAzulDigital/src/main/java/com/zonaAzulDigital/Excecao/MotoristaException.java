@@ -22,4 +22,10 @@ public class MotoristaException extends Exception {
         super(msg);
     }
 
+    public MotoristaException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    
+    
+
 }
