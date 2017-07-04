@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -36,7 +37,7 @@ public class ModelCartaoZonaAzulTest {
     public static void configAmbienteTeste() {
     }
   
-
+    @Ignore
     @Test
     public void testComprar() throws Exception {
         System.out.println("comprar");
@@ -49,7 +50,7 @@ public class ModelCartaoZonaAzulTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testRecuperar() throws Exception {
         System.out.println("recuperar");
@@ -61,7 +62,7 @@ public class ModelCartaoZonaAzulTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testRecuperarUltimo() throws Exception {
         System.out.println("recuperarUltimo");
