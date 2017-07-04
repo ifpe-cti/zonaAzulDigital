@@ -35,7 +35,7 @@ function scene:create(event )
             height = 20,
             x = display.contentWidth/7 * 6.1,
             y = display.contentHeight/7 * 4,
-            defaultFile = "Imagens/KeyLocked.png",
+            defaultFile = "imagens/keyLocked.png",
             onEvent = lockedFunctionCompra
         }
     )

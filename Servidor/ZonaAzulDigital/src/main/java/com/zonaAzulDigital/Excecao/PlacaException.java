@@ -9,16 +9,18 @@ package com.zonaAzulDigital.Excecao;
  *
  * @author JonasJr
  */
-public enum PlacaException {
-    NULL("Placa é obrigatorio"),
-    LETRAS("Placa deve conter 3 letras"),
-    NUMEROS("Placa deve conter 4 números"),
-    NAOENCONTRADA("Placa não encontrada");
+public class PlacaException extends Exception{
+    public static final String NULL="Placa é obrigatorio";
+    public static final String LETRAS = "Placa deve conter 3 letras" ;
+    public static final String NUMEROS = "Placa deve conter 4 números";
+    public static final String NAOENCONTRADA = "Placa não encontrada";
     
-    public String msg;
+     public PlacaException(String msg) {
+        super(msg);
+    }
 
-    private PlacaException(String msg) {
-        this.msg = msg;
+    public PlacaException(String msg, Throwable causa) {
+        super(msg, causa);
     }
     
 }

@@ -2,11 +2,11 @@ local composer = require ("composer")
 
 local scene = composer.newScene()
 
-local menu = require("Bibliotecas.menu_slider")
+local menu = require("bibliotecas.menu_slider")
 
 local widget = require("widget")
 
-local webServiceComunication = require("webServiceComunication")
+local webServiceComunication = require("WebServiceComunication")
 
 local menuMotorista
 
@@ -15,11 +15,11 @@ function scene:create(event)
 	local sceneGroup = self.view
     
 
-    menuMotorista = menu:new({
+   menuMotorista = menu:new({
         data={
             {text="Cartões Ativos", scene="TelaMotoristaInicial"},
             {text="Comprar cartão", scene="TelaCompraMotorista"},
-            {text="Histórico de Compras"},
+            {text="Histórico de Compras", scene = "OlaMundo"},
             {text="Sair", callback=destroyMenu}
         }, 
         containers={
@@ -31,13 +31,13 @@ function scene:create(event)
                 }
             }
         })
-    local botaoAtualizar = widget.newButton(
+  local botaoAtualizar = widget.newButton(
         {
             width = 50,
             height = 40,
             x = display.contentWidth/7 * 6.4 ,
             y = display.contentHeight/7 ,
-            defaultFile = "Imagens/AtualizarApp.png",
+            defaultFile = "imagens/atualizarApp.png",
             onEvent = atualizaDados
         }
     )
