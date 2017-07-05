@@ -13,6 +13,10 @@
         <servlet-name>testeCompra</servlet-name>
         <servlet-class>testeCompra</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>testeCompraCartao</servlet-name>
+        <servlet-class>testeCompraCartao</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -28,6 +32,10 @@
     <servlet-mapping>
         <servlet-name>testeCompra</servlet-name>
         <url-pattern>/testeCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testeCompraCartao</servlet-name>
+        <url-pattern>/testeCompraCartao</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

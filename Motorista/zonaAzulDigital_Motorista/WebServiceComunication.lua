@@ -142,6 +142,10 @@ local function eventoCompraCartao(event)
 
 			toast.show("Senha invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
 
+		elseif event.status ==403 then
+			
+			toast.show("Placa invalida!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+			
 		elseif event.status == 406 then
 
 			toast.show("Saldo insuficiente!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  			

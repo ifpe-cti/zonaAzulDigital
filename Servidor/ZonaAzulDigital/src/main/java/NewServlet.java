@@ -15,6 +15,7 @@ import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.Excecao.PlacaException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
@@ -99,7 +100,7 @@ public class NewServlet extends HttpServlet {
         CartaoZonaAzul novoCartao = new CartaoZonaAzul();
         try {
             novoCartao = modelCartaoZonaAzul.comprar(m1, new Placa("KHX", "0066"));
-        } catch (MotoristaException | DaoException ex) {
+        } catch (MotoristaException | DaoException| PlacaException ex) {
             Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -4,25 +4,11 @@
  * and open the template in the editor.
  */
 
+import com.zonaAzulDigital.DAO.DaoAdministradorDB;
 import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
 import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
-import com.zonaAzulDigital.DAO.DaoMotoristaBD;
-import com.zonaAzulDigital.DAO.DaoPlacaBD;
-import com.zonaAzulDigital.Excecao.DaoException;
-import com.zonaAzulDigital.Excecao.LoginException;
-import com.zonaAzulDigital.Excecao.MotoristaException;
-import com.zonaAzulDigital.Excecao.PlacaException;
-import com.zonaAzulDigital.entidades.CartaoZonaAzul;
-import com.zonaAzulDigital.entidades.Motorista;
-import com.zonaAzulDigital.entidades.Placa;
-import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
-import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
-import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
-import com.zonaAzulDigital.model.ModelMotorista;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author JonasJr
+ * @author Samuel
  */
-public class testeCompra extends HttpServlet {
+public class testeCompraCartao extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,23 +31,9 @@ public class testeCompra extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelCartaoZonaAzulInterface modelCartaoZonaAzul = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
-               new DaoCompraCartaoZADB(), new DaoPlacaBD());
-        CartaoZonaAzul novoCartao = new CartaoZonaAzul();
         
-        ModelMotoristaInterface modelMotorista = new ModelMotorista(new DaoMotoristaBD());
-        
-        Motorista m1 = new Motorista();
-        try {
-            m1 = modelMotorista.login("10654901430", "1234");
-        } catch (LoginException ex) {
-            Logger.getLogger(testeCompra.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            novoCartao = modelCartaoZonaAzul.comprar(m1, new Placa("MUS", "2277"));
-        } catch (MotoristaException | DaoException |PlacaException ex) {
-            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DaoCartaoZonaAzulBD dao = new DaoCartaoZonaAzulBD();
+       // dao.listarCartoesAtivos(m)
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -69,10 +41,10 @@ public class testeCompra extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testeCompra</title>");            
+            out.println("<title>Servlet testeCompraCartao</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet testeCompra at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet testeCompraCartao at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
