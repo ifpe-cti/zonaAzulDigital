@@ -37,12 +37,12 @@ public class ModelCartaoZonaAzulTest {
     public ModelCartaoZonaAzulTest() {
         
     }
-    
+    /*
     @BeforeClass
     public void configAmbienteTeste() {
         this.modelCarttaoZA = new ModelCartaoZonaAzul(new DAOMotoristaFake(), new DAOCartaoZonaAzulFake(),
                 new DAOCompraCartaoZAFake(), new DAOPlacaFake());
-    }
+    }*/
   
     @Ignore
     @Test
