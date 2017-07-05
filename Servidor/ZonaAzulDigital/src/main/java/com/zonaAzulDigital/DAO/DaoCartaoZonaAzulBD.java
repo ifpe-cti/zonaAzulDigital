@@ -105,7 +105,7 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
     public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "SELECT ca FROM  CompraCartaoZA co, CartaoZonaAzul ca WHERE co.motorista.id = :p1 and "
-                + "co.cartaoZonaAzul.numero = ca.numero and ca.dataExpirar > :p2";
+                + "co.cartaoZonaAzul.numero = ca.numero and ca.dataFim > :p2";
         Query query = em.createQuery(hql);
         query.setParameter("p1", m.getId());
         query.setParameter("p2", new Date(System.currentTimeMillis()));

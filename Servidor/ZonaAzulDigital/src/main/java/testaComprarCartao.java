@@ -47,7 +47,7 @@ public class testaComprarCartao extends HttpServlet {
         List<CartaoZonaAzul> cartaoZonaAzuls = null;
         try {
 
-            Motorista motorista = daoMotoristaBD.recuperarPorId(1);
+            Motorista motorista = daoMotoristaBD.recuperar("10654901430");
             cartaoZonaAzuls = modelCartaoZonaAzul.CartoesAtivosPor(motorista);
         } catch (Exception e) {
             Logger.getLogger(testaComprarCartao.class.getName()).log(Level.SEVERE, null, e);

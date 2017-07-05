@@ -92,7 +92,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
         return cartaoZonaAzul;
     }
-    
+    @Override
     public List<CartaoZonaAzul> CartoesAtivosPor(Motorista motorista){
         List<CartaoZonaAzul> cartaoZonaAzuls = daoCartaoZonaAzul.listarCartoesAtivos(motorista);
         
