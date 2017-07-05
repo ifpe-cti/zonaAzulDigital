@@ -20,7 +20,6 @@ import java.util.List;
 public interface DAOCartaoZonaAzul {
 
 //    public CartaoZonaAzul comprar(CartaoZonaAzul cartaoZonaAzul, Motorista motorista) throws DaoException;
-
     public CartaoZonaAzulInfo cadastrar(CartaoZonaAzulInfo cartaoZonaAzulInfo) throws DaoException;
 
     public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException;
@@ -29,5 +28,8 @@ public interface DAOCartaoZonaAzul {
 
     public BigDecimal preco(String cidade) throws DaoException;
 
+    public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m);
+
     public List<CartaoZonaAzul> listarTudo();
+
 }

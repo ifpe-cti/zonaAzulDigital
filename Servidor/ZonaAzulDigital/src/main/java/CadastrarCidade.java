@@ -41,7 +41,7 @@ public class CadastrarCidade extends HttpServlet {
             cartaoZonaAzulInfoInfo.setPreco(new BigDecimal(2));
             daoZonaAzul.cadastrar(cartaoZonaAzulInfoInfo);
         } catch (Exception ex) {
-            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastrarCidade.class.getName()).log(Level.SEVERE, null, ex);
         }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
