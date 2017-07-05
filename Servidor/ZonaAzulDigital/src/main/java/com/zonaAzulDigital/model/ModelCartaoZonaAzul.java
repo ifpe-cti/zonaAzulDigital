@@ -9,6 +9,7 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.Excecao.PlacaException;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
@@ -16,6 +17,7 @@ import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
+import com.zonaAzulDigital.interfaces.ModelPlacaInterface;
 import java.math.BigDecimal;
 
 /**
@@ -38,7 +40,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     }
 
     @Override
-    public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException {
+    public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException,PlacaException {
         try {
             motorista = this.daoMotorista.recuperarPorId(motorista.getId());
         } catch (NullPointerException ex) {
@@ -51,7 +53,10 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
             System.out.println(ex.getMessage());
         }
         
-
+        ModelPlacaInterface mp = new ModelPlaca(daoPlaca);
+        
+        mp.validar(placa);
+        
         BigDecimal preco = daoCartaoZonaAzul.preco("Garanhuns");
         CartaoZonaAzul novoCartaoZA = null;
         if (motorista.debitar(preco)) {

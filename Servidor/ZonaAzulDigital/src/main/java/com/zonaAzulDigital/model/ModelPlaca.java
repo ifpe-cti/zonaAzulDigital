@@ -37,7 +37,8 @@ public class ModelPlaca implements ModelPlacaInterface {
 
         return placa;
     }
-
+    
+    @Override
     public boolean validar(Placa p) throws PlacaException {
         if (p == null) {
             throw new PlacaException(PlacaException.NULL);
@@ -51,10 +52,10 @@ public class ModelPlaca implements ModelPlacaInterface {
         for (int i = 0; i < p.getLetras().length(); i++) {
             char c = p.getLetras().charAt(i);
             char num = p.getNumeros().charAt(i);
-            if (c <= 'a' && c >= 'z' || c <= 'A' && c >= 'Z') {
+            if (c < 'a' ||  c > 'z' || c < 'A' || c > 'Z') {
                 throw new PlacaException(PlacaException.LETRAS);
             }
-            if(num < '0' && num > '9'){
+            if(num < '0' || num > '9'){
                 throw new PlacaException(PlacaException.NUMEROS);
             }
         }

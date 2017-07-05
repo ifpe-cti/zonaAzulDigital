@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
+import com.zonaAzulDigital.Excecao.PlacaException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
@@ -79,7 +80,11 @@ public class CartaoZonaAzulService {
                 String jsonRetorno  = gson.toJson(motoristaRetorno);
                 
                 r = Response.ok(jsonRetorno).build();
-            }catch(MotoristaException me ){
+            }
+            catch(PlacaException pe){
+            r = Response.status(403).build();
+            }
+            catch(MotoristaException me ){
                 r = Response.status(406).build();
             }
             catch(LoginException le){
