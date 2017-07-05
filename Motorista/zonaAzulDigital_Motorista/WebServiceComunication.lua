@@ -81,7 +81,11 @@ local function eventoLogarMotorista(event)
 			
 			local motoristaJson = json.decode(event.response)
 			motoristaLogado = motoristaJson
+			
+			webService:consultarCartoesAtivos(motoristaLogado)
+
 			composer.gotoScene("TelaMotoristaInicial")
+			
 			
 		elseif event.status == 401 then
 			
@@ -238,5 +242,47 @@ end
 --Rest para pegar todos os cartoes ativos
 --================================================================================================================================================================
 
+
+local function eventoCartoesAtivos(event)
+	if not event.isError then
+
+		local response = json.decode(event.response)
+		
+		if event.status == 200 then
+			print(event.response)
+			cartoesAtivos = json.decode(event.response)
+			
+			
+			composer.gotoScene("TelaMotoristaInicial")
+		else
+			
+			print(event.response)
+        	print(event.status)
+        	print("erro interno no servidor")
+		end
+		
+	else
+		toast.show("Você não está conectado a internet!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.8}})  
+	end
+	return 
+end
+
+function webService:consultarCartoesAtivos(motorista)
+	
+	local headers = {}
+
+	headers["Content-Type"] = "application/json"
+
+	local dados = json.encode(motorista)
+
+	local params = {}
+	
+	params.headers = headers
+
+	params.body = dados
+	
+	network.request("http://"..endereco..":"..porta.."/TesteZonaAzul/rest/cartaozonaazul/cartoesativos", "POST", eventoCartoesAtivos, params)
+
+end
 --================================================================================================================================================================
 return webService
