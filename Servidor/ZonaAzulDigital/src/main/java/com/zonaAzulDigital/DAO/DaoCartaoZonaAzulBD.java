@@ -9,6 +9,7 @@ import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
+import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
@@ -98,6 +99,16 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
             throw new DaoException(DaoException.NAOCADASTRADO);
         }
         return cartaoZonaAzulInfo;
+    }
+    
+    public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m){
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        String hql = "FROM CompraCartaoZA c  WHERE c.motorista = :p1";
+        Query query = em.createQuery(hql);
+        List<CompraCartaoZA> cartoesComprados = query.getResultList();
+        
+
+        return query.getResultList();
     }
 
 }
