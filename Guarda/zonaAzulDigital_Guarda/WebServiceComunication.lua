@@ -34,7 +34,7 @@ function webService:consultarPlaca(letras, numeros)
 
 	params.body = placaJson
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/guarda/consultar", "GET", eventoConsultarPlaca, params)
+	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/consultar", "GET", eventoConsultarPlaca, params)
 
 end
 
