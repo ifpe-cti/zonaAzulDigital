@@ -46,6 +46,10 @@ function scene:create(event)
     
 end
 
+function scene:show( event )
+    
+end
+
 
 function atualizaDados(event)
     if event.phase == "began" then
@@ -64,5 +68,6 @@ function destroyMenu(event)
 end
 
 scene:addEventListener("create", scene)
+scene:addEventListener("show", scene)
 
 return scene
