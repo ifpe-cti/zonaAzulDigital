@@ -8,9 +8,12 @@ package com.zonaAzulDigital.controler;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.model.ModelMotorista;
+import java.math.BigDecimal;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -19,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class venderCredito {
+
     private Motorista motorista;
     private double valor;
     private ModelMotorista modelMotorista;
@@ -29,9 +33,16 @@ public class venderCredito {
         this.modelMotorista = new ModelMotorista(new DaoMotoristaBD());
     }
 
-    
-    public boolean comprar(){
-        return false;
+    public void comcluir() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            motorista.creditar(new BigDecimal(valor));
+            modelMotorista.atualizar(motorista);
+            context.addMessage(null, new FacesMessage("Opeção realizada"));
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(e.getMessage()));
+        }
+        
     }
 
     public Motorista getMotorista() {
@@ -49,9 +60,9 @@ public class venderCredito {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    public List<Motorista> listarTodosMotorista(){
+
+    public List<Motorista> listarTodosMotorista() {
         return modelMotorista.listarTodos();
     }
-    
+
 }
- 

@@ -9,13 +9,18 @@ package com.zonaAzulDigital.Excecao;
  *
  * @author JonasJr
  */
-public class DaoException extends Exception{
+public class DaoException extends Exception {
 
     public static final String NAOCADASTRADO = "Não foi possivel cadastrar";
     public static final String NAOATUALIZADO = "Não foi possivel atualizar";
     public static final String NAODELETADO = "Não foi possivel deletar";
-    public DaoException(String msg) {
-        super(msg);
+
+    public DaoException(String message) {
+        super(message);
     }
-    
+
+    public DaoException(String msg, Throwable causa) {
+        super(msg, causa);
+    }
+
 }

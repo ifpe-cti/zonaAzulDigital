@@ -44,7 +44,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         try {
             motorista = this.daoMotorista.recuperarPorId(motorista.getId());
         } catch (NullPointerException ex) {
-            throw new MotoristaException(MotoristaException.NULL);
+            throw new MotoristaException(MotoristaException.NULL, ex);
         }
         try {
 

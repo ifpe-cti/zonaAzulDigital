@@ -19,7 +19,7 @@ public interface DAOPlaca {
 
     public Placa recuperar(String letras, String numeros) throws DaoException;
 
-    public Placa recuperarPorId(Object objeto) throws DaoException;
+    public Placa recuperarPorId(int id) throws DaoException;
 
     public List<Placa> listarTudo();
 

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface ModelMotoristaInterface {
     Motorista cadastrar(Motorista motorista) throws DaoException, CpfException,MotoristaException;
-    Motorista atualizar(Motorista motorista) throws DaoException, CpfException;
+    Motorista atualizar(Motorista motorista) throws DaoException, CpfException, MotoristaException;
     Motorista recuperar(Motorista motorista) throws DaoException, CpfException;
     Motorista login(String cpf, String senha) throws LoginException;
     List<Motorista> listarTodos();

@@ -8,7 +8,6 @@ package com.zonaAzulDigital.tests.DAO;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
-import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import java.math.BigDecimal;
@@ -21,17 +20,14 @@ import java.util.List;
  */
 public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
 
-    private List<CartaoZonaAzulInfo> cidades;
     private List<CartaoZonaAzul> cartoes;
 
     public DAOCartaoZonaAzulFake() {
-        this.cidades = new ArrayList<>();
         this.cartoes = new ArrayList<>();
     }
 
     @Override
     public CartaoZonaAzulInfo cadastrar(CartaoZonaAzulInfo cartaoZonaAzulInfo) throws DaoException {
-        this.cidades.add(cartaoZonaAzulInfo);
         return cartaoZonaAzulInfo;
     }
 
@@ -53,17 +49,7 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
 
     @Override
     public BigDecimal preco(String cidade) throws DaoException {
-        BigDecimal valor = null;
-        try {
-            for (CartaoZonaAzulInfo cartaoZonaAzulInfo : this.cidades) {
-                if (cartaoZonaAzulInfo.getCidade().equals(cidade)) {
-                    valor = cartaoZonaAzulInfo.getPreco();
-                }
-            }
-        } catch (NumberFormatException ex) {
-            throw new DaoException(ex.getMessage());
-        }
-        return valor;
+       return  new BigDecimal(2);
     }
 
     @Override
