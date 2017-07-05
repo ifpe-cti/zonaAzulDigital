@@ -7,6 +7,8 @@ package com.zonaAzulDigital.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,17 +25,18 @@ import javax.persistence.Transient;
  * @author Samuel
  */
 @Entity
-public class CartaoZonaAzul implements Serializable{
+public class CartaoZonaAzul implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int numero;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Placa placa;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataEntacionamento;
+    private Date dataInicio;
     private BigDecimal valor;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataExpirar;
+    private Date dataFim;
     @Transient
     private String tempoRestante;
 
@@ -42,9 +45,11 @@ public class CartaoZonaAzul implements Serializable{
 
     public CartaoZonaAzul(Placa placa) {
         this.placa = placa;
-        this.dataEntacionamento = new Date();
+        this.dataInicio = new Date();
+        LocalDateTime ltd = LocalDateTime.now().plusHours(2);
+        this.dataFim = Date.from(ltd.atZone(ZoneId.systemDefault()).toInstant());
     }
-    
+
     public int getNumero() {
         return numero;
     }
@@ -59,14 +64,6 @@ public class CartaoZonaAzul implements Serializable{
 
     public void setPlaca(Placa placa) {
         this.placa = placa;
-    }
-    
-    public Date getData() {
-        return dataEntacionamento;
-    }
-
-    public void setData(Date data) {
-        this.dataEntacionamento = data;
     }
 
     public BigDecimal getValor() {
@@ -85,21 +82,20 @@ public class CartaoZonaAzul implements Serializable{
         this.tempoRestante = tempoRestante;
     }
 
-    public Date getDataEntacionamento() {
-        return dataEntacionamento;
+    public Date getDataInicio() {
+        return dataInicio;
     }
 
-    public void setDataEntacionamento(Date dataEntacionamento) {
-        this.dataEntacionamento = dataEntacionamento;
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public Date getDataExpirar() {
-        return dataExpirar;
+    public Date getDataFim() {
+        return dataFim;
     }
 
-    public void setDataExpirar(Date dataExpirar) {
-        this.dataExpirar = dataExpirar;
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
     }
-    
-    
+
 }

@@ -60,7 +60,7 @@ public class testeCompra extends HttpServlet {
         try {
             novoCartao = modelCartaoZonaAzul.comprar(m1, new Placa("MUS", "2277"));
         } catch (MotoristaException | DaoException |PlacaException ex) {
-            Logger.getLogger(NewServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(testeCompra.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         response.setContentType("text/html;charset=UTF-8");

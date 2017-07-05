@@ -19,6 +19,12 @@ import com.zonaAzulDigital.interfaces.DAOPlaca;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
 import com.zonaAzulDigital.interfaces.ModelPlacaInterface;
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 /**
  *
@@ -85,6 +91,20 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul();
         cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
         return cartaoZonaAzul;
+    }
+    
+    public List<CartaoZonaAzul> CartoesAtivosPor(Motorista motorista){
+        List<CartaoZonaAzul> cartaoZonaAzuls = daoCartaoZonaAzul.listarCartoesAtivos(motorista);
+        
+        for (CartaoZonaAzul cartaoZonaAzul : cartaoZonaAzuls) {
+            LocalTime horaExpirar = LocalDateTime.ofInstant(cartaoZonaAzul.getDataFim().toInstant(), ZoneId.systemDefault()).toLocalTime();
+            
+            
+            LocalTime tempoRestante = LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar ));
+            cartaoZonaAzul.setTempoRestante(tempoRestante.toString());
+        }
+        
+        return cartaoZonaAzuls;
     }
 
 }

@@ -8,6 +8,7 @@ package com.zonaAzulDigital.tests.DAO;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
+import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import java.math.BigDecimal;
@@ -55,6 +56,11 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
     @Override
     public List<CartaoZonaAzul> listarTudo() {
         return cartoes;
+    }
+
+    @Override
+    public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

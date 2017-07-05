@@ -83,9 +83,11 @@ public class CartaoZonaAzulService {
             }
             catch(PlacaException pe){
             r = Response.status(403).build();
+            Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, pe);
             }
             catch(MotoristaException me ){
                 r = Response.status(406).build();
+                Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, me);
             }
             catch(LoginException le){
                  r = Response.status(401).build();

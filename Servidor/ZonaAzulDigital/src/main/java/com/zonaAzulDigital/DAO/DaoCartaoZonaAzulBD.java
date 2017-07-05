@@ -15,6 +15,7 @@ import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -41,7 +42,6 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
 //        }
 //        return cartaoZonaAzul;
 //    }
-
     @Override
     public CartaoZonaAzul recuperarUltimo(Placa placa) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
@@ -79,7 +79,7 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
             String hql = "FROM CartaoZonaAzulInfo c WHERE c.cidade = :p1";
             Query query = em.createQuery(hql);
             query = query.setParameter("p1", cidade);
-            preco =((CartaoZonaAzulInfo)query.getSingleResult()).getPreco();
+            preco = ((CartaoZonaAzulInfo) query.getSingleResult()).getPreco();
         } catch (NumberFormatException ex) {
             throw new DaoException(ex.getMessage());
         }
@@ -100,15 +100,18 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
         }
         return cartaoZonaAzulInfo;
     }
-    
-    public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m){
-        EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM CompraCartaoZA c  WHERE c.motorista = :p1";
-        Query query = em.createQuery(hql);
-        List<CompraCartaoZA> cartoesComprados = query.getResultList();
-        
 
-        return query.getResultList();
+    @Override
+    public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m) {
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        String hql = "SELECT ca FROM  CompraCartaoZA co, CartaoZonaAzul ca WHERE co.motorista.id = :p1 and "
+                + "co.cartaoZonaAzul.numero = ca.numero and ca.dataExpirar > :p2";
+        Query query = em.createQuery(hql);
+        query.setParameter("p1", m.getId());
+        query.setParameter("p2", new Date(System.currentTimeMillis()));
+        List<CartaoZonaAzul> cartoesComprados = query.getResultList();
+
+        return cartoesComprados;
     }
 
 }

@@ -4,11 +4,20 @@
  * and open the template in the editor.
  */
 
-import com.zonaAzulDigital.DAO.DaoAdministradorDB;
 import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
 import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
+import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
+import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
+import com.zonaAzulDigital.model.ModelMotorista;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Samuel
+ * @author JonasJr
  */
-public class testeCompraCartao extends HttpServlet {
+public class testaComprarCartao extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,20 +40,34 @@ public class testeCompraCartao extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        DaoCartaoZonaAzulBD dao = new DaoCartaoZonaAzulBD();
-       // dao.listarCartoesAtivos(m)
-        
         response.setContentType("text/html;charset=UTF-8");
+        DaoMotoristaBD daoMotoristaBD = new DaoMotoristaBD();
+        ModelCartaoZonaAzul modelCartaoZonaAzul = new ModelCartaoZonaAzul(daoMotoristaBD, new DaoCartaoZonaAzulBD(),
+                new DaoCompraCartaoZADB(), new DaoPlacaBD());
+        List<CartaoZonaAzul> cartaoZonaAzuls = null;
+        try {
+
+            Motorista motorista = daoMotoristaBD.recuperarPorId(1);
+            cartaoZonaAzuls = modelCartaoZonaAzul.CartoesAtivosPor(motorista);
+        } catch (Exception e) {
+            Logger.getLogger(testaComprarCartao.class.getName()).log(Level.SEVERE, null, e);
+        }
         try (PrintWriter out = response.getWriter()) {
+
+
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testeCompraCartao</title>");            
+            out.println("<title>Servlet testaComprarCartao</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet testeCompraCartao at " + request.getContextPath() + "</h1>");
+            for (CartaoZonaAzul cartaoZonaAzul : cartaoZonaAzuls) {
+                            out.println("<h1>Placa: " + cartaoZonaAzul.getPlaca()+ "</h1><br/>");
+                            out.println("<h1>Data Compra: " + cartaoZonaAzul.getDataInicio() + "</h1><br/>");
+                            out.println("<h1>Tempo restante: " + cartaoZonaAzul.getTempoRestante() + "</h1><br/>");
+
+            }
             out.println("</body>");
             out.println("</html>");
         }
