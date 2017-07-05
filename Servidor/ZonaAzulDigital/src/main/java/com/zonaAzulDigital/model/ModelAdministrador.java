@@ -40,6 +40,7 @@ public class ModelAdministrador implements ModelAdministradorInterface{
     @Override
     public Adminstrador login(String cpf, String senha) throws DaoException, LoginException{
         return daoAdminstrador.login(cpf, senha);
+        
     }
 
     @Override
