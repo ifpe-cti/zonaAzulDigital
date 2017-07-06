@@ -5,8 +5,12 @@
  */
 
 import com.zonaAzulDigital.DAO.DaoCartaoZonaAzulBD;
+import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
+import com.zonaAzulDigital.DAO.DaoMotoristaBD;
+import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -35,8 +39,9 @@ public class recuperarUltimoCartao extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            DaoCartaoZonaAzulBD daoCartaoZonaAzulBD = new DaoCartaoZonaAzulBD();
-            CartaoZonaAzul cartaoZonaAzul = daoCartaoZonaAzulBD.recuperarUltimo(new Placa("khx", "0066"));
+            ModelCartaoZonaAzul modelCartaoZonaAzul = new ModelCartaoZonaAzul(new DaoMotoristaBD(), 
+                    new DaoCartaoZonaAzulBD(), new DaoCompraCartaoZADB(), new DaoPlacaBD());
+            CartaoZonaAzul cartaoZonaAzul = modelCartaoZonaAzul.recuperarUltimo(new Placa("khx", "0066"));
         } catch (Exception e) {
             Logger.getLogger(recuperarUltimoCartao.class.getName()).log(Level.SEVERE, null, e);
         }

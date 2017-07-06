@@ -6,6 +6,7 @@
 package com.zonaAzulDigital.tests.DAO;
 
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
@@ -19,7 +20,6 @@ import java.util.List;
 public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
     private List<CompraCartaoZA> compraCartaoZAs;
     
-
     public DAOCompraCartaoZAFake() {
         compraCartaoZAs = new ArrayList<>();
     }
@@ -28,6 +28,7 @@ public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
     
     @Override
     public CompraCartaoZA comprar(CompraCartaoZA compraCartaoZA) throws DaoException {
+        compraCartaoZA.getCartaoZonaAzul().setNumero(compraCartaoZAs.size() + 1);
         compraCartaoZA.setId(compraCartaoZAs.size() + 1);
         compraCartaoZAs.add(compraCartaoZA);
         return compraCartaoZA;
@@ -47,6 +48,14 @@ public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
             }
         }
         return returno;
+    }
+    
+    public List<CartaoZonaAzul> getListaCartoes(){
+        List<CartaoZonaAzul> listaCartoes = new ArrayList<>();
+        for (CompraCartaoZA compraCartaoZA : compraCartaoZAs) {
+            listaCartoes.add(compraCartaoZA.getCartaoZonaAzul());
+        }
+        return listaCartoes;
     }
     
 }
