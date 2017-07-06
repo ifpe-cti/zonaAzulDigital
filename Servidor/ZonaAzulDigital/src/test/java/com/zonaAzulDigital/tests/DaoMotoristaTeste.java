@@ -93,7 +93,7 @@ public class DaoMotoristaTeste {
     public void disparaExcecaoDeRecuperar()throws DaoException{
         excecao.expect(DaoException.class);
         
-        Motorista mc = dmbd.recuperar("04882");
+         dmbd.recuperar("04882");
         
     }
     
@@ -104,8 +104,21 @@ public class DaoMotoristaTeste {
         
         Motorista motorista = dmbd.cadastrar(m);
         
-        dmbd.login(motorista.getCpf(), motorista.getSenha());
+        Motorista m2 = dmbd.login(motorista.getCpf(), motorista.getSenha());
         
-        assertEquals("Eduardo", motorista.getNome());
+        assertEquals("Eduardo", m2.getNome());
     }
+    
+    
+    @Test
+    public void disparaExcecaoDeLogin() throws LoginException, DaoException{
+        excecao.expect(DaoException.class);
+         
+        m = new Motorista(0, "Eduardo", "11792558402", BigDecimal.ZERO, "edu");
+        
+        Motorista motorista = dmbd.cadastrar(m);
+        
+        dmbd.login(motorista.getCpf(), motorista.getSenha());
+    }
+        
 }
