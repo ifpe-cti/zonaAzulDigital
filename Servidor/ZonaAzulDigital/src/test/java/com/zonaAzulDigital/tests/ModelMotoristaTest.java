@@ -28,7 +28,7 @@ import org.junit.rules.ExpectedException;
  * @author Samuel
  */
 
-public class MotoristaTest {
+public class ModelMotoristaTest {
     
     public ModelMotoristaInterface md;
     

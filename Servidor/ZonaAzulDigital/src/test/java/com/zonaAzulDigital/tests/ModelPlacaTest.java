@@ -9,6 +9,6 @@ package com.zonaAzulDigital.tests;
  *
  * @author Samuel
  */
-public class PlacaTest {
+public class ModelPlacaTest {
     
 }
