@@ -24,7 +24,7 @@ import org.junit.rules.ExpectedException;
 public class DaoMotoristaTeste {
     public DAOMotorista dmbd;
     
-    public Motorista m;
+    public Motorista m, m1;
     
     
     @Rule
@@ -33,11 +33,11 @@ public class DaoMotoristaTeste {
     @Before
     public void before(){
         dmbd = new DaoMotoristaBD();
-        m = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
+        m1 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
     }
     @Test
     public void testandoCadastroMostorista() throws DaoException{
-        Motorista mc = dmbd.cadastrar(m);
+        Motorista mc = dmbd.cadastrar(m1);
         
          assertEquals("Carlos Eduardo",mc.getNome());
          
@@ -46,7 +46,15 @@ public class DaoMotoristaTeste {
     public void  disparaExcecaoDao() throws DaoException{
         excecao.expect(DaoException.class);
         
-         Motorista mc = new Motorista(0, "", "04982857407", BigDecimal.ZERO, "carlos");
+         Motorista mc = new Motorista();
          dmbd.cadastrar(mc);
+    }
+    
+    @Test
+    public void testandoMotoristaAtualizado() throws DaoException{
+       
+         Motorista mc = dmbd.atualizar(m1);
+        
+        assertEquals("Carlos Eduardo", mc.getNome());
     }
 }
