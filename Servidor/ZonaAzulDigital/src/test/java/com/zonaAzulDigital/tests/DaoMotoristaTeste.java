@@ -24,7 +24,7 @@ import org.junit.rules.ExpectedException;
 public class DaoMotoristaTeste {
     public DAOMotorista dmbd;
     
-    public Motorista m, m1, m2, m3;
+    public Motorista m, m1, m2, m3, m4;
     
     
     @Rule
@@ -34,8 +34,9 @@ public class DaoMotoristaTeste {
     public void before(){
         dmbd = new DaoMotoristaBD();
         m1 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
-        m2 =new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
-         m3 = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "xonas");
+        m2 = new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
+         m3 = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "jonas");
+         m4 = new Motorista(0, "Castanha", "04882857407", BigDecimal.ZERO, "carlos");
     }
     
     @Test
@@ -45,8 +46,9 @@ public class DaoMotoristaTeste {
          assertEquals("Carlos Eduardo",mc.getNome());
          
     }
+    
     @Test
-    public void  disparaExcecaoDao() throws DaoException{
+    public void  disparaExcecaoDeCadastro() throws DaoException{
         excecao.expect(DaoException.class);
         
          Motorista mc = new Motorista();
@@ -58,11 +60,11 @@ public class DaoMotoristaTeste {
        
        
        dmbd.cadastrar(m2);
-       m2.setNome("Samuardo");
+       m2.setNome("Tony");
        
        Motorista mc = dmbd.atualizar(m2);
         
-        assertEquals("Samuardo", mc.getNome());
+        assertEquals("Tony", mc.getNome());
     }
     
     @Test
@@ -77,10 +79,22 @@ public class DaoMotoristaTeste {
         assertEquals("Jonas", mc.getNome());
     }
     
+    @Test
     public void testeRecuperarPorCpf() throws DaoException{
-        Motorista mc = dmbd.recuperar( "04982857407");
         
-        assertEquals("Carlos Eduardo", mc.getNome());
+
+        dmbd.cadastrar(m4);
+        
+        Motorista mc = dmbd.recuperar("04882857407");
+        
+        assertEquals("Castanha", mc.getNome());
     }
     
+    @Test
+    public void disparaExcecaoDeRecuperar()throws DaoException{
+        excecao.expect(DaoException.class);
+        
+        Motorista mc = dmbd.recuperar("04882");
+        
+    }
 }
