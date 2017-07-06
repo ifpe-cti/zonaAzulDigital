@@ -13,7 +13,9 @@ import com.zonaAzulDigital.interfaces.DAOMotorista;
 import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  *
@@ -23,6 +25,10 @@ public class DaoMotoristaTeste {
     public DAOMotorista dmbd;
     
     public Motorista m;
+    
+    
+    @Rule
+    public ExpectedException excecao = ExpectedException.none();
     
     @Before
     public void before(){
@@ -36,5 +42,11 @@ public class DaoMotoristaTeste {
          assertEquals("Carlos Eduardo",mc.getNome());
          
     }
-    
+    @Test
+    public void  disparaExcecaoDao() throws DaoException{
+        excecao.expect(DaoException.class);
+        
+         Motorista mc = new Motorista(0, "", "04982857407", BigDecimal.ZERO, "carlos");
+         dmbd.cadastrar(mc);
+    }
 }
