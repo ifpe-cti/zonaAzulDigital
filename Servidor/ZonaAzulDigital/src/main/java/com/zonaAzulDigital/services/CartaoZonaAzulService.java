@@ -103,7 +103,7 @@ public class CartaoZonaAzulService {
     }
     
     @GET
-    @Path("/consultar")
+    @Path("/buscar")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response consultarCartao(String json){
         

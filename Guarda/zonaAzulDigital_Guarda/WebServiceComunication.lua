@@ -9,12 +9,15 @@ local function eventoConsultarPlaca(event)
         local response = json.decode(event.response)
         
         if event.status == 200 then
-
+            print(event.response)
             local cartaoJson = json.decode(event.response)
             cartaoConsultado = cartaoJson
 
+            composer.gotoScene("TelaGuarda")
+
         end
         print(event.response)
+        print(event.status)
     else
         print("Erro")
     end
@@ -22,7 +25,10 @@ local function eventoConsultarPlaca(event)
 end
 
 function webService:consultarPlaca(letras, numeros)
-    
+    local headers = {}
+
+    headers["Content-Type"] = "application/json"
+
     local placa = {}
 
     placa.letras = letras
@@ -31,10 +37,10 @@ function webService:consultarPlaca(letras, numeros)
 	local placaJson = json.encode(placa)
 
 	local params = {}
-
+    params.headers = headers
 	params.body = placaJson
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/guarda/consultar", "GET", eventoConsultarPlaca, params)
+	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/buscar", "GET", eventoConsultarPlaca, params)
 
 end
 

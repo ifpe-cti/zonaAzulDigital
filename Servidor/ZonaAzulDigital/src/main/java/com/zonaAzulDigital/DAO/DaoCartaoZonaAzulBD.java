@@ -45,13 +45,20 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
     @Override
     public CartaoZonaAzul recuperarUltimo(Placa placa) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
+//select * from cartaozonaazul as c, placa as p where c.placa_id = p.id and p.letras = 'KHX' 
+//and p.numeros='0066' and c.dataFim=(
+//select max(ca.dataFim) from cartaozonaazul as ca where ca.placa_id ='2');
 
-        String hql = "FROM CartaoZonaAzul c WHERE c.placa = :p1 ";
+//        String hql = "SELECT ca FROM CartaoZonaAzul ca, Palca p WHERE ca.placa.id = p.id and "
+//                + "p.letras = :p1 and p.numeros = :p2 and ca.dataFim = ( SELECT MAX(c.dataFim) "
+//                + "FROM CartaoZonaAzul c WHERE c.placa.id = ca.placa.id)";
+        String hql = "SELECT ca FROM CartaoZonaAzul ca, Placa p WHERE ca.placa.id = p.id and "
+                + "p.letras = :p1 and p.numeros = :p2 and ca.dataFim =( SELECT MAX(c.dataFim) "
+                + "FROM CartaoZonaAzul c , Placa p WHERE c.placa.id = p.id and p.letras = :p1 and p.numeros = :p2)";
         Query query = em.createQuery(hql);
-        query = query.setParameter("p1", placa);
-        List<CartaoZonaAzul> cartoes = query.getResultList();
-        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) cartoes.get(cartoes.size() - 1);
-
+        query = query.setParameter("p1", placa.getLetras());
+        query = query.setParameter("p2", placa.getNumeros());
+        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) query.getSingleResult();
         return cartaoZonaAzul;
     }
 
