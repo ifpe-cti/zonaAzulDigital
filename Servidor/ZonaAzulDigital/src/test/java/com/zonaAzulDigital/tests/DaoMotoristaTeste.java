@@ -19,12 +19,12 @@ import org.junit.rules.ExpectedException;
 
 /**
  *
- * @author Samuel
+ * @author Carlos Eduardo
  */
 public class DaoMotoristaTeste {
     public DAOMotorista dmbd;
     
-    public Motorista m, m1;
+    public Motorista m, m1, m2, m3;
     
     
     @Rule
@@ -34,7 +34,10 @@ public class DaoMotoristaTeste {
     public void before(){
         dmbd = new DaoMotoristaBD();
         m1 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
+        m2 =new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
+         m3 = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "xonas");
     }
+    
     @Test
     public void testandoCadastroMostorista() throws DaoException{
         Motorista mc = dmbd.cadastrar(m1);
@@ -53,8 +56,27 @@ public class DaoMotoristaTeste {
     @Test
     public void testandoMotoristaAtualizado() throws DaoException{
        
-         Motorista mc = dmbd.atualizar(m1);
+       
+       dmbd.cadastrar(m2);
+       m2.setNome("Samuardo");
+       
+       Motorista mc = dmbd.atualizar(m2);
         
-        assertEquals("Carlos Eduardo", mc.getNome());
+        assertEquals("Samuardo", mc.getNome());
     }
+    
+    @Test
+    public void testeRecuperarPorId() throws DaoException{
+       
+        
+       dmbd.cadastrar(m3);
+       
+        
+        Motorista mc = dmbd.recuperarPorId(1);
+        
+        assertEquals("Jonas", mc.getNome());
+    }
+    
+    
+    
 }
