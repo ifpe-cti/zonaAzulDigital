@@ -21,15 +21,15 @@ function scene:create()
 
     local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
 
-    iconeTxt:translate( display.contentWidth/2, display.contentHeight/10 * 1.75)
+  iconeTxt:translate( display.contentWidth/2*1.014, display.contentHeight/10 + 55)
 
-    iconeTxt:scale(0.3,0.3)
+    iconeTxt:scale(0.5,0.5)
 
     local linha1 = display.newLine(display.contentWidth/6 * 1.3, display.contentHeight/10 * 4.1, display.contentWidth/6 * 2.73, display.contentHeight/10 * 4.1)
     linha1:setStrokeColor(0.2, 0.2, 1, 1)
     linha1.strokeWidth = 2.65
 
-    local linha2 = display.newLine(display.contentWidth/6 * 3.29, display.contentHeight/10 * 4.1, display.contentWidth/6 * 4.73, display.contentHeight/10 * 4.1)
+    local linha2 = display.newLine(display.contentWidth/6 * 3.15, display.contentHeight/10 * 4.1, display.contentWidth/6 * 4.85, display.contentHeight/10 * 4.1)
     linha2:setStrokeColor(0.2, 0.2, 1, 1)
     linha2.strokeWidth = 2.65
     
@@ -54,7 +54,7 @@ function scene:create()
     
     local placaText = display.newText({text = "Placa: ", x = display.contentWidth/2, y = display.contentHeight/10 * 8.5,whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
     
-    local dataText = display.newText({text = "Horário: ", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
+    local dataText = display.newText({text = "Tempo Restante: ", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
    
     
 
@@ -90,7 +90,7 @@ function scene:show(event)
         letras.placeholder = "letras"
         letras.align = "center"
       
-        numeros = native.newTextField(display.contentWidth/3 * 2, display.contentHeight/2.7, display.contentWidth/4, display.contentHeight/15)
+        numeros = native.newTextField(display.contentWidth/3 * 2, display.contentHeight/2.7, display.contentWidth/3.5, display.contentHeight/15)
         numeros.placeholder = "numeros"
         numeros.align = "center"
         numeros.inputType = "number"
