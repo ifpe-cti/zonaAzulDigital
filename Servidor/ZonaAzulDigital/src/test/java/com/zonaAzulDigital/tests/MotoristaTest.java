@@ -15,6 +15,7 @@ import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
 import com.zonaAzulDigital.tests.DAO.DAOMotoristaFake;
 import java.math.BigDecimal;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -56,6 +57,7 @@ public class MotoristaTest {
     @Test
     public void deveDispararExcecaoDeCPFVazio() throws CpfException, DaoException, MotoristaException{
         excecao.expect(CpfException.class);
+        excecao.expectMessage(CpfException.NULL);
         m = new Motorista(1, "Samuel", "", BigDecimal.ZERO, "alabala");
         md.cadastrar(m);
     }
@@ -63,6 +65,7 @@ public class MotoristaTest {
     @Test
     public void deveDispararExcecaoDeCPFNull() throws CpfException, DaoException, MotoristaException{
         excecao.expect(CpfException.class);
+        excecao.expectMessage(CpfException.NULL);
         m = new Motorista(1, "Samuel", null, BigDecimal.ZERO, "alabala");
         md.cadastrar(m);
     }
@@ -77,6 +80,7 @@ public class MotoristaTest {
     @Test
     public void deveDispararExcecaoDeMotoristaNull() throws DaoException, CpfException, MotoristaException{
         excecao.expect(MotoristaException.class);
+        excecao.expectMessage(MotoristaException.NULL);
         m = null;
         md.cadastrar(m);
     }
@@ -84,14 +88,14 @@ public class MotoristaTest {
     @Test
     public void deveDispararExcecaoDeMotoristaComNomeVazio() throws DaoException, CpfException, MotoristaException{
         excecao.expect(MotoristaException.class);
-        
+        excecao.expectMessage(MotoristaException.NOMEOBRIGATORIO);
         md.cadastrar(new Motorista(1, "", "11791558402", BigDecimal.ZERO, "samuel"));
     }
     
     @Test
     public void deveDispararExcecaoDeMotoristaComNomeNull() throws DaoException, CpfException, MotoristaException{
         excecao.expect(MotoristaException.class);
-        
+        excecao.expectMessage(MotoristaException.NOMEOBRIGATORIO);
         md.cadastrar(new Motorista(1, null, "11791558402", BigDecimal.ZERO, "samuel"));
     }
     
@@ -99,14 +103,14 @@ public class MotoristaTest {
     @Test
     public void deveDispararExcecaoDeMotoristaComSenhaVazia() throws DaoException, CpfException, MotoristaException{
         excecao.expect(MotoristaException.class);
-        
+        excecao.expectMessage(MotoristaException.SENHAOBRIGATORIA);
         md.cadastrar(new Motorista(1, "Samuel", "11791558402", BigDecimal.ZERO, ""));
     }
     
     @Test
     public void deveDispararExcecaoDeMotoristaComSenhaNull() throws DaoException, CpfException, MotoristaException{
         excecao.expect(MotoristaException.class);
-        
+        excecao.expectMessage(MotoristaException.SENHAOBRIGATORIA);
         md.cadastrar(new Motorista(1, "Samuel", "11791558402", BigDecimal.ZERO, null));
     }
     @Test
@@ -118,7 +122,7 @@ public class MotoristaTest {
     @Test
     public void deveDispararExcecaoDeMotoristaComCreditoNegativo() throws DaoException, CpfException, MotoristaException{
         excecao.expect(MotoristaException.class);
-        
+        excecao.expectMessage(MotoristaException.CREDITOINVALIDO);
         md.cadastrar(new Motorista(1, "Samuel", "11791558402", new BigDecimal(-1), "Samuel"));
     }
     
@@ -142,5 +146,54 @@ public class MotoristaTest {
         Motorista motoristaRecuperado = md.login(m1.getCpf(),m1.getSenha());
         
         assertEquals("Samuel",motoristaRecuperado.getNome());
+    }
+    
+    @Test
+    public void deveLevantarExcecaoComLoginInvalido() throws DaoException, MotoristaException, CpfException, LoginException{
+        excecao.expect(LoginException.class);
+        excecao.expectMessage(LoginException.FALHOU);
+
+        md.cadastrar(m1);
+        
+        md.login("","");
+     }
+    @Test
+    public void deveAtualizarMotorista() throws DaoException, CpfException, MotoristaException{
+      md.cadastrar(m1);
+        
+        Motorista m = new Motorista(0, "Samuel Soares", "11791558402", BigDecimal.ZERO, "samuleu");
+        
+       Motorista mAtualizado =  md.atualizar(m);
+       
+        assertEquals(m.getNome(), mAtualizado.getNome());
+    }
+    
+    @Test
+    public void deveRecuperarMotoristaDaLista() throws DaoException, CpfException, MotoristaException{
+       md.cadastrar(m1); 
+       Motorista m =  md.recuperar(m1);
+       assertEquals("Samuel",m.getNome());
+    }
+    
+    @Test
+    public void deveLevantarExcecaoQuandoRecuperarMotoristaDaLista() throws DaoException, CpfException, MotoristaException{
+       excecao.expect(DaoException.class);
+       md.cadastrar(m1); 
+       Motorista m =  md.recuperar(m1);
+       if (m != null){
+           throw new DaoException("Não foi possivel atualizar");
+       }
+    }
+    
+    @Test
+    public void deveRetornarUmaListaDeMotoristasCadastrados() throws DaoException, CpfException, MotoristaException{
+        md.cadastrar(m1);
+        md.cadastrar(m2); 
+        md.cadastrar(m3); 
+        List<Motorista> lista = md.listarTodos();
+        
+        assertEquals("Samuel", lista.get(0).getNome());
+        assertEquals("Carlos Eduardo", lista.get(1).getNome());
+        assertEquals("Jonas", lista.get(2).getNome());
     }
 }
