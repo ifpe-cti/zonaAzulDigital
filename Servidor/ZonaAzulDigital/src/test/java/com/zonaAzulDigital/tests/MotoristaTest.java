@@ -143,4 +143,45 @@ public class MotoristaTest {
         
         assertEquals("Samuel",motoristaRecuperado.getNome());
     }
+    
+    @Test
+    public void deveLevantarExcecaoComLoginInvalido() throws DaoException, MotoristaException, CpfException, LoginException{
+        excecao.expect(LoginException.class);
+        
+        md.cadastrar(m1);
+        
+        md.login("","");
+     }
+    @Test
+    public void deveAtualizarMotorista() throws DaoException, CpfException, MotoristaException{
+      md.cadastrar(m1);
+        
+        Motorista m = new Motorista(0, "Samuel Soares", "11791558402", BigDecimal.ZERO, "samuleu");
+        
+       Motorista mAtualizado =  md.atualizar(m);
+       
+        assertEquals(m.getNome(), mAtualizado.getNome());
+    }
+    
+    @Test
+    public void deveRecuperarMotoristaDaLista() throws DaoException, CpfException, MotoristaException{
+       md.cadastrar(m1); 
+       Motorista m =  md.recuperar(m1);
+       assertEquals("Samuel",m.getNome());
+    }
+    
+    @Test
+    public void deveLevantarExcecaoQuandoRecuperarMotoristaDaLista() throws DaoException, CpfException, MotoristaException{
+       excecao.expect(DaoException.class);
+       md.cadastrar(m1); 
+       Motorista m =  md.recuperar(m1);
+       if (m != null){
+           throw new DaoException("Não foi possivel atualizar");
+       }
+    }
+    
+    @Test
+    public void deveRetornarUmaListaDeMotoristaCadastrados(){
+        
+    }
 }
