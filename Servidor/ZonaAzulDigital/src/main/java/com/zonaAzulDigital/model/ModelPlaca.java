@@ -23,12 +23,12 @@ public class ModelPlaca implements ModelPlacaInterface {
         this.daoPlaca = daoPlaca;
     }
 
-    @Override
-    public Placa cadastrar(Placa objeto) throws DaoException {
-
-        objeto = (Placa) this.daoPlaca.cadastrar(objeto);
-        return objeto;
-    }
+//    @Override
+//    public Placa cadastrar(Placa objeto) throws DaoException {
+//
+//        objeto = (Placa) this.daoPlaca.cadastrar(objeto);
+//        return objeto;
+//    }
 
     @Override
     public Placa recuperar(Placa placa) throws DaoException {
