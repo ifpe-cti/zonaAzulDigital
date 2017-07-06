@@ -86,7 +86,7 @@ end
 
 
 function scene:hide(event)
-    if event.phase == "will" then
+    if event.phase == "did" then
         
         display.remove(senha)
         display.remove(letras)
