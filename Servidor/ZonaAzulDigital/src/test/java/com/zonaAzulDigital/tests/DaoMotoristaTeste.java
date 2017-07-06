@@ -8,6 +8,7 @@ package com.zonaAzulDigital.tests;
 
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import java.math.BigDecimal;
@@ -24,7 +25,7 @@ import org.junit.rules.ExpectedException;
 public class DaoMotoristaTeste {
     public DAOMotorista dmbd;
     
-    public Motorista m, m1, m2, m3, m4;
+    public Motorista m, m1, m2;
     
     
     @Rule
@@ -34,9 +35,7 @@ public class DaoMotoristaTeste {
     public void before(){
         dmbd = new DaoMotoristaBD();
         m1 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
-        m2 = new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
-         m3 = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "jonas");
-         m4 = new Motorista(0, "Castanha", "04882857407", BigDecimal.ZERO, "carlos");
+     
     }
     
     @Test
@@ -58,11 +57,11 @@ public class DaoMotoristaTeste {
     @Test
     public void testandoMotoristaAtualizado() throws DaoException{
        
+       m =new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
+       dmbd.cadastrar(m);
+       m.setNome("Tony");
        
-       dmbd.cadastrar(m2);
-       m2.setNome("Tony");
-       
-       Motorista mc = dmbd.atualizar(m2);
+       Motorista mc = dmbd.atualizar(m);
         
         assertEquals("Tony", mc.getNome());
     }
@@ -70,8 +69,8 @@ public class DaoMotoristaTeste {
     @Test
     public void testeRecuperarPorId() throws DaoException{
        
-        
-       dmbd.cadastrar(m3);
+       m = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "jonas");
+       dmbd.cadastrar(m);
        
         
         Motorista mc = dmbd.recuperarPorId(1);
@@ -82,8 +81,8 @@ public class DaoMotoristaTeste {
     @Test
     public void testeRecuperarPorCpf() throws DaoException{
         
-
-        dmbd.cadastrar(m4);
+        m = new Motorista(0, "Castanha", "04882857407", BigDecimal.ZERO, "carlos");
+        dmbd.cadastrar(m);
         
         Motorista mc = dmbd.recuperar("04882857407");
         
@@ -96,5 +95,17 @@ public class DaoMotoristaTeste {
         
         Motorista mc = dmbd.recuperar("04882");
         
+    }
+    
+    @Test
+    public void testeDeLogin() throws LoginException, DaoException{
+        
+        m = new Motorista(0, "Eduardo", "11792558402", BigDecimal.ZERO, "edu");
+        
+        Motorista motorista = dmbd.cadastrar(m);
+        
+        dmbd.login(motorista.getCpf(), motorista.getSenha());
+        
+        assertEquals("Eduardo", motorista.getNome());
     }
 }
