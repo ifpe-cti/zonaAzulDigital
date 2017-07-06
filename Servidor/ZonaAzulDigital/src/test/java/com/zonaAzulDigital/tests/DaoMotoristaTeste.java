@@ -77,6 +77,10 @@ public class DaoMotoristaTeste {
         assertEquals("Jonas", mc.getNome());
     }
     
-    
+    public void testeRecuperarPorCpf() throws DaoException{
+        Motorista mc = dmbd.recuperar( "04982857407");
+        
+        assertEquals("Carlos Eduardo", mc.getNome());
+    }
     
 }
