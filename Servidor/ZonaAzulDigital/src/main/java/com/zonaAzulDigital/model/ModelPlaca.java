@@ -40,7 +40,9 @@ public class ModelPlaca implements ModelPlacaInterface {
     
     @Override
     public boolean validar(Placa p) throws PlacaException {
-        p.setLetras(p.getLetras().toUpperCase());
+//       if (p != null){
+//           p.setLetras(p.getLetras().toUpperCase());
+//       }
         
         if (p == null) {
             throw new PlacaException(PlacaException.NULL);
