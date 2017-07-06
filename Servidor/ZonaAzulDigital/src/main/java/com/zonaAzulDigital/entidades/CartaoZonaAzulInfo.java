@@ -16,12 +16,19 @@ import javax.persistence.Id;
  */
 @Entity
 public class CartaoZonaAzulInfo implements Serializable {
+
     @Id
     private String cidade;
     private BigDecimal preco;
 
-    
-    
+    public CartaoZonaAzulInfo() {
+    }
+
+    public CartaoZonaAzulInfo(String cidade, BigDecimal preco) {
+        this.cidade = cidade;
+        this.preco = preco;
+    }
+
     public String getCidade() {
         return cidade;
     }
@@ -37,7 +44,5 @@ public class CartaoZonaAzulInfo implements Serializable {
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
-    
-    
-    
+
 }

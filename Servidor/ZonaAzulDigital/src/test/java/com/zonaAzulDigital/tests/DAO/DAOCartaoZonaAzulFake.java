@@ -13,6 +13,7 @@ import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,23 +35,35 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
 
     @Override
     public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CartaoZonaAzul ultimo = null;
+        for (CartaoZonaAzul carto : cartoes) {
+            if (carto.getPlaca().getLetras().equals(placa.getLetras())
+                    && carto.getPlaca().getNumeros().equals(placa.getNumeros())) {
+                if (ultimo == null) {
+                    ultimo = carto;
+                } else if (ultimo.getDataFim().compareTo(carto.getDataFim()) == -1) {
+                    ultimo = carto;
+                }
+            }
+        }
+        return ultimo;
     }
 
     @Override
     public CartaoZonaAzul recuperarPorId(int id) throws DaoException {
         CartaoZonaAzul retorno = null;
-        try {
-            retorno = this.cartoes.get(id);
-        } catch (NullPointerException ex) {
-
+        for (CartaoZonaAzul carto : cartoes) {
+            if (carto.getNumero() == id) {
+                retorno = carto;
+                break;
+            }
         }
         return retorno;
     }
 
     @Override
     public BigDecimal preco(String cidade) throws DaoException {
-       return  new BigDecimal(2);
+        return new BigDecimal(2);
     }
 
     @Override
@@ -60,7 +73,17 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
 
     @Override
     public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<CartaoZonaAzul> cartoesAtivos = new ArrayList<>();
+        if (m.getCpf().equals("106549011430")) {
+            cartoesAtivos.add(new CartaoZonaAzul(new Placa("MUS", "2277")));
+            cartoesAtivos.add(new CartaoZonaAzul(new Placa("KHX", "0066")));
+            cartoesAtivos.add(new CartaoZonaAzul(new Placa("KFW", "8983")));
+        }
+        return cartoesAtivos;
+    }
+
+    public void setListaCartoes(List<CartaoZonaAzul> lista) {
+        this.cartoes = lista;
     }
 
 }

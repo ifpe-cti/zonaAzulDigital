@@ -46,30 +46,35 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     }
 
     @Override
-    public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException,PlacaException {
+    public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException, PlacaException {
         try {
             motorista = this.daoMotorista.recuperarPorId(motorista.getId());
+
         } catch (NullPointerException ex) {
             throw new MotoristaException(MotoristaException.NULL, ex);
         }
+        if (motorista == null) {
+            throw new MotoristaException(MotoristaException.NAOENCONTRADO);
+        }
         try {
 
-           placa = this.daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
+            placa = this.daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         ModelPlacaInterface mp = new ModelPlaca(daoPlaca);
-        
+
         mp.validar(placa);
-        
+
         BigDecimal preco = daoCartaoZonaAzul.preco("Garanhuns");
         CartaoZonaAzul novoCartaoZA = null;
         if (motorista.debitar(preco)) {
             novoCartaoZA = new CartaoZonaAzul(placa);
             novoCartaoZA.setValor(preco);
             CompraCartaoZA compraCartaoZA = new CompraCartaoZA(motorista, novoCartaoZA);
-            daoCompraCartaoZA.comprar(compraCartaoZA);
+            compraCartaoZA = daoCompraCartaoZA.comprar(compraCartaoZA);
+            novoCartaoZA = compraCartaoZA.getCartaoZonaAzul();
 
         } else {
             throw new MotoristaException(MotoristaException.CREDITOINSUFICIENTE);
@@ -88,23 +93,22 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
 
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
-        CartaoZonaAzul cartaoZonaAzul = new CartaoZonaAzul();
-        cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
+        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
         return cartaoZonaAzul;
     }
+
     @Override
-    public List<CartaoZonaAzul> CartoesAtivosPor(Motorista motorista){
+    public List<CartaoZonaAzul> CartoesAtivosPor(Motorista motorista) {
         List<CartaoZonaAzul> cartaoZonaAzuls = daoCartaoZonaAzul.listarCartoesAtivos(motorista);
-        
+
         for (CartaoZonaAzul cartaoZonaAzul : cartaoZonaAzuls) {
             LocalTime horaExpirar = LocalDateTime.ofInstant(cartaoZonaAzul.getDataFim().toInstant(), ZoneId.systemDefault()).toLocalTime();
-            
-            
-            LocalTime tempoRestante = LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar ));
+
+            LocalTime tempoRestante = LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar));
             cartaoZonaAzul.setTempoRestante(tempoRestante.toString());
         }
-        
+
         return cartaoZonaAzuls;
     }
-
+    
 }
