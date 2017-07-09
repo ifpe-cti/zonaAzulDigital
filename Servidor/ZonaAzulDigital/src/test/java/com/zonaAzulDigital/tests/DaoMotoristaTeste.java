@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Assert;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -49,13 +50,13 @@ public class DaoMotoristaTeste {
         
         Motorista mc = dmbd.cadastrar(m);
         
-         assertEquals("Carlos Eduardo",mc.getNome());
-         
+        Assert.assertNotEquals(0, mc.getId());
     }
     
     @Test
     public void  disparaExcecaoDeCadastro() throws DaoException{
         excecao.expect(DaoException.class);
+        excecao.expectMessage(DaoException.NAOCADASTRADO);
         
          Motorista mc = new Motorista();
          dmbd.cadastrar(mc);
@@ -105,42 +106,6 @@ public class DaoMotoristaTeste {
     }
     
     @Test
-    public void testeDeLogin() throws LoginException, DaoException{
-        
-        m = new Motorista(0, "Eduardo", "11792558402", BigDecimal.ZERO, "edu");
-        
-        Motorista motorista = dmbd.cadastrar(m);
-        
-        Motorista motorista1 = dmbd.login(motorista.getCpf(), motorista.getSenha());
-        
-        assertEquals("Eduardo", motorista1.getNome());
-    }
-    
-    
-    @Test
-    public void disparaExcecaoDeLoginCpfErrado() throws  DaoException, LoginException{
-        excecao.expect(LoginException.class);
-        excecao.expectMessage(LoginException.FALHOU);
-        m = new Motorista(0, "Evandro", "11793558402", BigDecimal.ZERO, "eva");
-        
-        Motorista motorista = dmbd.cadastrar(m);
-        
-        dmbd.login("12312312312", motorista.getSenha());
-    }
-    
-    @Test
-    public void disparaExcecaoDeLoginSenhaErrado() throws DaoException, LoginException{
-        excecao.expect(LoginException.class);
-        excecao.expectMessage(LoginException.FALHOU);
-        
-        m = new Motorista(0, "Izaquias", "11793658402", BigDecimal.ZERO, "eva");
-        
-        Motorista motorista = dmbd.cadastrar(m);
-        
-        dmbd.login(motorista.getCpf(), "asd");
-    }
-    
-    @Test
     public void testeDeListarTodos() throws DaoException{
         
         dmbd.cadastrar(m1);
@@ -149,9 +114,9 @@ public class DaoMotoristaTeste {
         
         List<Motorista> lm =  dmbd.listarTudo();
         
-        assertEquals("Antonio", lm.get(7).getNome());
-        assertEquals("Joao", lm.get(8).getNome());
-        assertEquals("Fabricio", lm.get(9).getNome());
+        assertEquals("Antonio", lm.get(4).getNome());
+        assertEquals("Joao", lm.get(5).getNome());
+        assertEquals("Fabricio", lm.get(6).getNome());
         
     }
 }
