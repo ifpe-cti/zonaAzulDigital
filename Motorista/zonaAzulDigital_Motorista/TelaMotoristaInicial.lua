@@ -50,6 +50,7 @@ function scene:create(event)
     )
     local rectSaldo = display.newRoundedRect(  display.contentWidth/7*1.8, display.contentHeight/7,display.contentWidth/3*1.3,  display.contentHeight/15, 9 )
     rectSaldo:setFillColor( 0.2, 0.2, 1, 1 )
+    webServiceComunication:consultarCartoesAtivos(motoristaLogado)
 
     local textoCartoes = display.newText({text = "Cartões Ativos:",x = display.contentWidth/2,y = display.contentHeight/7* 1.5,fontSize = 20})
     local textoSaldo = display.newText({text = "Saldo:",x = display.contentWidth/7 * 1.1 ,y = display.contentHeight/7,fontSize = 20})
