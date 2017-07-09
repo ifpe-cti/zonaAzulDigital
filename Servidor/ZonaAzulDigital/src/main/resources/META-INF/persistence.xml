@@ -15,7 +15,6 @@
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/zonaazuldigital?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="zonaazuldigital"/>
       <property name="javax.persistence.jdbc.password" value="1234"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

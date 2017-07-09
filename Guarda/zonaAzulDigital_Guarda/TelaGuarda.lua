@@ -12,7 +12,7 @@ local letras, numeros
 
 function scene:create()
     local sceneGroup = self.view
-
+    --url do icone free :  https://icons8.com/icon/245/car
     local iconeCar = display.newImage("Imagens/Car.png")
 
     iconeCar:translate(display.contentWidth/2, display.contentHeight/10)
@@ -21,7 +21,7 @@ function scene:create()
 
     local iconeTxt = display.newImage("Imagens/ZonaAzulLogo.png")
 
-  iconeTxt:translate( display.contentWidth/2*1.014, display.contentHeight/10 + 55)
+    iconeTxt:translate( display.contentWidth/2*1.014, display.contentHeight/10 + 55)
 
     iconeTxt:scale(0.5,0.5)
 
@@ -40,7 +40,7 @@ function scene:create()
     local placa = display.newText({text = "Placa", x = display.contentWidth/2, y = display.contentHeight/10 * 2.75, fontSize = 25})
     placa:setFillColor( 0.2, 0.2, 1, 1)
 
-    local consultar = widget.newButton({label = "consultar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/2* 1, width = display.contentWidth/1.5, height = display.contentHeight/12,  shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0.5 }, over={ 0.8, 0.8, 1} } })
+    local consultar = widget.newButton({label = "Consultar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/2* 1, width = display.contentWidth/1.5, height = display.contentHeight/12,  shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0.5 }, over={ 0.8, 0.8, 1} } })
 
     --cartaoConsultado.placa.letras cartaoConsultado.placa.numeros cartaoConsultado.dataEntacionamento  cartaoConsultado.numero  
 
@@ -50,11 +50,11 @@ function scene:create()
 
     local cartaoText = display.newText({text = "CARTÃO", x = display.contentWidth/2, y = display.contentHeight/10 * 6.5, whidth = display.contentWidth/2, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "center"})
     cartaoText:setFillColor(0.2, 0.2, 1, 1)
-    local numeroText = display.newText({text = "Numero: ", x = display.contentWidth/2, y = display.contentHeight/10 * 7.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
+    numeroText = display.newText({text = "Número: ", x = display.contentWidth/2, y = display.contentHeight/10 * 7.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
     
-    local placaText = display.newText({text = "Placa: ", x = display.contentWidth/2, y = display.contentHeight/10 * 8.5,whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
+    placaText = display.newText({text = "Placa: ", x = display.contentWidth/2, y = display.contentHeight/10 * 8.5,whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
     
-    local dataText = display.newText({text = "Tempo Restante: ", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
+    dataText = display.newText({text = "Tempo Restante: ", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
    
     consultar:addEventListener("touch", consultarPlaca)
 
@@ -72,23 +72,23 @@ function scene:create()
 end
 
 function scene:show(event)
-    if event.phase == "did" then
+    if event.phase == "will" then
         letras = native.newTextField(display.contentWidth/3, display.contentHeight/2.7, display.contentWidth/4, display.contentHeight/15)
-        letras.placeholder = "letras"
+        letras.placeholder = "Letras"
         letras.align = "center"
       
         numeros = native.newTextField(display.contentWidth/3 * 2, display.contentHeight/2.7, display.contentWidth/3.5, display.contentHeight/15)
-        numeros.placeholder = "numeros"
+        numeros.placeholder = "Números"
         numeros.align = "center"
         numeros.inputType = "number"
 
         if cartaoConsultado.letras ~= nil then
         
-            numeroText = numeroText .. cartaoConsultado.numero
+            numeroText.text = numeroText.text .. cartaoConsultado.numero
 
-            placaText = placaText .. cartaoConsultado.placa.letras .. "-" .. cartaoConsultado.placa.numeros
+            placaText.text = placaText.text .. cartaoConsultado.placa.letras .. "-" .. cartaoConsultado.placa.numeros
 
-            dataText = dataText .. cartaoConsultado.dataFim
+            dataText.text = dataText.text .. cartaoConsultado.dataFim
         
 
         end     
