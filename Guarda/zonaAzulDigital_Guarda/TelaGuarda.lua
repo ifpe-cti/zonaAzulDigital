@@ -56,19 +56,6 @@ function scene:create()
     
     local dataText = display.newText({text = "Tempo Restante: ", x = display.contentWidth/2, y = display.contentHeight/10 * 9.5, whidth = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 20, Textalign = "left"})
    
-    
-    print(cartaoConsultado.letras)
-    if cartaoConsultado.letras ~= nil then
-        
-        numeroText = numeroText .. cartaoConsultado.numero
-
-        placaText = placaText .. cartaoConsultado.placa.letras .. "-" .. cartaoConsultado.placa.numeros
-
-        dataText = dataText .. cartaoConsultado.dataFim
-        
-
-    end
-
     consultar:addEventListener("touch", consultarPlaca)
 
 
@@ -95,7 +82,16 @@ function scene:show(event)
         numeros.align = "center"
         numeros.inputType = "number"
 
+        if cartaoConsultado.letras ~= nil then
         
+            numeroText = numeroText .. cartaoConsultado.numero
+
+            placaText = placaText .. cartaoConsultado.placa.letras .. "-" .. cartaoConsultado.placa.numeros
+
+            dataText = dataText .. cartaoConsultado.dataFim
+        
+
+        end     
     end
 end
 
