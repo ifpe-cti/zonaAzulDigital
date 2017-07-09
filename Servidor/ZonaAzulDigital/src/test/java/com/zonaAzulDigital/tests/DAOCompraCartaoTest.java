@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -34,7 +35,7 @@ public class DAOCompraCartaoTest {
     public void before() {
         dcza = new DaoCompraCartaoZADB();
     }
-
+    @Ignore
     @Test
     public void deveEfetuarCompra() throws DaoException {
         Motorista m = new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
@@ -45,7 +46,7 @@ public class DAOCompraCartaoTest {
 
         assertEquals(m.getCpf(), compraRetorno.getMotorista().getCpf());
     }
-
+    @Ignore
     @Test
     public void deveLevantarExcecaoDeCompra() throws DaoException {
         excecao.expect(DaoException.class);
