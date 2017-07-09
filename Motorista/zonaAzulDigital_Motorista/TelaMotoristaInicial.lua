@@ -11,10 +11,15 @@ local webServiceComunication = require("WebServiceComunication")
 local menuMotorista
 local sceneGroup
 
+local credito
+
+local tabelaCaixas = {}
+
+local id
+
 function scene:create(event)
 
 	sceneGroup = self.view
-    
 
     menuMotorista = menu:new({
         data={
@@ -32,6 +37,7 @@ function scene:create(event)
                 }
             }
         })
+
     local botaoAtualizar = widget.newButton(
         {
             width = 50,
@@ -42,78 +48,131 @@ function scene:create(event)
             onEvent = atualizaDados
         }
     )
+    local rectSaldo = display.newRoundedRect(  display.contentWidth/7*1.8, display.contentHeight/7,display.contentWidth/3*1.3,  display.contentHeight/15, 9 )
+    rectSaldo:setFillColor( 0.2, 0.2, 1, 1 )
 
-
-
-    local textoCartoes = display.newText({text = "Cartões Ativos:",x = display.contentWidth/7 * 2,y = display.contentHeight/7,fontSize = 20})
+    local textoCartoes = display.newText({text = "Cartões Ativos:",x = display.contentWidth/2,y = display.contentHeight/7* 1.5,fontSize = 20})
+    local textoSaldo = display.newText({text = "Saldo:",x = display.contentWidth/7 * 1.1 ,y = display.contentHeight/7,fontSize = 20})
+    
+    credito= display.newText({text ="R$: ".. motoristaLogado.credito..",00",x = display.contentWidth/7 * 2.5 ,y = display.contentHeight/7+1,fontSize = 15})
     
     sceneGroup:insert(textoCartoes)
     sceneGroup:insert(botaoAtualizar)
+    sceneGroup:insert(rectSaldo)
+    sceneGroup:insert(textoSaldo)
+    sceneGroup:insert(credito)
     
 end
 
 function scene:show( event )
     if event.phase == "will" then
+        credito.text ="R$: ".. motoristaLogado.credito..",00"
+        webServiceComunication:consultarCartoesAtivos(motoristaLogado)
+        mostraCartoesAtivos()
+    end
+end
 
-        local posicaoY = display.contentHeight/7
+
+function mostraCartoesAtivos()
+     local posicaoY = display.contentHeight/6.7
         local posicaoX = display.contentWidth/2
         
         if #cartoesAtivos > 0  then
-
+            id = 1
             for i = 1 , #cartoesAtivos do
+                
                 if i%2 ~= 0 then
-                    local caixaRect = display.newRoundedRect(  posicaoX,  posicaoY* 2, display.contentWidth, display.contentHeight/7, 9 )
-
-                    local textPlaca = display.newText({text = "Placa:" , x = display.contentWidth/7  , y = posicaoY*2 - 10 , fontSize = 15, align = "left" })
-                    local placa = display.newText({text = cartoesAtivos[i].placa.letras .. "-"..cartoesAtivos[i].placa.numeros , x = display.contentWidth/7 *1 , y = posicaoY*2 + 10 , fontSize = 15, align = "left" })
-                    local textTempoRestante = display.newText({text = "Tempo Restante:" , x = display.contentWidth/7 * 3.5  , y = posicaoY*2 - 10 , fontSize = 15, align = "left" })
-                    local tempoRestante = display.newText({text ="hr: ".. cartoesAtivos[i].tempoRestante  , x = display.contentWidth/7 *3.5 , y = posicaoY*2 + 10 , fontSize = 15, align = "left" })
-
-
+                    
+                    local caixaRect = display.newRoundedRect(  posicaoX,  posicaoY* 2, display.contentWidth, display.contentHeight/12, 9 )
+                    caixaRect.id = id
+                    caixaRect.cartaoAtivo = cartoesAtivos[i]
                     caixaRect:setFillColor( 0.2, 0.2, 1, 1 )
+                    caixaRect:addEventListener("touch",onTouch)
+                    
+                    local placa = display.newText({text = cartoesAtivos[i].placa.letras .. "-"..cartoesAtivos[i].placa.numeros , x = display.contentWidth/7 *1.2 , y = posicaoY*2 , fontSize = 15, align = "left" })
+                    local textTempoRestante = display.newText({text = "Restante:" , x = display.contentWidth/7 * 3.5  , y = posicaoY*2  , fontSize = 15, align = "left" })
+                    local tempoRestante = display.newText({text ="hr: ".. cartoesAtivos[i].tempoRestante  , x = display.contentWidth/7 *5.5 , y = posicaoY*2 , fontSize = 15, align = "left" })
+                    
                     sceneGroup:insert(caixaRect)
-                    sceneGroup:insert(textPlaca)
                     sceneGroup:insert(placa)
                     sceneGroup:insert(textTempoRestante)
                     sceneGroup:insert(tempoRestante)
+
+                    table.insert(tabelaCaixas,caixaRect)
+                    
                 else
-                    local caixaRect = display.newRoundedRect(  posicaoX,  posicaoY* 2, display.contentWidth, display.contentHeight/7, 9 )
+                    local caixaRect = display.newRoundedRect(  posicaoX,  posicaoY* 2, display.contentWidth, display.contentHeight/12, 9 )
+                    caixaRect.id = id
+                    caixaRect.cartaoAtivo = cartoesAtivos[i]
+                    caixaRect:setFillColor( 0.8, 0.8, 1 )
+                    caixaRect:addEventListener("touch",onTouch)
 
-                    local textPlaca = display.newText({text = "Placa:" , x = display.contentWidth/7  , y = posicaoY*2 - 10 , fontSize = 15, align = "left" })
-                    local placa = display.newText({text = cartoesAtivos[i].placa.letras .. "-"..cartoesAtivos[i].placa.numeros , x = display.contentWidth/7 *1 , y = posicaoY*2 + 10 , fontSize = 15, align = "left" })
-                    local textTempoRestante = display.newText({text = "Tempo Restante:" , x = display.contentWidth/7 * 3.5  , y = posicaoY*2 - 10 , fontSize = 15, align = "left" })
-                    local tempoRestante = display.newText({text ="hr: ".. cartoesAtivos[i].tempoRestante  , x = display.contentWidth/7 *3.5 , y = posicaoY*2 + 10 , fontSize = 15, align = "left" })
 
-                    textPlaca:setFillColor( 0, 0, 0 )
+                    local placa = display.newText({text = cartoesAtivos[i].placa.letras .. "-"..cartoesAtivos[i].placa.numeros , x = display.contentWidth/7 *1.2 , y = posicaoY*2 , fontSize = 15, align = "left" })
+                    local textTempoRestante = display.newText({text = "Restante:" , x = display.contentWidth/7 * 3.5  , y = posicaoY*2 , fontSize = 15, align = "left" })
+                    local tempoRestante = display.newText({text ="hr: ".. cartoesAtivos[i].tempoRestante  , x = display.contentWidth/7 *5.5 , y = posicaoY*2 , fontSize = 15, align = "left" })
+
+                    
                     placa:setFillColor( 0, 0, 0 )
                     textTempoRestante:setFillColor(0,0,0)
                     tempoRestante:setFillColor(0,0,0)
-                    caixaRect:setFillColor( 0.8, 0.8, 1 )
+                    
                     
                     sceneGroup:insert(caixaRect)
-                    sceneGroup:insert(textPlaca)
                     sceneGroup:insert(placa)
                     sceneGroup:insert(textTempoRestante)
                     sceneGroup:insert(tempoRestante)
 
+                    table.insert(tabelaCaixas,caixaRect)
+                    
                 end
-                posicaoY = posicaoY + 40 
+                id = id + 1
+                posicaoY = posicaoY + 22  
             end
+        else
+            caixaRectInfo = display.newRoundedRect(  display.contentWidth/2,  display.contentHeight/ 2, display.contentWidth, display.contentHeight/7, 9 )
+            caixaRectInfo:setFillColor( 0.2, 0.2, 1, 1 )
+            textoNaoPossuiCartoes = display.newText({text = "Você não possui cartões ativos!\n Aperte no botão atualizar!" , x = display.contentWidth/2  , y = display.contentHeight/2 , fontSize = 15, align = "center" })
+            sceneGroup:insert(caixaRectInfo)
+            sceneGroup:insert(textoNaoPossuiCartoes)
         end
+
+end
+
+
+function scene:hide(event)
+    if event.phase == "will" then
+        display.remove(textoNaoPossuiCartoes)
+        display.remove(caixaRectInfo)
+
+        for i = #tabelaCaixas , 1, -1 do
+            table.remove(tabelaCaixas,i)
+        end
+
 
     end
 end
-
 
 function atualizaDados(event)
     if event.phase == "began" then
-
         webServiceComunication:atualizarMotorista(motoristaLogado)
         webServiceComunication:consultarCartoesAtivos(motoristaLogado)
-
+        composer.gotoScene("TelaMotoristaInicial")
     end
 end
 
+ function onTouch(event)
+    if event.phase == "began" then
+        for i = 1 , #tabelaCaixas do
+            if tabelaCaixas[i].id == event.target.id then
+                local options = { params =  {cartaoAtivo = tabelaCaixas[i].cartaoAtivo}}
+
+                composer.gotoScene("TelaDetalhesCartao",options)
+                break
+            end
+        end                       
+    end
+end
 
 
 function destroyMenu(event)
@@ -121,10 +180,10 @@ function destroyMenu(event)
     motoristaLogado = nil
     composer.removeScene("TelaMotoristaInicial")
     composer.gotoScene("TelaLogin")
-
 end
 
 scene:addEventListener("create", scene)
 scene:addEventListener("show", scene)
+scene:addEventListener("hide", scene)
 
 return scene

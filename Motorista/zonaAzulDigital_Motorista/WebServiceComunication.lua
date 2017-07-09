@@ -82,10 +82,7 @@ local function eventoLogarMotorista(event)
 			local motoristaJson = json.decode(event.response)
 			motoristaLogado = motoristaJson
 			
-			webService:consultarCartoesAtivos(motoristaLogado)
-
 			composer.gotoScene("TelaMotoristaInicial")
-			
 			
 		elseif event.status == 401 then
 			
@@ -249,11 +246,7 @@ local function eventoCartoesAtivos(event)
 		local response = json.decode(event.response)
 		
 		if event.status == 200 then
-			print(event.response)
 			cartoesAtivos = json.decode(event.response)
-			
-			
-			composer.gotoScene("TelaMotoristaInicial")
 		else
 			
 			print(event.response)
