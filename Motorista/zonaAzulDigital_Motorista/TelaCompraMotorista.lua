@@ -26,7 +26,7 @@ function scene:create(event )
     local caixaSaldo = display.newRoundedRect(  display.contentWidth/2,  display.contentHeight/7 * 1.5, 160, 60, 9 )
     caixaSaldo:setFillColor( 0.2, 0.2, 1, 1 )
     local textSaldo = display.newText({text = "Seu saldo é de:", x = display.contentWidth/2,y = display.contentHeight/7  * 1.3, fontSize = 15})
-    saldo = display.newText({text = "R$ ".. motoristaLogado.credito..".00", x = display.contentWidth/2,y = display.contentHeight/7  * 1.65, fontSize = 15})
+    saldo = display.newText({text = "R$ ".. motoristaLogado.credito..",00", x = display.contentWidth/2,y = display.contentHeight/7  * 1.65, fontSize = 15})
     
 
     local botaoLocked = widget.newButton(
