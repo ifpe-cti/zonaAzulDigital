@@ -14,7 +14,6 @@ import com.zonaAzulDigital.entidades.Placa;
  * @author JonasJr
  */
 public interface ModelPlacaInterface {
-    public Placa cadastrar(Placa placa) throws DaoException;
     public Placa recuperar(Placa placa) throws DaoException;
     public Placa recuperarId(int id) throws DaoException;
     public boolean validar(Placa p) throws PlacaException; 
