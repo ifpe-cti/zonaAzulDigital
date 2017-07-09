@@ -131,8 +131,13 @@ public class CartaoZonaAzulService {
                 r = Response.ok(jsonRetorno).build();
 
             }
+            catch(PlacaException pe){
+                r = Response.status(403).build(); 
+                Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, pe);
+            }
             catch(Exception e){
                 r = Response.serverError().build();
+                Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, e);
             }
             
         }

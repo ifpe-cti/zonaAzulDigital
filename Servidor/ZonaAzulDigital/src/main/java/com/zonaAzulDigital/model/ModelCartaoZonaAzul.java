@@ -89,8 +89,10 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     }
 
     @Override
-    public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException {
-
+    public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException ,PlacaException{
+        ModelPlacaInterface mp = new ModelPlaca(daoPlaca);
+        
+        mp.validar(placa);
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
         CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);

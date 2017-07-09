@@ -20,6 +20,6 @@ import java.util.List;
 public interface ModelCartaoZonaAzulInterface {
     CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException,PlacaException;
     CartaoZonaAzul recuperar(CartaoZonaAzul cartaoZA) throws DaoException;
-    CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException;
+    CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException,PlacaException;
     List<CartaoZonaAzul> CartoesAtivosPor(Motorista m);
 }
