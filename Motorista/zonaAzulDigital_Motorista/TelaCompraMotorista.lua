@@ -66,7 +66,7 @@ end
 function scene:show(event)
     if event.phase == "did" then
         
-        saldo.text = "R$ ".. motoristaLogado.credito..".00"
+        saldo.text = "R$ ".. motoristaLogado.credito..",00"
 
         letras = native.newTextField(display.contentWidth/10 * 3.7, display.contentHeight/7 *3.2, display.contentWidth/10 * 2.2, 30)
         letras.placeholder = "Letras"
