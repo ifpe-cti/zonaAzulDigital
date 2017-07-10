@@ -186,6 +186,7 @@ public class ModelMotoristaTest {
         }
     }
 
+    @Ignore
     @Test
     public void deveRetornarUmaListaDeMotoristasCadastrados() throws DaoException, CpfException, MotoristaException {
         md.cadastrar(m1);

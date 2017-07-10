@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -42,7 +43,7 @@ public class DaoMotoristaTeste {
         m3 = new Motorista(0, "Fabricio", "04982557407", BigDecimal.ZERO, "fabricio");
      
     }
-    
+    @Ignore
     @Test
     public void testandoCadastroMostorista() throws DaoException{
         
@@ -52,7 +53,7 @@ public class DaoMotoristaTeste {
         
         Assert.assertNotEquals(0, mc.getId());
     }
-    
+    @Ignore
     @Test
     public void  disparaExcecaoDeCadastro() throws DaoException{
         excecao.expect(DaoException.class);
@@ -61,7 +62,7 @@ public class DaoMotoristaTeste {
          Motorista mc = new Motorista();
          dmbd.cadastrar(mc);
     }
-    
+    @Ignore
     @Test
     public void testandoMotoristaAtualizado() throws DaoException{
        
@@ -73,7 +74,7 @@ public class DaoMotoristaTeste {
         
         assertEquals("Tony", mc.getNome());
     }
-    
+    @Ignore
     @Test
     public void testeRecuperarPorId() throws DaoException{
        
@@ -85,7 +86,7 @@ public class DaoMotoristaTeste {
         
         assertEquals("Jonas", mc.getNome());
     }
-    
+    @Ignore
     @Test
     public void testeRecuperarPorCpf() throws DaoException{
         
@@ -96,7 +97,7 @@ public class DaoMotoristaTeste {
         
         assertEquals("Castanha", mc.getNome());
     }
-    
+    @Ignore
     @Test
     public void disparaExcecaoDeRecuperar()throws DaoException{
         excecao.expect(DaoException.class);
@@ -104,7 +105,7 @@ public class DaoMotoristaTeste {
          dmbd.recuperar("04882");
         
     }
-    
+    @Ignore
     @Test
     public void testeDeListarTodos() throws DaoException{
         

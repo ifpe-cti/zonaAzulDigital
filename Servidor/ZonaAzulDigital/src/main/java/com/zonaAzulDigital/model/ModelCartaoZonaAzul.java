@@ -5,13 +5,16 @@
  */
 package com.zonaAzulDigital.model;
 
+import com.zonaAzulDigital.Excecao.CartaoZAException;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.Excecao.PlacaException;
+import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.entidades.VendaMes;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
@@ -19,12 +22,9 @@ import com.zonaAzulDigital.interfaces.DAOPlaca;
 import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
 import com.zonaAzulDigital.interfaces.ModelPlacaInterface;
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +47,21 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         this.daoCartaoZonaAzul = daoCartaoZonaAzul;
         this.daoCompraCartaoZA = daoCompraCartaoZA;
         this.daoPlaca = daoPlaca;
+    }
+
+    @Override
+    public CartaoZonaAzulInfo cadastrarDetalhes(CartaoZonaAzulInfo cartaoZonaAzulInfo) throws CartaoZAException, DaoException {
+        if (cartaoZonaAzulInfo == null) {
+            throw new CartaoZAException(CartaoZAException.NULL);
+        }
+        if (cartaoZonaAzulInfo.getCidade() == null || cartaoZonaAzulInfo.getCidade().isEmpty()) {
+            throw new CartaoZAException(CartaoZAException.CIDADENULL);
+        }
+        if (cartaoZonaAzulInfo.getPreco() == null) {
+            throw new CartaoZAException(CartaoZAException.PRECO);
+        }
+
+        return daoCartaoZonaAzul.cadastrar(cartaoZonaAzulInfo);
     }
 
     @Override
@@ -95,9 +110,9 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     }
 
     @Override
-    public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException ,PlacaException{
+    public CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException, PlacaException {
         ModelPlacaInterface mp = new ModelPlaca(daoPlaca);
-        
+
         mp.validar(placa);
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
@@ -111,7 +126,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         List<CartaoZonaAzul> cartaoZonaAzuls = daoCartaoZonaAzul.listarCartoesAtivos(motorista);
 
         for (CartaoZonaAzul cartaoZonaAzul : cartaoZonaAzuls) {
-            
+
             cartaoZonaAzul.setTempoRestante(calculaTempoRestante(cartaoZonaAzul.getDataFim()).toString());
         }
 
@@ -121,15 +136,28 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     public LocalTime calculaTempoRestante(Date data) {
         LocalTime horaExpirar = LocalDateTime.ofInstant(data.toInstant(), ZoneId.systemDefault()).toLocalTime();
         long tempoEmSegundos = ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar);
-        if(tempoEmSegundos < 0){
+        if (tempoEmSegundos < 0) {
             tempoEmSegundos = 0;
         }
         return LocalTime.ofSecondOfDay(tempoEmSegundos);
 
     }
 
-    public List<Long> vendarNoMes(int ano) throws DaoException {
-        return daoCartaoZonaAzul.vendasPorMes(ano);
+    @Override
+    public List<VendaMes> vendasNoMes(int ano) throws DaoException {
+        List<Object[]> lista = daoCartaoZonaAzul.vendasPorMes(ano);
+        List<VendaMes> vendasMes = new ArrayList<>();
+        for (Object[] vendasMe : lista) {
+            int i = (int) vendasMe[0];
+            long l = (long) vendasMe[1];
+            vendasMes.add(new VendaMes(i, l));
+
+        }
+        return vendasMes;
+    }
+
+    public List<Placa> recuperarTodosCartoesPor(Motorista motorista) {
+        return daoCartaoZonaAzul.recuperarCartoesPor(motorista);
     }
 
 }

@@ -18,7 +18,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Adminstrador implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -66,17 +66,18 @@ public class Adminstrador implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    public String getPrimeiroNome(){
+
+    public String getPrimeiroNome() {
         String pNome = "";
-        if(this.nome != null && !this.nome.isEmpty()){
-            
-           pNome = this.nome.substring(0 ,this.nome.indexOf(' '));
-        } 
+        if (this.nome != null && !this.nome.isEmpty()) {
+            int indice = this.nome.indexOf(' ');
+            if(indice>0){
+                pNome = this.nome.substring(0 ,indice);
+            }else{
+                pNome = this.nome;
+            }
+        }
         return pNome;
     }
-    
-    
-    
-    
+
 }

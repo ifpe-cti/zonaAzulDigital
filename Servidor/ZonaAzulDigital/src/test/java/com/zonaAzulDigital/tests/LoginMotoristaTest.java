@@ -13,6 +13,7 @@ import com.zonaAzulDigital.interfaces.DAOMotorista;
 import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -36,7 +37,7 @@ public class LoginMotoristaTest {
         dmbd = new DaoMotoristaBD();
      
     }
-    
+    @Ignore
     @Test
     public void testeDeLogin() throws LoginException, DaoException{
         
@@ -49,7 +50,7 @@ public class LoginMotoristaTest {
         assertEquals("Eduardo", motorista1.getNome());
     }
     
-    
+    @Ignore
     @Test
     public void disparaExcecaoDeLoginCpfErrado() throws  DaoException, LoginException{
         excecao.expect(LoginException.class);
@@ -60,7 +61,7 @@ public class LoginMotoristaTest {
         
         dmbd.login("12312312312", motorista.getSenha());
     }
-    
+    @Ignore
     @Test
     public void disparaExcecaoDeLoginSenhaErrado() throws DaoException, LoginException{
         excecao.expect(LoginException.class);

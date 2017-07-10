@@ -10,6 +10,7 @@ import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.entidades.VendaMes;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.tests.DAO.base.Cartoes;
 import java.math.BigDecimal;
@@ -88,7 +89,12 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
     }
 
     @Override
-    public List<Long> vendasPorMes(int ano) throws DaoException {
+    public List<Object[]> vendasPorMes(int ano) throws DaoException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Placa> recuperarCartoesPor(Motorista motorista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

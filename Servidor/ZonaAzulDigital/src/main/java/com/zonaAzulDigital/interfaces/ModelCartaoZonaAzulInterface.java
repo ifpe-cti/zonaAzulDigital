@@ -5,12 +5,15 @@
  */
 package com.zonaAzulDigital.interfaces;
 
+import com.zonaAzulDigital.Excecao.CartaoZAException;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.Excecao.PlacaException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
+import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.entidades.VendaMes;
 import java.util.List;
 
 /**
@@ -18,8 +21,16 @@ import java.util.List;
  * @author JonasJr
  */
 public interface ModelCartaoZonaAzulInterface {
-    CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException,PlacaException;
+    
+    CartaoZonaAzulInfo cadastrarDetalhes(CartaoZonaAzulInfo cartaoZonaAzulInfo) throws CartaoZAException, DaoException;
+
+    CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException, PlacaException;
+
     CartaoZonaAzul recuperar(CartaoZonaAzul cartaoZA) throws DaoException;
-    CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException,PlacaException;
+
+    CartaoZonaAzul recuperarUltimo(Placa placa) throws DaoException, PlacaException;
+
     List<CartaoZonaAzul> CartoesAtivosPor(Motorista m);
+
+    List<VendaMes> vendasNoMes(int ano) throws DaoException;
 }

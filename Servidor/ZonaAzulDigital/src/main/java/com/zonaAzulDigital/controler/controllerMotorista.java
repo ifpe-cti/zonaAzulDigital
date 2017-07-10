@@ -5,6 +5,7 @@
  */
 package com.zonaAzulDigital.controler;
 
+import com.zonaAzulDigital.Criptografia.MD5Crip;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.Excecao.CpfException;
 import com.zonaAzulDigital.Excecao.DaoException;
@@ -26,7 +27,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class controllerMotorista implements Serializable{
+public class controllerMotorista implements Serializable {
 
     private ModelMotoristaInterface modelMotorista;
     private Motorista motorista;
@@ -39,7 +40,8 @@ public class controllerMotorista implements Serializable{
     public void cadastrar() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            
+            String senhaCrip = MD5Crip.encriptar(motorista.getSenha());
+            motorista.setSenha(senhaCrip);
             motorista = this.modelMotorista.cadastrar(motorista);
             context.addMessage(null, new FacesMessage("Sucesso", motorista.getNome() + " foi cadastrado com sucesso!"));
 

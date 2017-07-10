@@ -10,11 +10,14 @@ import com.zonaAzulDigital.DAO.DaoCompraCartaoZADB;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.DAO.DaoPlacaBD;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.constante.Meses;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
+import com.zonaAzulDigital.entidades.VendaMes;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.DAOPlaca;
+import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
 import com.zonaAzulDigital.model.ModelCartaoZonaAzul;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class controllerRelatorio implements Serializable {
     private DAOMotorista dAOMotorista;
     private DAOCartaoZonaAzul dAOCartaoZonaAzul;
     private DAOCompraCartaoZA dAOCompraCartaoZA;
-    private ModelCartaoZonaAzul modelCartaoZonaAzul;
+    private ModelCartaoZonaAzulInterface modelCartaoZonaAzul;
 
     public LineChartModel getGraficoLinha() {
         return graficoLinha;
@@ -60,17 +63,18 @@ public class controllerRelatorio implements Serializable {
         ChartSeries cartoes = new ChartSeries();
         cartoes.setLabel("Cartões");
         
-        List<Long> comprasNoMes = new ArrayList<>();
+        List<VendaMes> comprasNoMes = new ArrayList<>();
         try {
-            comprasNoMes = modelCartaoZonaAzul.vendarNoMes(2017);
+            comprasNoMes = modelCartaoZonaAzul.vendasNoMes(2017);
         } catch (DaoException ex) {
             Logger.getLogger(controllerRelatorio.class.getName()).log(Level.SEVERE, null, ex);
         }
         long escala = 0;
         for (int i = 0; i < comprasNoMes.size(); i++) {
-            cartoes.set(i, comprasNoMes.get(i));
-            if(escala < comprasNoMes.get(i)){
-                escala = comprasNoMes.get(i);
+            String s = Meses.values()[comprasNoMes.get(i).getMes()].name();
+            cartoes.set(s, comprasNoMes.get(i).getQuantidade());
+            if(comprasNoMes.get(i).getQuantidade().compareTo(escala) > 0){
+                escala = comprasNoMes.get(i).getQuantidade();
             }
         }
          
@@ -79,6 +83,8 @@ public class controllerRelatorio implements Serializable {
         graficoLinha.setTitle("Vendas no mês");
         graficoLinha.setLegendPosition("e");
         Axis yAxis = graficoLinha.getAxis(AxisType.Y);
+        Axis xAxis = graficoLinha.getAxis(AxisType.X);
+        
         graficoLinha.setShowPointLabels(true);
         graficoLinha.getAxes().put(AxisType.X, new CategoryAxis("Mes"));
         yAxis.setLabel("Quantidade");

@@ -5,6 +5,7 @@
  */
 package com.zonaAzulDigital.controler;
 
+import com.zonaAzulDigital.Criptografia.MD5Crip;
 import com.zonaAzulDigital.DAO.DaoAdministradorDB;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
@@ -18,6 +19,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import sun.security.provider.MD5;
 
 /**
  *
@@ -40,12 +42,15 @@ public class controllerAdm implements Serializable {
     }
 
     public void setAdministrador(Adminstrador administrador) {
+
         this.administrador = administrador;
     }
 
     public void cadastrar() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
+            String senhaCrip = MD5Crip.encriptar(administrador.getSenha());
+            administrador.setSenha(senhaCrip);
             modelAdministrador.cadastrar(administrador);
             context.addMessage(null, new FacesMessage("Cadastrado com sucesso!"));
         } catch (DaoException ex) {
@@ -58,11 +63,13 @@ public class controllerAdm implements Serializable {
     public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
+            String senhaCrip = MD5Crip.encriptar(administrador.getSenha());
+            administrador.setSenha(senhaCrip);
             Adminstrador adm = modelAdministrador.login(administrador.getCpf(), administrador.getSenha());
             context.getExternalContext().getSessionMap().put("admLogado", adm);
             context.getExternalContext().redirect(
-                    context.getExternalContext().getRequestContextPath()+
-                            "/administrativo/index.xhtml");
+                    context.getExternalContext().getRequestContextPath()
+                    + "/administrativo/index.xhtml");
         } catch (DaoException | LoginException ex) {
             context.addMessage(null, new FacesMessage("Erro", ex.getMessage()));
             Logger.getLogger(controllerAdm.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,20 +84,20 @@ public class controllerAdm implements Serializable {
         context.getExternalContext().getSessionMap().remove("admLogado");
         try {
             context.getExternalContext().redirect(
-                    context.getExternalContext().getRequestContextPath()+
-                            "/administrativo/index.xhtml");
+                    context.getExternalContext().getRequestContextPath()
+                    + "/administrativo/index.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(controllerAdm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public Adminstrador getLogado(){
+
+    public Adminstrador getLogado() {
         return (Adminstrador) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("admLogado");
     }
-    
-    public boolean estaLogado(){
+
+    public boolean estaLogado() {
         boolean retorno = false;
-        if(getLogado() != null ){
+        if (getLogado() != null) {
             retorno = true;
         }
         return retorno;
