@@ -4,28 +4,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-    <ui:composition template="/WEB-INF/template/templateLogado.xhtml">
+    <ui:composition template="/WEB-INF/template/templateBase.xhtml">
         <ui:define name="titulo">Cadastrar motorista</ui:define>
         <ui:define name="corpo">
-            <div id="titulo"><h3>Cadastrar motorista</h3></div>
-            <div id="conteudo">
+            <p:fieldset legend="Cadastrar motorista" style="margin: auto; width: 390px;">
                 <h:form id="formCadMotorista">
                     <p:growl id="growl" showDetail="true"  />  
-                    <p:panel id="cadMotorista" >
-                        <h:panelGrid columns="2">
-                            <p:outputLabel value="CPF:"/>
-                            <p:inputText value="#{cadastrarMotorista.motorista.cpf}"/>
-                            <p:outputLabel value="Nome:"/>
-                            <p:inputText value="#{cadastrarMotorista.motorista.nome}"/>
-                            <p:outputLabel value="Senha:"/>
-                            <p:password id="senha" value="#{cadastrarMotorista.motorista.senha}" match="cofSenha" feedback="true" required="true"/>
-                            <p:outputLabel value="Confirmar senha:"/>
-                            <p:password id="cofSenha" value="#{cadastrarMotorista.motorista.senha}" rendered="true"/>
-                            <p:commandButton value="Cadastrar" update="formCadMotorista" action="#{cadastrarMotorista.cadastrar()}"/>
-                        </h:panelGrid>
-                    </p:panel>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="CPF:"/>
+                        <p:inputText value="#{controllerMotorista.motorista.cpf}"/>
+                        <p:outputLabel value="Nome:"/>
+                        <p:inputText value="#{controllerMotorista.motorista.nome}"/>
+                        <p:outputLabel value="Senha:"/>
+                        <p:password id="senha" value="#{controllerMotorista.motorista.senha}" match="cofSenha" feedback="true" required="true"/>
+                        <p:outputLabel value="Confirmar senha:"/>
+                        <p:password id="cofSenha" value="#{controllerMotorista.motorista.senha}" rendered="true"/>
+                        <p:commandButton value="Cadastrar" update="formCadMotorista" action="#{controllerMotorista.cadastrar()}"/>
+                    </h:panelGrid>
                 </h:form>
-            </div>
+            </p:fieldset>
         </ui:define>
     </ui:composition>
 </html>

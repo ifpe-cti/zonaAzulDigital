@@ -11,6 +11,7 @@ import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.ModelPlacaInterface;
 import com.zonaAzulDigital.model.ModelPlaca;
 import com.zonaAzulDigital.tests.DAO.DAOPlacaFake;
+import com.zonaAzulDigital.tests.DAO.base.Placas;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,13 +26,12 @@ public class ModelPlacaTest {
 
     public ModelPlacaInterface mp;
     public Placa p1;
-
     @Rule
     public ExpectedException excecao = ExpectedException.none();
 
     @Before
     public void before() {
-        mp = new ModelPlaca(new DAOPlacaFake());
+        mp = new ModelPlaca(new DAOPlacaFake(new Placas()));
         p1 = new Placa("KHX", "0069");
     }
 

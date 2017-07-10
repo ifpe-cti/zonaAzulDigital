@@ -7,6 +7,7 @@
     <class>com.zonaAzulDigital.entidades.Motorista</class>
     <class>com.zonaAzulDigital.entidades.CartaoZonaAzulInfo</class>
     <class>com.zonaAzulDigital.entidades.CompraCartaoZA</class>
+    <class>com.zonaAzulDigital.entidades.Adminstrador</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>

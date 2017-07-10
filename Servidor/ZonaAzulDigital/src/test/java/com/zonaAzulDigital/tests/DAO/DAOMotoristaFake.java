@@ -9,6 +9,10 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
+
+import com.zonaAzulDigital.tests.DAO.base.Motoristas;
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,19 +22,25 @@ import java.util.List;
  */
 public class DAOMotoristaFake implements DAOMotorista {
 
-    List<Motorista> motoristas = new ArrayList<>();
+    List<Motorista> listaMotoristas;
+
+    public DAOMotoristaFake(Motoristas motoristas) {
+        this.listaMotoristas = motoristas.getMotoristas();
+    }
+    
+    
     
     @Override
     public Motorista cadastrar(Motorista motorista) throws DaoException {
-        motorista.setId(motoristas.size() + 1);
-        this.motoristas.add(motorista);
+        motorista.setId(listaMotoristas.size() + 1);
+        this.listaMotoristas.add(motorista);
         return motorista;        
     }
     
     @Override
     public Motorista recuperar(String cpf) throws DaoException {
         Motorista m = null;
-        for (Motorista motorista : motoristas) {
+        for (Motorista motorista : listaMotoristas) {
             if (motorista.getCpf().equals(cpf)) {
                 m = motorista;
             }
@@ -41,7 +51,7 @@ public class DAOMotoristaFake implements DAOMotorista {
     @Override
     public Motorista recuperarPorId(int id) throws DaoException {
           Motorista m = null;
-        for (Motorista motorista : motoristas) {
+        for (Motorista motorista : listaMotoristas) {
             if (motorista.getId() == id) {
                 m = motorista;
             }
@@ -52,7 +62,7 @@ public class DAOMotoristaFake implements DAOMotorista {
     @Override
     public Motorista atualizar(Motorista motorista) throws DaoException {
         Motorista mRetorno = null;
-        for (Motorista m : motoristas) {
+        for (Motorista m : listaMotoristas) {
             if (m.getCpf().equals(motorista.getCpf()) ){
                 m.setCredito(motorista.getCredito());
                 m.setNome(motorista.getNome());
@@ -70,9 +80,7 @@ public class DAOMotoristaFake implements DAOMotorista {
     @Override
     public Motorista login(String cpf, String senha) throws LoginException {
         Motorista m = null;
-       
-       
-        for (Motorista motorista : motoristas) {
+        for (Motorista motorista : listaMotoristas) {
             if (motorista.getCpf().equals(cpf) && motorista.getSenha().equals(senha)) {
                 m = motorista;
             }
@@ -85,7 +93,7 @@ public class DAOMotoristaFake implements DAOMotorista {
     
     @Override
     public List<Motorista> listarTudo() {
-        return motoristas;
+        return listaMotoristas;
     }
     
 }

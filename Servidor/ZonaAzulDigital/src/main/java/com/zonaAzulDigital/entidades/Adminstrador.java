@@ -5,15 +5,26 @@
  */
 package com.zonaAzulDigital.entidades;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author JonasJr
  */
-public class Adminstrador {
+@Entity
+public class Adminstrador implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String cpf;
     private String nome;
+    private String senha;
 
     public Adminstrador() {
     }
@@ -47,6 +58,24 @@ public class Adminstrador {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    public String getPrimeiroNome(){
+        String pNome = "";
+        if(this.nome != null && !this.nome.isEmpty()){
+            
+           pNome = this.nome.substring(0 ,this.nome.indexOf(' '));
+        } 
+        return pNome;
+    }
+    
     
     
     

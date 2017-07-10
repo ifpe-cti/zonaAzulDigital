@@ -28,6 +28,14 @@ public class Placa implements Serializable {
 
     }
 
+    public Placa(int id, String letras, String numeros) {
+        this(letras, numeros);
+        this.id = id;
+        
+    }
+    
+    
+
     public Placa(String letras, String numeros) {
         this.letras = letras.toUpperCase();
         this.numeros = numeros;

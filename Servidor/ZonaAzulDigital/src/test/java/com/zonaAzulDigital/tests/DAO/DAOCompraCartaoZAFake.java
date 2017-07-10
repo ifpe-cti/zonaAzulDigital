@@ -9,7 +9,9 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CompraCartaoZA;
 import com.zonaAzulDigital.entidades.Motorista;
+import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
+import com.zonaAzulDigital.tests.DAO.base.Compras;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,8 @@ import java.util.List;
 public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
     private List<CompraCartaoZA> compraCartaoZAs;
     
-    public DAOCompraCartaoZAFake() {
-        compraCartaoZAs = new ArrayList<>();
+    public DAOCompraCartaoZAFake(Compras compras) {
+        compraCartaoZAs = compras.comprasCartaoAZs();
     }
     
     
@@ -49,6 +51,14 @@ public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
         }
         return returno;
     }
+
+    public List<CompraCartaoZA> getCompraCartaoZAs() {
+        return compraCartaoZAs;
+    }
+
+    public void setCompraCartaoZAs(List<CompraCartaoZA> compraCartaoZAs) {
+        this.compraCartaoZAs = compraCartaoZAs;
+    }
     
     public List<CartaoZonaAzul> getListaCartoes(){
         List<CartaoZonaAzul> listaCartoes = new ArrayList<>();
@@ -56,6 +66,13 @@ public class DAOCompraCartaoZAFake implements DAOCompraCartaoZA{
             listaCartoes.add(compraCartaoZA.getCartaoZonaAzul());
         }
         return listaCartoes;
+    }
+    public List<Placa> gerListaPlacas(){
+        List<Placa> listasPlacas = new ArrayList<>();
+        for (CompraCartaoZA compraCartaoZA: compraCartaoZAs) {
+            listasPlacas.add(compraCartaoZA.getCartaoZonaAzul().getPlaca());
+        }
+        return listasPlacas;
     }
     
 }

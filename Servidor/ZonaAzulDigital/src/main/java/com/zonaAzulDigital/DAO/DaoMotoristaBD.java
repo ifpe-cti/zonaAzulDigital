@@ -61,7 +61,7 @@ public class DaoMotoristaBD implements DAOMotorista {
     @Override
     public Motorista recuperar(String cpf) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Motorista m WHERE m.cpf = :p1 ";
+        String hql = "FROM "+Motorista.class.getSimpleName()+" m WHERE m.cpf = :p1 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", cpf);
@@ -80,7 +80,7 @@ public class DaoMotoristaBD implements DAOMotorista {
     @Override
     public Motorista login(String cpf, String senha) throws LoginException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Motorista m WHERE m.cpf = :p1 and m.senha = :p2 ";
+        String hql = "FROM "+Motorista.class.getSimpleName()+" m WHERE m.cpf = :p1 and m.senha = :p2 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", cpf);
@@ -100,7 +100,7 @@ public class DaoMotoristaBD implements DAOMotorista {
     @Override
     public List<Motorista> listarTudo() {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Motorista";
+        String hql = "FROM "+Motorista.class.getSimpleName();
         Query query = em.createQuery(hql);
 
         return (List<Motorista>) query.getResultList();
