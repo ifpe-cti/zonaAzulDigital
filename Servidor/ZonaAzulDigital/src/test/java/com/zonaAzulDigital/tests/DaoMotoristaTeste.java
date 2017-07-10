@@ -34,7 +34,7 @@ public class DaoMotoristaTeste {
     @Rule
     public ExpectedException excecao = ExpectedException.none();
     
-    @Before
+ /*   @Before
     public void before(){
         dmbd = new DaoMotoristaBD();
         m1 = new Motorista(0, "Antonio", "04982857406", BigDecimal.ZERO, "antonio");
@@ -118,5 +118,5 @@ public class DaoMotoristaTeste {
         assertEquals("Joao", lm.get(5).getNome());
         assertEquals("Fabricio", lm.get(6).getNome());
         
-    }
+    }*/
 }

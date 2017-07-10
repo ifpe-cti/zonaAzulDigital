@@ -31,7 +31,7 @@ public class LoginMotoristaTest {
     @Rule
     public ExpectedException excecao = ExpectedException.none();
     
-    @Before
+ /*   @Before
     public void before(){
         dmbd = new DaoMotoristaBD();
      
@@ -71,5 +71,5 @@ public class LoginMotoristaTest {
         Motorista motorista = dmbd.cadastrar(m);
         
         dmbd.login(motorista.getCpf(), "asd");
-    }
+    }*/
 }
