@@ -11,6 +11,7 @@ import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
+import com.zonaAzulDigital.tests.DAO.base.Cartoes;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,8 +25,8 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
 
     private List<CartaoZonaAzul> cartoes;
 
-    public DAOCartaoZonaAzulFake() {
-        this.cartoes = new ArrayList<>();
+    public DAOCartaoZonaAzulFake(Cartoes cartoes) {
+        this.cartoes = cartoes.getCartoes();
     }
 
     @Override
@@ -74,7 +75,7 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
     @Override
     public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m) {
         List<CartaoZonaAzul> cartoesAtivos = new ArrayList<>();
-        if (m.getCpf().equals("106549011430")) {
+        if (m.getCpf().equals("10654901430")) {
             cartoesAtivos.add(new CartaoZonaAzul(new Placa("MUS", "2277")));
             cartoesAtivos.add(new CartaoZonaAzul(new Placa("KHX", "0066")));
             cartoesAtivos.add(new CartaoZonaAzul(new Placa("KFW", "8983")));
@@ -84,6 +85,11 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
 
     public void setListaCartoes(List<CartaoZonaAzul> lista) {
         this.cartoes = lista;
+    }
+
+    @Override
+    public List<Long> vendasPorMes(int ano) throws DaoException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

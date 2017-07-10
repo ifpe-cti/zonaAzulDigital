@@ -9,7 +9,6 @@ import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Adminstrador;
-import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DaoAdminstrador;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,10 +25,10 @@ public class DaoAdministradorDB implements DaoAdminstrador {
         try {
             EntityManager em = HibernateUtil.getInstance().getEntityManager();
             em.getTransaction().begin();
-            em.persist(em);
+            em.persist(adm);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            throw new DaoException(DaoException.NAOCADASTRADO);
+            throw new DaoException(DaoException.NAOCADASTRADO, ex);
         }
 
         return adm;
@@ -38,7 +37,7 @@ public class DaoAdministradorDB implements DaoAdminstrador {
     @Override
     public Adminstrador recuperar(String cpf) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Administrador a WHERE a.cpf = :p1 ";
+        String hql = "FROM "+Adminstrador.class.getSimpleName()+" a WHERE a.cpf = :p1 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", cpf);
@@ -54,7 +53,7 @@ public class DaoAdministradorDB implements DaoAdminstrador {
     @Override
     public Adminstrador login(String cpf, String senha) throws LoginException{
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Administrador a WHERE a.cpf = :p1 and a.senha = :p2 ";
+        String hql = "FROM "+Adminstrador.class.getSimpleName()+" a WHERE a.cpf = :p1 and a.senha = :p2 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", cpf);
@@ -74,7 +73,7 @@ public class DaoAdministradorDB implements DaoAdminstrador {
     @Override
     public List<Adminstrador> listarTodos() {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Administrador";
+        String hql = "FROM " + Adminstrador.class.getSimpleName();
         Query query = em.createQuery(hql);
 
         return (List<Adminstrador>) query.getResultList();

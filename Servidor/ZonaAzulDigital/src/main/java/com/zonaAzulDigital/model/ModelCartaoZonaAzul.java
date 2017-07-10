@@ -22,8 +22,12 @@ import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,7 +52,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
     @Override
     public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException, PlacaException {
         try {
-            motorista = this.daoMotorista.recuperarPorId(motorista.getId());
+            motorista = this.daoMotorista.recuperar(motorista.getCpf());
 
         } catch (NullPointerException ex) {
             throw new MotoristaException(MotoristaException.NULL, ex);
@@ -57,8 +61,10 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
             throw new MotoristaException(MotoristaException.NAOENCONTRADO);
         }
         try {
-
-            placa = this.daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
+            Placa p = this.daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
+            if (p != null) {
+                placa = p;
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -94,6 +100,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
         CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
+        cartaoZonaAzul.setTempoRestante(calculaTempoRestante(cartaoZonaAzul.getDataFim()).toString());
         return cartaoZonaAzul;
     }
 
@@ -102,13 +109,25 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         List<CartaoZonaAzul> cartaoZonaAzuls = daoCartaoZonaAzul.listarCartoesAtivos(motorista);
 
         for (CartaoZonaAzul cartaoZonaAzul : cartaoZonaAzuls) {
-            LocalTime horaExpirar = LocalDateTime.ofInstant(cartaoZonaAzul.getDataFim().toInstant(), ZoneId.systemDefault()).toLocalTime();
-
-            LocalTime tempoRestante = LocalTime.ofSecondOfDay(ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar));
-            cartaoZonaAzul.setTempoRestante(tempoRestante.toString());
+            
+            cartaoZonaAzul.setTempoRestante(calculaTempoRestante(cartaoZonaAzul.getDataFim()).toString());
         }
 
         return cartaoZonaAzuls;
     }
-    
+
+    public LocalTime calculaTempoRestante(Date data) {
+        LocalTime horaExpirar = LocalDateTime.ofInstant(data.toInstant(), ZoneId.systemDefault()).toLocalTime();
+        long tempoEmSegundos = ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar);
+        if(tempoEmSegundos < 0){
+            tempoEmSegundos = 0;
+        }
+        return LocalTime.ofSecondOfDay(tempoEmSegundos);
+
+    }
+
+    public List<Long> vendarNoMes(int ano) throws DaoException {
+        return daoCartaoZonaAzul.vendasPorMes(ano);
+    }
+
 }

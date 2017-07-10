@@ -15,6 +15,7 @@ import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -55,7 +56,7 @@ public class DaoCompraCartaoZADB implements DAOCompraCartaoZA{
     @Override
     public List<CompraCartaoZA> recuperarPor(Motorista motorista) throws DaoException{
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM CompraCartaoZA c WHERE c.motorista = :p1 ";
+        String hql = "FROM "+CompraCartaoZA.class.getSimpleName()+" c WHERE c.motorista = :p1 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", motorista);

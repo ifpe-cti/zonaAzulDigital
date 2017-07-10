@@ -25,23 +25,7 @@
             </p:layoutUnit>
             <p:layoutUnit size = "250" position="west" collapsible="true">
                 <ui:insert name="menu">
-                    <h:form>
-                        <p:menu>
-                            <p:submenu label="Cadastrar">
-                                
-                                <p:menuitem value="Administrador"  url="/cadastrar/administrador.xhtml" icon="ui-icon-bullet"/>
-                            </p:submenu>
-                            <p:submenu label="Vendas">
-                                <p:menuitem value="Credito" url="/vendas/creditos.xhtml"  icon="ui-icon-bullet" />
-                                
-                            </p:submenu>
-                            
-                            <p:submenu label="Relatorios">
-                                <p:menuitem value="Cartão" url="/relatorios/cartoes.xhtml"  icon="ui-icon-bullet"/>
-                                <p:menuitem value="Motorista" url="/relatorios/motoristas.xhtml"  icon="ui-icon-bullet"/>
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
+                    <ui:include src="menuBasico.xhtml"/>
                 </ui:insert>
             </p:layoutUnit>
             <p:layoutUnit position="center">

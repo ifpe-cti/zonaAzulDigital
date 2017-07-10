@@ -12,6 +12,7 @@ import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -25,25 +26,26 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class cadastrarMotorista {
+public class controllerMotorista implements Serializable{
 
     private ModelMotoristaInterface modelMotorista;
     private Motorista motorista;
 
-    public cadastrarMotorista() {
+    public controllerMotorista() {
         this.modelMotorista = new ModelMotorista(new DaoMotoristaBD());
         this.motorista = new Motorista();
     }
 
     public void cadastrar() {
-        
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
-            FacesContext context = FacesContext.getCurrentInstance();
+            
             motorista = this.modelMotorista.cadastrar(motorista);
             context.addMessage(null, new FacesMessage("Sucesso", motorista.getNome() + " foi cadastrado com sucesso!"));
 
         } catch (DaoException | CpfException | MotoristaException ex) {
-            Logger.getLogger(cadastrarMotorista.class.getName()).log(Level.SEVERE, null, ex);
+            context.addMessage(null, new FacesMessage("Erro", ex.getMessage()));
+            Logger.getLogger(controllerMotorista.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 

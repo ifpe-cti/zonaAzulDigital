@@ -11,6 +11,7 @@ import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,5 +32,7 @@ public interface DAOCartaoZonaAzul {
     public List<CartaoZonaAzul> listarCartoesAtivos(Motorista m);
 
     public List<CartaoZonaAzul> listarTudo();
+    
+    public List<Long> vendasPorMes(int ano) throws DaoException;
 
 }

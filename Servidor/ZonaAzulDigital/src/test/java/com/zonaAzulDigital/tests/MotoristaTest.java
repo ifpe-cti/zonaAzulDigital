@@ -14,6 +14,7 @@ import com.zonaAzulDigital.interfaces.DAOMotorista;
 import com.zonaAzulDigital.interfaces.ModelMotoristaInterface;
 import com.zonaAzulDigital.model.ModelMotorista;
 import com.zonaAzulDigital.tests.DAO.DAOMotoristaFake;
+import com.zonaAzulDigital.tests.DAO.base.Motoristas;
 import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class MotoristaTest {
     
     @Before
     public void before(){
-        md = new ModelMotorista(new DAOMotoristaFake());
+        md = new ModelMotorista(new DAOMotoristaFake(new Motoristas()));
         m1 = new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
         m2 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "cadu");
         m3 = new Motorista(0, "Jonas", "10654901430", BigDecimal.ZERO, "xonas");

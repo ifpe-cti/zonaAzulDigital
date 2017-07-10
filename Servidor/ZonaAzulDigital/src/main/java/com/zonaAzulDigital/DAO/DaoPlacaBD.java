@@ -32,7 +32,7 @@ public class DaoPlacaBD implements DAOPlaca {
     @Override
     public Placa recuperar(String letras, String numeros) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
-        String hql = "FROM Placa p WHERE p.letras = :p1 and p.numeros = :p2 ";
+        String hql = "FROM "+Placa.class.getSimpleName()+" p WHERE p.letras = :p1 and p.numeros = :p2 ";
         Query query = em.createQuery(hql);
 
         query = query.setParameter("p1", letras);
@@ -52,7 +52,7 @@ public class DaoPlacaBD implements DAOPlaca {
     public List<Placa> listarTudo() {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
 
-        String hql = "FROM Placa";
+        String hql = "FROM "+Placa.class.getSimpleName();
         Query query = em.createQuery(hql);
         List<Placa> listaPlacas = query.getResultList();
 

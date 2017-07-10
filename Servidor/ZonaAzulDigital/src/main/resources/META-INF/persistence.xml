@@ -7,15 +7,15 @@
     <class>com.zonaAzulDigital.entidades.Motorista</class>
     <class>com.zonaAzulDigital.entidades.CartaoZonaAzulInfo</class>
     <class>com.zonaAzulDigital.entidades.CompraCartaoZA</class>
+    <class>com.zonaAzulDigital.entidades.Adminstrador</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.show_sql" value="false"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/zonaazuldigital?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="zonaazuldigital"/>
       <property name="javax.persistence.jdbc.password" value="1234"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

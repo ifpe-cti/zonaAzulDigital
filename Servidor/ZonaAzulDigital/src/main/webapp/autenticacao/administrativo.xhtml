@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/WEB-INF/template/templateBase.xhtml">
+        <ui:define name="titulo">Login Administrativo</ui:define>
+        <ui:define name="corpo">
+            <c:if test="#{controllerAdm.estaLogado()}">
+                #{facesContext.externalContext.redirect("/TesteZonaAzul/administrativo/")}
+            </c:if>
+            <h:form id="formLoginAdm">
+                <p:growl id="growl" showDetail="true"  />  
+                <p:fieldset id="login" legend="Login Administrativo" style=" width: 350px; margin: auto" >
+                    <h:panelGrid columns="2" style=" margin: auto">
+                        <p:outputLabel value="CPF:"/>
+                        <p:inputText value="#{controllerAdm.administrador.cpf}"/>
+                        <p:outputLabel value="Senha:"/>
+                        <p:password id="senha" value="#{controllerAdm.administrador.senha}" required="true"/>
+                        <p:outputLabel value=""/>
+                        <p:commandButton value="Login" update="formLoginAdm" action="#{controllerAdm.login()}"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

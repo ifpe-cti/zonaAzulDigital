@@ -21,6 +21,11 @@ import com.zonaAzulDigital.interfaces.ModelCartaoZonaAzulInterface;
 import com.zonaAzulDigital.tests.DAO.DAOCartaoZonaAzulFake;
 import com.zonaAzulDigital.tests.DAO.DAOCompraCartaoZAFake;
 import com.zonaAzulDigital.tests.DAO.DAOMotoristaFake;
+import com.zonaAzulDigital.tests.DAO.DAOPlacaFake;
+import com.zonaAzulDigital.tests.DAO.base.Cartoes;
+import com.zonaAzulDigital.tests.DAO.base.Compras;
+import com.zonaAzulDigital.tests.DAO.base.Motoristas;
+import com.zonaAzulDigital.tests.DAO.base.Placas;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,11 @@ public class ModelCartaoZonaAzulTest {
     private DAOCompraCartaoZA dAOCompraCartaoZA;
     private DAOPlaca dAOPlaca;
     private Motorista motorista;
-
+    private Placas placas;
+    private Motoristas motoristas;
+    private Cartoes cartoes;
+    private Compras compras;
+    
     public ModelCartaoZonaAzulTest() {
     }
 
@@ -51,11 +60,16 @@ public class ModelCartaoZonaAzulTest {
 
     @Before
     public void antesDostestes() {
-        dAOMotorista = new DAOMotoristaFake();
-        dAOCompraCartaoZA = new DAOCompraCartaoZAFake();
-        dAOCartaoZonaAzul = new DAOCartaoZonaAzulFake();
-        dAOPlaca = new DaoPlacaBD();
-        motorista = new Motorista("Jonas Ferreira", "106549011430", "123");
+        placas = new Placas();
+        motoristas = new Motoristas();
+        cartoes = new Cartoes(placas);
+        compras = new Compras(motoristas,cartoes);
+        
+        dAOPlaca = new DAOPlacaFake(placas);
+        dAOMotorista = new DAOMotoristaFake(motoristas);
+        dAOCartaoZonaAzul = new DAOCartaoZonaAzulFake(cartoes);
+        dAOCompraCartaoZA = new DAOCompraCartaoZAFake(compras);
+        motorista = new Motorista("Samuel", "11791558402", "123");
     }
 
     @Test
@@ -64,7 +78,7 @@ public class ModelCartaoZonaAzulTest {
         dAOMotorista.cadastrar(motorista);
         dAOCartaoZonaAzul.cadastrar(new CartaoZonaAzulInfo("Garanhuns", new BigDecimal(2)));
         modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
-        Placa placa = new Placa("KHX", "0066");
+        Placa placa = new Placa("AAA", "0066");
         CartaoZonaAzul cartao = modelCarttaoZA.comprar(motorista, placa);
 
         assertEquals(placa.getLetras(), cartao.getPlaca().getLetras());
@@ -122,22 +136,14 @@ public class ModelCartaoZonaAzulTest {
 
     @Test
     public void deveRecuperarUmCartaoCadastrado() throws DaoException, MotoristaException, PlacaException {
-        motorista.creditar(new BigDecimal(100));
-        dAOMotorista.cadastrar(motorista);
-        dAOCartaoZonaAzul.cadastrar(new CartaoZonaAzulInfo("Garanhuns", new BigDecimal(2)));
         modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
-        CartaoZonaAzul c1 = modelCarttaoZA.comprar(motorista, new Placa("KHX", "0066"));
-        CartaoZonaAzul c2 = modelCarttaoZA.comprar(motorista, new Placa("MUS", "2277"));
-        CartaoZonaAzul c3 = modelCarttaoZA.comprar(motorista, new Placa("KFW", "8983"));
+        CartaoZonaAzul c1 = cartoes.get(0);
+        CartaoZonaAzul c2 = cartoes.get(1);
+        CartaoZonaAzul c3 = cartoes.get(2);
 
-        List<CartaoZonaAzul> lista = ((DAOCompraCartaoZAFake) dAOCompraCartaoZA).getListaCartoes();
-        ((DAOCartaoZonaAzulFake) dAOCartaoZonaAzul).setListaCartoes(lista);
-
-        modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
-
-        assertEquals(c1, modelCarttaoZA.recuperar(c1));
-        assertEquals(c2, modelCarttaoZA.recuperar(c2));
-        assertEquals(c3, modelCarttaoZA.recuperar(c3));
+        assertEquals(c1.getNumero(), modelCarttaoZA.recuperar(c1).getNumero());
+        assertEquals(c2.getNumero(), modelCarttaoZA.recuperar(c2).getNumero());
+        assertEquals(c3.getNumero(), modelCarttaoZA.recuperar(c3).getNumero());
     }
 
     @Test
@@ -147,24 +153,18 @@ public class ModelCartaoZonaAzulTest {
         dAOCartaoZonaAzul.cadastrar(new CartaoZonaAzulInfo("Garanhuns", new BigDecimal(2)));
         modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
         CartaoZonaAzul ultimo = modelCarttaoZA.comprar(motorista, new Placa("KHX", "0066"));
-        ultimo = modelCarttaoZA.comprar(motorista, new Placa("MUS", "2277"));
-        ultimo = modelCarttaoZA.comprar(motorista, new Placa("KFW", "8983"));
-        ultimo = modelCarttaoZA.comprar(motorista, new Placa("KHX", "0066"));
+       
+        CartaoZonaAzul ca = modelCarttaoZA.recuperarUltimo(new Placa("KHX", "0066"));
 
-        List<CartaoZonaAzul> lista = ((DAOCompraCartaoZAFake) dAOCompraCartaoZA).getListaCartoes();
-        ((DAOCartaoZonaAzulFake) dAOCartaoZonaAzul).setListaCartoes(lista);
-
-        modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
-
-        assertEquals(ultimo.getPlaca().getLetras(), modelCarttaoZA.recuperarUltimo(new Placa("KHX", "0066")).getPlaca().getLetras());
-        assertEquals(ultimo.getPlaca().getNumeros(), modelCarttaoZA.recuperarUltimo(new Placa("KHX", "0066")).getPlaca().getNumeros());
+        assertEquals(ultimo.getPlaca().getLetras(), ca.getPlaca().getLetras());
+        assertEquals(ultimo.getPlaca().getNumeros(), ca.getPlaca().getNumeros());
 
     }
 
     @Test
     public void recuperarCartoesAtivosDoMotorista() throws DaoException, MotoristaException, PlacaException {
         modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
-        List<CartaoZonaAzul> lista = modelCarttaoZA.CartoesAtivosPor(motorista);
+        List<CartaoZonaAzul> lista = modelCarttaoZA.CartoesAtivosPor(motoristas.get(0));
         assertEquals(3, lista.size());
     }
 }
