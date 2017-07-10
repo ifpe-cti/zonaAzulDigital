@@ -12,14 +12,18 @@ local function eventoConsultarPlaca(event)
         
         if event.status == 200 then
             print(event.response)
-                                
+                    
             cartaoConsultado =json.decode(event.response)
-            
+
             composer.gotoScene("TelaGuarda")
 
         elseif event.status == 403 then
 
             toast.show("Placa Invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+
+        elseif event.status == 417 then
+
+            toast.show("Placa não cadastrada no sistema!", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})              
 
         else
             print(event.response)

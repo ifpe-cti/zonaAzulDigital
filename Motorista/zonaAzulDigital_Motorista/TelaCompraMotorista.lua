@@ -19,7 +19,7 @@ function scene:create(event )
     local sceneGroup = self.view
 
     local txtPlaca  = display.newText({text = "Placa:", x = display.contentWidth/2, y = display.contentHeight/7 * 2.55, fontSize = 25})
-    local comprar = widget.newButton({label = "Comprar",onRelease = compraCartao, labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2.2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
+    local comprar = widget.newButton({label = "COMPRAR",onRelease = compraCartao, labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, fontSize = 14, x = display.contentWidth/2, y = display.contentHeight/3.2 * 2.2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
     
     local hifen = display.newLine( display.contentWidth/10*4.9, display.contentHeight/7 *3.2, display.contentWidth/10 * 4.9 + 10, display.contentHeight/7 *3.2)
 
