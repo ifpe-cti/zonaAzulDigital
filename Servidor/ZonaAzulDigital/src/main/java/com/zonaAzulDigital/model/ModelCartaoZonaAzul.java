@@ -155,8 +155,8 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         }
         return vendasMes;
     }
-
-    public List<Placa> recuperarTodosCartoesPor(Motorista motorista) {
+    @Override
+    public List<CartaoZonaAzul> recuperarTodosCartoesPor(Motorista motorista) {
         return daoCartaoZonaAzul.recuperarCartoesPor(motorista);
     }
 

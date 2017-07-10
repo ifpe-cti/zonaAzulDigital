@@ -94,7 +94,7 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
     }
 
     @Override
-    public List<Placa> recuperarCartoesPor(Motorista motorista) {
+    public List<CartaoZonaAzul> recuperarCartoesPor(Motorista motorista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

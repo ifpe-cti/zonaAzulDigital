@@ -125,20 +125,20 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
         }
         return lista;
     }
-    
-    public List<Placa> recuperarCartoesPor(Motorista motorista){
+    @Override
+    public List<CartaoZonaAzul> recuperarCartoesPor(Motorista motorista){
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "SELECT ca FROM  " + CompraCartaoZA.class.getSimpleName() + " co, "
                 + CartaoZonaAzul.class.getSimpleName() + " ca WHERE co.motorista.id = :p1 and "
                 + "co.cartaoZonaAzul.numero = ca.numero";
         Query query = em.createQuery(hql);
         query.setParameter("p1", motorista);
-        List<Placa> placas = new ArrayList<>();
+        List<CartaoZonaAzul> cartoes = new ArrayList<>();
         try{
-            placas = query.getResultList();
+            cartoes = query.getResultList();
         }catch(Exception ex){
             Logger.getLogger(DaoCartaoZonaAzulBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return placas;
+        return cartoes;
     }
 }

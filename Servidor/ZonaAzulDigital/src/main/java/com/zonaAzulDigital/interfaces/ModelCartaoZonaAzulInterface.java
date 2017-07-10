@@ -21,7 +21,7 @@ import java.util.List;
  * @author JonasJr
  */
 public interface ModelCartaoZonaAzulInterface {
-    
+
     CartaoZonaAzulInfo cadastrarDetalhes(CartaoZonaAzulInfo cartaoZonaAzulInfo) throws CartaoZAException, DaoException;
 
     CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException, PlacaException;
@@ -33,4 +33,6 @@ public interface ModelCartaoZonaAzulInterface {
     List<CartaoZonaAzul> CartoesAtivosPor(Motorista m);
 
     List<VendaMes> vendasNoMes(int ano) throws DaoException;
+
+    List<CartaoZonaAzul> recuperarTodosCartoesPor(Motorista motorista);
 }
