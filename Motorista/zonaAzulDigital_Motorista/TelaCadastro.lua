@@ -49,9 +49,9 @@ function scene:create()
     linha3:setStrokeColor(0.2, 0.2, 1, 1)
     linha3.strokeWidth = 2.65
     
-    local voltar = widget.newButton({label = "Voltar",labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, x = display.contentWidth/4, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
+    local voltar = widget.newButton({label = "VOLTAR",labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} },fontSize = 13 , x = display.contentWidth/4, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
     
-    local cadastrar = widget.newButton({label = "Cadastrar", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} },x = display.contentWidth/4 * 3, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13,shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
+    local cadastrar = widget.newButton({label = "CADASTRAR", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} },fontSize = 13 , x = display.contentWidth/4 * 3, y = display.contentHeight/7 * 5.5, width = display.contentWidth/2.9, height = display.contentHeight/13,shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} }})
     
     voltar:addEventListener("touch", voltarTelaLogin)
     cadastrar:addEventListener("touch", cadastrarMotorista)
