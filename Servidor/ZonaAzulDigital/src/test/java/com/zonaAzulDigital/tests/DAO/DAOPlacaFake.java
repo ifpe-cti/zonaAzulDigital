@@ -34,6 +34,7 @@ public class DAOPlacaFake implements DAOPlaca{
 
     @Override
     public Placa recuperar(String letras, String numeros) throws DaoException {
+        listaPlacas.add(new Placa("KHX", "0069"));
         Placa returno = null;
         for (Placa placa : listaPlacas) {
             if (placa.getLetras().equals(letras) && placa.getNumeros().equals(numeros)) {

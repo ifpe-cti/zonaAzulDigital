@@ -9,13 +9,16 @@ package com.zonaAzulDigital.tests;
 import com.zonaAzulDigital.DAO.DaoMotoristaBD;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
+import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
 import java.math.BigDecimal;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Assert;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -25,7 +28,7 @@ import org.junit.rules.ExpectedException;
 public class DaoMotoristaTeste {
     public DAOMotorista dmbd;
     
-    public Motorista m, m1, m2;
+    public Motorista m, m1, m2, m3;
     
     
     @Rule
@@ -34,21 +37,26 @@ public class DaoMotoristaTeste {
     @Before
     public void before(){
         dmbd = new DaoMotoristaBD();
-        m1 = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
+        m1 = new Motorista(0, "Antonio", "04982857406", BigDecimal.ZERO, "antonio");
+        m2 = new Motorista(0, "Joao", "04982857507", BigDecimal.ZERO, "joao");
+        m3 = new Motorista(0, "Fabricio", "04982557407", BigDecimal.ZERO, "fabricio");
      
     }
     
     @Test
     public void testandoCadastroMostorista() throws DaoException{
-        Motorista mc = dmbd.cadastrar(m1);
         
-         assertEquals("Carlos Eduardo",mc.getNome());
-         
+        m = new Motorista(0, "Carlos Eduardo", "04982857407", BigDecimal.ZERO, "carlos");
+        
+        Motorista mc = dmbd.cadastrar(m);
+        
+        Assert.assertNotEquals(0, mc.getId());
     }
     
     @Test
     public void  disparaExcecaoDeCadastro() throws DaoException{
         excecao.expect(DaoException.class);
+        excecao.expectMessage(DaoException.NAOCADASTRADO);
         
          Motorista mc = new Motorista();
          dmbd.cadastrar(mc);
@@ -57,7 +65,7 @@ public class DaoMotoristaTeste {
     @Test
     public void testandoMotoristaAtualizado() throws DaoException{
        
-       m =new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
+       m = new Motorista(0, "Samuel", "11791558402", BigDecimal.ZERO, "samuel");
        dmbd.cadastrar(m);
        m.setNome("Tony");
        
@@ -92,33 +100,23 @@ public class DaoMotoristaTeste {
     @Test
     public void disparaExcecaoDeRecuperar()throws DaoException{
         excecao.expect(DaoException.class);
-        
+        excecao.expectMessage(MotoristaException.NAOENCONTRADO);
          dmbd.recuperar("04882");
         
     }
     
     @Test
-    public void testeDeLogin() throws LoginException, DaoException{
+    public void testeDeListarTodos() throws DaoException{
         
-        m = new Motorista(0, "Eduardo", "11792558402", BigDecimal.ZERO, "edu");
+        dmbd.cadastrar(m1);
+        dmbd.cadastrar(m2);
+        dmbd.cadastrar(m3);
         
-        Motorista motorista = dmbd.cadastrar(m);
+        List<Motorista> lm =  dmbd.listarTudo();
         
-        Motorista m2 = dmbd.login(motorista.getCpf(), motorista.getSenha());
+        assertEquals("Antonio", lm.get(4).getNome());
+        assertEquals("Joao", lm.get(5).getNome());
+        assertEquals("Fabricio", lm.get(6).getNome());
         
-        assertEquals("Eduardo", m2.getNome());
     }
-    
-    
-    @Test
-    public void disparaExcecaoDeLogin() throws LoginException, DaoException{
-        excecao.expect(DaoException.class);
-         
-        m = new Motorista(0, "Eduardo", "11792558402", BigDecimal.ZERO, "edu");
-        
-        Motorista motorista = dmbd.cadastrar(m);
-        
-        dmbd.login(motorista.getCpf(), motorista.getSenha());
-    }
-        
 }

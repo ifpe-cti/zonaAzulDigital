@@ -2,6 +2,8 @@ local json = require("json")
 
 local webService = {}
 
+local toast = require("plugin.toast")
+
 local composer = require("composer")
 
 local function eventoConsultarPlaca(event)
@@ -10,14 +12,20 @@ local function eventoConsultarPlaca(event)
         
         if event.status == 200 then
             print(event.response)
-            local cartaoJson = json.decode(event.response)
-            cartaoConsultado = cartaoJson
-
+                                
+            cartaoConsultado =json.decode(event.response)
+            
             composer.gotoScene("TelaGuarda")
 
+        elseif event.status == 403 then
+
+            toast.show("Placa Invalida", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})  
+
+        else
+            print(event.response)
+            print(event.status)
+
         end
-        print(event.response)
-        print(event.status)
     else
         print("Erro")
     end

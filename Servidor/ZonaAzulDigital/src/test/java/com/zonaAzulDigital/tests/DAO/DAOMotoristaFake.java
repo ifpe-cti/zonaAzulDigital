@@ -9,8 +9,10 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.LoginException;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
+
 import com.zonaAzulDigital.tests.DAO.base.Motoristas;
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,20 @@ public class DAOMotoristaFake implements DAOMotorista {
     
     @Override
     public Motorista atualizar(Motorista motorista) throws DaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Motorista mRetorno = null;
+        for (Motorista m : listaMotoristas) {
+            if (m.getCpf().equals(motorista.getCpf()) ){
+                m.setCredito(motorista.getCredito());
+                m.setNome(motorista.getNome());
+                m.setSenha(motorista.getSenha());
+                
+                mRetorno = m;
+            }
+        }
+        if (mRetorno == null ){ 
+            throw new DaoException(DaoException.NAOATUALIZADO);
+        }
+        return mRetorno;
     }
     
     @Override
@@ -69,6 +84,9 @@ public class DAOMotoristaFake implements DAOMotorista {
             if (motorista.getCpf().equals(cpf) && motorista.getSenha().equals(senha)) {
                 m = motorista;
             }
+        }
+        if (m == null) { 
+           throw new LoginException(LoginException.FALHOU);
         }
         return m;
     }
