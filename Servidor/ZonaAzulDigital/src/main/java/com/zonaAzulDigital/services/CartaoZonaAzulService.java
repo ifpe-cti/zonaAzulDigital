@@ -130,6 +130,9 @@ public class CartaoZonaAzulService {
                 
                 r = Response.ok(jsonRetorno).build();
 
+            }catch(DaoException de){
+                r = Response.status(417).build(); 
+                Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, de);
             }
             catch(PlacaException pe){
                 r = Response.status(403).build(); 
