@@ -132,7 +132,7 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
                 + CartaoZonaAzul.class.getSimpleName() + " ca WHERE co.motorista.id = :p1 and "
                 + "co.cartaoZonaAzul.numero = ca.numero";
         Query query = em.createQuery(hql);
-        query.setParameter("p1", motorista);
+        query.setParameter("p1", motorista.getId());
         List<CartaoZonaAzul> cartoes = new ArrayList<>();
         try{
             cartoes = query.getResultList();
