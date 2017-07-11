@@ -85,7 +85,6 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         }
 
         ModelPlacaInterface mp = new ModelPlaca(daoPlaca);
-
         mp.validar(placa);
 
         BigDecimal preco = daoCartaoZonaAzul.preco("Garanhuns");
@@ -116,9 +115,20 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         mp.validar(placa);
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
-        CartaoZonaAzul cartaoZonaAzul = (CartaoZonaAzul) daoCartaoZonaAzul.recuperarUltimo(placa);
+        CartaoZonaAzul cartaoZonaAzul = daoCartaoZonaAzul.recuperarUltimo(placa);
         cartaoZonaAzul.setTempoRestante(calculaTempoRestante(cartaoZonaAzul.getDataFim()).toString());
         return cartaoZonaAzul;
+    }
+
+    @Override
+    public CartaoZonaAzul recuperaCartaoAtivo(Placa placa) throws PlacaException, DaoException {
+        ModelPlacaInterface mp = new ModelPlaca(daoPlaca);
+        mp.validar(placa);
+        placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
+
+        CartaoZonaAzul cartaoAtivo = daoCartaoZonaAzul.recuperaCartaoAtivo(placa);
+        cartaoAtivo.setTempoRestante(calculaTempoRestante(cartaoAtivo.getDataFim()).toString());
+        return cartaoAtivo;
     }
 
     @Override
@@ -133,8 +143,8 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         return cartaoZonaAzuls;
     }
 
-    public LocalTime calculaTempoRestante(Date data) {
-        LocalTime horaExpirar = LocalDateTime.ofInstant(data.toInstant(), ZoneId.systemDefault()).toLocalTime();
+    public LocalTime calculaTempoRestante(Date dataFim) {
+        LocalTime horaExpirar = LocalDateTime.ofInstant(dataFim.toInstant(), ZoneId.systemDefault()).toLocalTime();
         long tempoEmSegundos = ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar);
         if (tempoEmSegundos < 0) {
             tempoEmSegundos = 0;
@@ -155,6 +165,7 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         }
         return vendasMes;
     }
+
     @Override
     public List<CartaoZonaAzul> recuperarTodosCartoesPor(Motorista motorista) {
         return daoCartaoZonaAzul.recuperarCartoesPor(motorista);

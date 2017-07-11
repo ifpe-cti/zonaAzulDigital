@@ -23,8 +23,8 @@ public class MD5Crip {
         MessageDigest ms;
         try{
             ms = MessageDigest.getInstance("MD5");
-            BigInteger hash = new BigInteger(ms.digest(senha.getBytes()));
-            retorno = hash.toString(32);
+            ms.update(senha.getBytes(),0,senha.length());
+            retorno = new BigInteger(1,ms.digest()).toString(16);
         }catch(Exception ex){
             Logger.getLogger(MD5Crip.class.getName()).log(Level.SEVERE, null, ex);
         }

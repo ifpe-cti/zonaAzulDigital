@@ -7,6 +7,7 @@ package com.zonaAzulDigital.DAO;
 
 import Hibernate.HibernateUtil;
 import com.zonaAzulDigital.Excecao.DaoException;
+import com.zonaAzulDigital.controler.controllerMotorista;
 import com.zonaAzulDigital.controler.controllerRelatorio;
 import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
@@ -104,19 +105,20 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
 
         return cartoesComprados;
     }
+
     @Override
     public List<Object[]> vendasPorMes(int ano) throws DaoException {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
 //        select count(*) from cartaozonaazul as ca where year(ca.dataInicio) = '2017'
 //        and month(ca.dataInicio) > '01' group by month(ca.dataInicio);
 //        String hql = "FORM " + CartaoZonaAzul.class.getSimpleName() + " c WHERE c.dataInicio > :p1";
-        String hql = "SELECT MONTH(c.dataInicio), COUNT(c) FROM " + CartaoZonaAzul.class.getName() + 
-                " c WHERE YEAR(c.dataInicio) = :p1 AND MONTH(c.dataInicio) > :p2 "
+        String hql = "SELECT MONTH(c.dataInicio), COUNT(c) FROM " + CartaoZonaAzul.class.getName()
+                + " c WHERE YEAR(c.dataInicio) = :p1 AND MONTH(c.dataInicio) > :p2 "
                 + "GROUP BY MONTH(c.dataInicio) ORDER BY MONTH(c.dataInicio)";
         Query query = em.createQuery(hql);
         query.setParameter("p1", ano);
         query.setParameter("p2", 1);
-        
+
         List<Object[]> lista = new ArrayList<>();
         try {
             lista = query.getResultList();
@@ -125,8 +127,31 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
         }
         return lista;
     }
+
+    public CartaoZonaAzul recuperaCartaoAtivo(Placa placa) {
+        EntityManager em = HibernateUtil.getInstance().getEntityManager();
+        String hql = "SELECT ca FROM " + CartaoZonaAzul.class.getSimpleName() + " ca, "
+                + Placa.class.getSimpleName() + " p WHERE ca.placa.id = p.id and "
+                + "p.letras = :p1 and p.numeros = :p2 and ca.dataFim > :p3 ";
+        Query query = em.createQuery(hql);
+        query.setParameter("p1", placa.getLetras());
+        query.setParameter("p2", placa.getNumeros());
+        Date dataInicio = new Date();
+        dataInicio.setHours(dataInicio.getHours() - 2);
+        query.setParameter("p3", dataInicio);
+
+        CartaoZonaAzul cartaoAtivo = new CartaoZonaAzul();
+        try {
+            cartaoAtivo = (CartaoZonaAzul) query.getSingleResult();
+        } catch (Exception ex) {
+            Logger.getLogger(DaoCartaoZonaAzulBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return cartaoAtivo;
+    }
+
     @Override
-    public List<CartaoZonaAzul> recuperarCartoesPor(Motorista motorista){
+    public List<CartaoZonaAzul> recuperarCartoesPor(Motorista motorista) {
         EntityManager em = HibernateUtil.getInstance().getEntityManager();
         String hql = "SELECT ca FROM  " + CompraCartaoZA.class.getSimpleName() + " co, "
                 + CartaoZonaAzul.class.getSimpleName() + " ca WHERE co.motorista.id = :p1 and "
@@ -134,9 +159,9 @@ public class DaoCartaoZonaAzulBD implements DAOCartaoZonaAzul {
         Query query = em.createQuery(hql);
         query.setParameter("p1", motorista.getId());
         List<CartaoZonaAzul> cartoes = new ArrayList<>();
-        try{
+        try {
             cartoes = query.getResultList();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             Logger.getLogger(DaoCartaoZonaAzulBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cartoes;

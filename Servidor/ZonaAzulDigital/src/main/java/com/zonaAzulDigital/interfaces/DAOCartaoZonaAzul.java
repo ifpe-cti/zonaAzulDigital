@@ -37,4 +37,6 @@ public interface DAOCartaoZonaAzul {
     public List<Object[]> vendasPorMes(int ano) throws DaoException;
 
     public List<CartaoZonaAzul> recuperarCartoesPor(Motorista motorista);
+    
+    public CartaoZonaAzul recuperaCartaoAtivo(Placa placa);
 }
