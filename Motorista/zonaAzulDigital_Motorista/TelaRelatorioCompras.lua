@@ -130,7 +130,7 @@ function mostraCompraCartoes(iFor,jFor)
 end
 
 function onTouchProximo()
-    for i = jFor , iFor, -1 do
+    for i = 8 , 1, -1 do
         if tabelaCaixasCompras[i]~=nil then
             display.remove(tabelaCaixasCompras[i])
             display.remove(tabelaCaixasCompras[i].placaText)
@@ -139,7 +139,7 @@ function onTouchProximo()
             table.remove(tabelaCaixasCompras,i)
         end
     end
-
+        print(#tabelaCaixasCompras)
     if #tabelaCaixasCompras == 0 then
         iFor = iFor+8
         jFor = jFor+8
@@ -172,6 +172,9 @@ function scene:hide(event)
 		display.remove(textoNaoPossuiCompras)
 		
         for i = #tabelaCaixasCompras , 1, -1 do
+            display.remove(tabelaCaixasCompras[i].placaText)
+            display.remove(tabelaCaixasCompras[i].dataText)
+            display.remove(tabelaCaixasCompras[i].dataCompra)
             display.remove(tabelaCaixasCompras[i])
             table.remove(tabelaCaixasCompras,i)
         end
