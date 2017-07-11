@@ -123,7 +123,7 @@ public class CartaoZonaAzulService {
             
             try{
                 
-                CartaoZonaAzul cza = mcza.recuperarUltimo(p);
+                CartaoZonaAzul cza = mcza.recuperaCartaoAtivo(p);
                 
                 
                 String jsonRetorno = gson.toJson(cza);
