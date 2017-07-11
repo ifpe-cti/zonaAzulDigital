@@ -288,9 +288,9 @@ local function eventoTodasAsCompras(event)
 	if not event.isError then
 
 		local response = json.decode(event.response)
-		print(event.response)
+		
 		if event.status == 200 then
-			
+			todosCartoes = response
 		else
 			
 			print(event.response)

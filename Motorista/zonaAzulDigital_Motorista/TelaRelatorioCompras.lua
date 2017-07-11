@@ -16,13 +16,14 @@ local textoNaoPossuiCompras
 
 local tabelaCaixasCompras = {}
 
+local iFor = 1
 
+local jFor = 8
 
 function scene:create(  )
 	sceneGroup = self.view
+
 	local textoCartoes = display.newText({text = "Todas as Compras:",x = display.contentWidth/2,y = display.contentHeight/8*1.3,fontSize = 20})
-	--local cadastro = widget.newButton({label = "Hello World",labelColor = { default={ 0.2, 0.2, 1, 1 }, over={0, 0, 0} },fontSize = 18 ,  textOnly = true, x = display.contentWidth/2, y = display.contentHeight/ 2.6 * 2, width = display.contentWidth/1.5, height = display.contentHeight/12, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 0 }, over={ 0.8, 0.8, 1 } } })
-	--cadastro:addEventListener("touch", relatorio)
 	sceneGroup:insert(textoCartoes)
 end
 
@@ -30,7 +31,7 @@ function scene:show(event)
 
 	if event.phase == "will" then
 		webServiceComunication:consultarCompraTodosCartoes(motoristaLogado)
-		mostraCompraCartoes()
+		mostraCompraCartoes(iFor,jFor)
 
 	end
 end
@@ -46,22 +47,23 @@ end
 
 
 
-function mostraCompraCartoes()
+function mostraCompraCartoes(iFor,jFor)
      local posicaoY = display.contentHeight/8
         local posicaoX = display.contentWidth/2
         
         if #todosCartoes > 0  then
-            if #todosCartoes>=8 then
-                local proximo = widget.newButton({label = "Próximo", labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, fontSize = 14 , x = display.contentWidth/2, y = display.contentHeight/10 * 9.79, width = display.contentWidth/2, height = display.contentHeight/17, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
+            if #todosCartoes>8 then
+                local proximo = widget.newButton({label = "Próximo",onRelease = onTouchProximo, labelColor = { default={ 1, 1, 1 }, over={0, 0, 0} }, fontSize = 14 , x = display.contentWidth/2, y = display.contentHeight/10 * 9.79, width = display.contentWidth/2, height = display.contentHeight/17, shape = "roundedRect", fillColor = { default={ 0.2, 0.2, 1, 1 }, over={ 0.8, 0.8, 1} } })
+                sceneGroup:insert(proximo)
             end
 
-            id = 1
-            for i = 1 , #todosCartoes do
-                
+            
+            for i = iFor, jFor do
+            if todosCartoes[i] ~=nil then         
                 if i%2 ~= 0 then
                     
                     local caixa = display.newRoundedRect(  posicaoX,  posicaoY* 2, display.contentWidth, display.contentHeight/12, 9 )
-                    caixa.id = id
+                    
                     caixa.cartao = todosCartoes[i]
                     
                     caixa:setFillColor( 0.2, 0.2, 1, 1 )
@@ -72,16 +74,20 @@ function mostraCompraCartoes()
                     local hora,data = funcaoDate:formataData(todosCartoes[i].dataInicio)
                     local dataCompra = display.newText({text =data .. "\n"..hora  , x = display.contentWidth/7 *5.5 , y = posicaoY*2 , fontSize = 15, align = "left" })
                     
+                    caixa.placaText = placaText
+                    caixa.dataText = dataText
+                    caixa.dataCompra = dataCompra
+
                     sceneGroup:insert(caixa)
                     sceneGroup:insert(placaText)
                     sceneGroup:insert(dataText)
                     sceneGroup:insert(dataCompra)
 
                     table.insert(tabelaCaixasCompras,caixa)
-                    print(tabelaCaixasCompras[i].cartao.numero)
+                    
                 else
                     local caixa = display.newRoundedRect(  posicaoX,  posicaoY* 2, display.contentWidth, display.contentHeight/12, 9 )
-                    caixa.id = id
+                    
                     caixa.cartao = todosCartoes[i]
                     caixa:setFillColor( 0.8, 0.8, 1 )
                     caixa:addEventListener("touch",onTouchCompras)
@@ -92,7 +98,10 @@ function mostraCompraCartoes()
                     local hora,data = funcaoDate:formataData(todosCartoes[i].dataInicio)
                     local dataCompra = display.newText({text =data .. "\n"..hora  , x = display.contentWidth/7 *5.5 , y = posicaoY*2 , fontSize = 15, align = "left" })
 
-                    
+                    caixa.placaText = placaText
+                    caixa.dataText = dataText
+                    caixa.dataCompra = dataCompra
+
                     placaText:setFillColor( 0, 0, 0 )
                     dataText:setFillColor(0,0,0)
                     dataCompra:setFillColor(0,0,0)
@@ -106,8 +115,9 @@ function mostraCompraCartoes()
                     table.insert(tabelaCaixasCompras,caixa)
                     
                 end
-                id = id + 1
+                
                 posicaoY = posicaoY + 22  
+            end
             end
         else
             caixaInfo = display.newRoundedRect(  display.contentWidth/2,  display.contentHeight/ 2, display.contentWidth, display.contentHeight/7, 9 )
@@ -119,12 +129,33 @@ function mostraCompraCartoes()
 
 end
 
+function onTouchProximo()
+    for i = jFor , iFor, -1 do
+        if tabelaCaixasCompras[i]~=nil then
+            display.remove(tabelaCaixasCompras[i])
+            display.remove(tabelaCaixasCompras[i].placaText)
+            display.remove(tabelaCaixasCompras[i].dataText)
+            display.remove(tabelaCaixasCompras[i].dataCompra)
+            table.remove(tabelaCaixasCompras,i)
+        end
+    end
+
+    if #tabelaCaixasCompras == 0 then
+        iFor = iFor+8
+        jFor = jFor+8
+    
+        mostraCompraCartoes(iFor,jFor)    
+
+    end
+
+
+end
 
 function onTouchCompras(event)
     if event.phase == "began" then
         for i = 1 , #tabelaCaixasCompras do
             
-            if tabelaCaixasCompras[i].id == event.target.id then
+            if tabelaCaixasCompras[i].cartao.numero == event.target.cartao.numero then
                 local options = { params =  {cartao = tabelaCaixasCompras[i].cartao}}
                 
                 composer.gotoScene("TelaDetalhesCartaoCompras",options)
@@ -144,7 +175,8 @@ function scene:hide(event)
             display.remove(tabelaCaixasCompras[i])
             table.remove(tabelaCaixasCompras,i)
         end
-
+        iFor = 1
+        jFor = 8
 	end
 
 end
