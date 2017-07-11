@@ -178,4 +178,35 @@ public class CartaoZonaAzulService {
         }
         return r;
     }
+    
+    @POST
+    @Path("/relatorioscartoes")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response consultaTodosCartoesComprados(String json) {
+
+        Response r = Response.serverError().build();
+
+        if (json != null && !json.isEmpty()) {
+
+            Gson gson = new Gson();
+
+            ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(),
+                    new DaoCompraCartaoZADB(), new DaoPlacaBD());
+            try {    
+                
+                Motorista m = gson.fromJson(json, Motorista.class);
+                List<CartaoZonaAzul> listaCartoesAtivos = mcza.recuperarTodosCartoesPor(m);
+                
+                String jsonRetorno = gson.toJson(listaCartoesAtivos);
+                
+                r = Response.ok(jsonRetorno).build();
+            }
+            catch (Exception e) {
+                r = Response.serverError().build();
+                Logger.getLogger(CartaoZonaAzulService.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return r;
+    }
+    
 }
