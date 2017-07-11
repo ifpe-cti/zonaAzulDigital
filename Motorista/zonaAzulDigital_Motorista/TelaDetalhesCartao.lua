@@ -6,17 +6,26 @@ local formataDate = require("funcaoDate")
 
 local cartaoAtivo = {}
 
-function scene:create(event)
-	cartaoAtivo = event.params.cartaoAtivo
+ 
 
-	local sceneGroup = self.view
-	local caixaRect = display.newRoundedRect(  display.contentWidth/2,  display.contentHeight/2.2, display.contentWidth/2*1.5, display.contentHeight/2*1.1, 9 )
-	caixaRect:setFillColor( 0.2, 0.2, 1, 1 )
+local sceneGroup
+
+function scene:create(event)
+	sceneGroup = self.view
+
+	cartaoAtivo = event.params.cartaoAtivo
 
 	local posicaoX  = display.contentWidth/7
 	local posicaoY   = display.contentHeight/6
 
-
+	local caixaRect = display.newRoundedRect(  display.contentWidth/2,  display.contentHeight/2.2, display.contentWidth/2*1.5, display.contentHeight/2*1.1, 9 )
+	caixaRect:setFillColor( 0.2, 0.2, 1, 1 )
+		
+	local textoTempoRestante = display.newText({text = "Tempo Restante: " , x = posicaoX *2.7 , y = posicaoY*3.4 , fontSize = 20, align = "left" })
+	tempoRestante = display.newText({text =  cartaoAtivo.tempoRestante , x = posicaoX *5.3 , y = posicaoY*3.4 , fontSize = 15, align = "left" })
+	
+	
+	
 	local textoCartao = display.newText({text = "Cartão" , x = display.contentWidth/2  , y = display.contentHeight/7  , fontSize = 25, align = "center" })
 	
 	local textoNum = display.newText({text = "Número:" , x = posicaoX*1.9 , y = posicaoY*1.5  , fontSize = 20, align = "left" })
@@ -34,12 +43,6 @@ function scene:create(event)
 	local textoValor = display.newText({text = "Valor: " , x = posicaoX *1.65 , y = posicaoY*3  , fontSize = 20, align = "left" })
 	valor = display.newText({text = "R$: "..cartaoAtivo.valor..",00" , x = posicaoX *5.3 , y = posicaoY*3  , fontSize = 17, align = "left" })
 	
-	local textoTempoRestante = display.newText({text = "Tempo Restante: " , x = posicaoX *2.7 , y = posicaoY*3.4 , fontSize = 20, align = "left" })
-	tempoRestante = display.newText({text = cartaoAtivo.tempoRestante , x = posicaoX *5.3 , y = posicaoY*3.4 , fontSize = 17, align = "left" })
-
-
-
-	
 	sceneGroup:insert(caixaRect)
 	sceneGroup:insert(textoCartao)
 	sceneGroup:insert(textoNum)
@@ -49,12 +52,11 @@ function scene:create(event)
 	sceneGroup:insert(textoDataInicio)
 	sceneGroup:insert(textoValor)
 	sceneGroup:insert(valor)
-	sceneGroup:insert(textoTempoRestante)
-	sceneGroup:insert(tempoRestante)
 	sceneGroup:insert(dataText)
 	sceneGroup:insert(horaText)
+	sceneGroup:insert(textoTempoRestante)
+	sceneGroup:insert(tempoRestante)
 	
-
 end
 
 
@@ -63,6 +65,7 @@ function scene:show(event)
 
 	if event.phase == "will" then
 		cartaoAtivo = event.params.cartaoAtivo
+
 		numero.text = cartaoAtivo.numero
 		placa.text = cartaoAtivo.placa.letras.."-"..cartaoAtivo.placa.numeros
 		local hora,data = formataDate:formataData(cartaoAtivo.dataInicio)
@@ -70,7 +73,6 @@ function scene:show(event)
 		horaText.text = hora
 		valor.text =  "R$: "..cartaoAtivo.valor..",00"
 		tempoRestante.text = cartaoAtivo.tempoRestante
-
 	end
 
 end
@@ -78,6 +80,7 @@ end
 
 scene:addEventListener("create",scene)
 scene:addEventListener("show",scene)
+
 
 
 return scene
