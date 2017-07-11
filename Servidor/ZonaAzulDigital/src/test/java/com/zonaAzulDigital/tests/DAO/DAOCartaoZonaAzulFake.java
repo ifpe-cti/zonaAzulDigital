@@ -98,4 +98,9 @@ public class DAOCartaoZonaAzulFake implements DAOCartaoZonaAzul {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public CartaoZonaAzul recuperaCartaoAtivo(Placa placa) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

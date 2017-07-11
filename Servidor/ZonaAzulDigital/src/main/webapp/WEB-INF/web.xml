@@ -25,6 +25,10 @@
         <servlet-name>recuperarUltimoCartao</servlet-name>
         <servlet-class>recuperarUltimoCartao</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>testaRetornoCartaoAtivo</servlet-name>
+        <servlet-class>testaRetornoCartaoAtivo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -52,6 +56,10 @@
     <servlet-mapping>
         <servlet-name>recuperarUltimoCartao</servlet-name>
         <url-pattern>/recuperarUltimoCartao</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testaRetornoCartaoAtivo</servlet-name>
+        <url-pattern>/testaRetornoCartaoAtivo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

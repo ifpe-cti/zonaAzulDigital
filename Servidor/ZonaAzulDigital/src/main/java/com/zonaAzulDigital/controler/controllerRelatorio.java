@@ -89,7 +89,7 @@ public class controllerRelatorio implements Serializable {
         graficoLinha.getAxes().put(AxisType.X, new CategoryAxis("Mes"));
         yAxis.setLabel("Quantidade");
         yAxis.setMin(0);
-        yAxis.setMax(escala + 10);
+        yAxis.setMax(escala + 3);
     }
     
     

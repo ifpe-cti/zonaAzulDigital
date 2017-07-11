@@ -35,4 +35,6 @@ public interface ModelCartaoZonaAzulInterface {
     List<VendaMes> vendasNoMes(int ano) throws DaoException;
 
     List<CartaoZonaAzul> recuperarTodosCartoesPor(Motorista motorista);
+
+    CartaoZonaAzul recuperaCartaoAtivo(Placa placa) throws PlacaException, DaoException;
 }
