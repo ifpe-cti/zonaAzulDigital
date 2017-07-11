@@ -75,7 +75,7 @@ end
 
 
 function mostraCartoesAtivos()
-     local posicaoY = display.contentHeight/6.7
+        local posicaoY = display.contentHeight/6.7
         local posicaoX = display.contentWidth/2
         
         if #cartoesAtivos > 0  then
@@ -94,6 +94,10 @@ function mostraCartoesAtivos()
                     local textTempoRestante = display.newText({text = "Restante:" , x = display.contentWidth/7 * 3.5  , y = posicaoY*2  , fontSize = 15, align = "left" })
                     local tempoRestante = display.newText({text ="hr: ".. cartoesAtivos[i].tempoRestante  , x = display.contentWidth/7 *5.5 , y = posicaoY*2 , fontSize = 15, align = "left" })
                     
+                    caixaRect.placa = placa
+                    caixaRect.textTempoRestante = textTempoRestante
+                    caixaRect.tempoRestante = tempoRestante
+
                     sceneGroup:insert(caixaRect)
                     sceneGroup:insert(placa)
                     sceneGroup:insert(textTempoRestante)
@@ -113,7 +117,10 @@ function mostraCartoesAtivos()
                     local textTempoRestante = display.newText({text = "Restante:" , x = display.contentWidth/7 * 3.5  , y = posicaoY*2 , fontSize = 15, align = "left" })
                     local tempoRestante = display.newText({text ="hr: ".. cartoesAtivos[i].tempoRestante  , x = display.contentWidth/7 *5.5 , y = posicaoY*2 , fontSize = 15, align = "left" })
 
-                    
+                    caixaRect.placa = placa
+                    caixaRect.textTempoRestante = textTempoRestante
+                    caixaRect.tempoRestante = tempoRestante
+
                     placa:setFillColor( 0, 0, 0 )
                     textTempoRestante:setFillColor(0,0,0)
                     tempoRestante:setFillColor(0,0,0)
@@ -147,6 +154,10 @@ function scene:hide(event)
         display.remove(caixaRectInfo)
 
         for i = #tabelaCaixas , 1, -1 do
+            display.remove(tabelaCaixas[i])
+            display.remove(tabelaCaixas[i].placa)
+            display.remove(tabelaCaixas[i].textTempoRestante)
+            display.remove(tabelaCaixas[i].tempoRestante)
             table.remove(tabelaCaixas,i)
         end
 
@@ -158,6 +169,7 @@ function atualizaDados(event)
     if event.phase == "began" then
         webServiceComunication:atualizarMotorista(motoristaLogado)
         webServiceComunication:consultarCartoesAtivos(motoristaLogado)
+        webServiceComunication:consultarCompraTodosCartoes(motoristaLogado)
         composer.gotoScene("TelaMotoristaInicial")
     end
 end
