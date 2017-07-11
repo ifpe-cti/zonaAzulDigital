@@ -127,7 +127,10 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
         CartaoZonaAzul cartaoAtivo = daoCartaoZonaAzul.recuperaCartaoAtivo(placa);
-        cartaoAtivo.setTempoRestante(calculaTempoRestante(cartaoAtivo.getDataFim()).toString());
+        if (cartaoAtivo.getNumero()!=0){
+            cartaoAtivo.setTempoRestante(calculaTempoRestante(cartaoAtivo.getDataFim()).toString());;
+        }
+        
         return cartaoAtivo;
     }
 
