@@ -12,6 +12,8 @@ motoristaLogado = {}
 
 cartoesAtivos = {}
 
+todosCartoes = {}
+
 composer.gotoScene("TelaLogin")
 
 display.setDefault("background", 0.3, 0.6, 1)
