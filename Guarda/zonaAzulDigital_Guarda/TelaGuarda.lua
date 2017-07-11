@@ -106,28 +106,20 @@ end
 function scene:show(event)
     if event.phase == "will" then
         if cartaoConsultado ~= nil then 
-                numeroCartao.text = cartaoConsultado.numero
                 
-                if cartaoConsultado.placa ~= nil then
-                    placaCartao.text = cartaoConsultado.placa.letras.."-"..cartaoConsultado.placa.numeros
-                end
+                if cartaoConsultado.numero ~=0 then
+                    numeroCartao.text = cartaoConsultado.numero
+                    if cartaoConsultado.placa ~= nil then
+                        placaCartao.text = cartaoConsultado.placa.letras.."-"..cartaoConsultado.placa.numeros
+                    end
                 
-                if cartaoConsultado.dataInicio ~= nil then
-                    local hora,data = funcaoDate:formataData(cartaoConsultado.dataInicio)
-                    dataCompraCartao.text =" ".. data.."\n"..hora
-                end
+                    if cartaoConsultado.dataInicio ~= nil then
+                        local hora,data = funcaoDate:formataData(cartaoConsultado.dataInicio)
+                        dataCompraCartao.text =" ".. data.."\n"..hora
+                    end
                 
-                if cartaoConsultado.tempoRestante ~= nil then
-                    if cartaoConsultado.tempoRestante == "00:00" then
-
-                        caixaNegativo = display.newRoundedRect(display.contentWidth/10*6.8, display.contentHeight/10*9.1 ,display.contentWidth/10*4, display.contentHeight/20, 9  )
-                        restanteCompraCartao = display.newText({text = "Tempo Esgotado!", x = display.contentWidth/2*1.7, y = display.contentHeight/10 *9.9, width = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 15, Textalign = "left"})
-                        caixaNegativo:setFillColor( 1, 0, 0 )
+                    if cartaoConsultado.tempoRestante ~= nil then
                         
-                        sceneGroup:insert(caixaNegativo) 
-                        sceneGroup:insert(restanteCompraCartao)
-                        
-                    else
                         caixaPositivo = display.newRoundedRect(display.contentWidth/10*7.2, display.contentHeight/10*9.1 ,display.contentWidth/10*3, display.contentHeight/20, 9  )
                         caixaPositivo:setFillColor( 0, 1, 0 )
                         
@@ -135,7 +127,19 @@ function scene:show(event)
                         restanteCompraCartao:setFillColor(0,0,0)
                         sceneGroup:insert(caixaPositivo) 
                         sceneGroup:insert(restanteCompraCartao)
+                    
                     end
+                else
+                    numeroCartao.text = ""
+                    placaCartao.text = ""
+                    dataCompraCartao.text = ""
+
+                    caixaNegativo = display.newRoundedRect(display.contentWidth/10*6.8, display.contentHeight/10*9.1 ,display.contentWidth/10*4, display.contentHeight/20, 9  )
+                    restanteCompraCartao = display.newText({text = "Tempo Esgotado!", x = display.contentWidth/2*1.7, y = display.contentHeight/10 *9.9, width = display.contentWidth/10 * 7, height = display.contentHeight/10 * 2, fontSize = 15, Textalign = "left"})
+                    caixaNegativo:setFillColor( 1, 0, 0 )
+                        
+                    sceneGroup:insert(caixaNegativo) 
+                    sceneGroup:insert(restanteCompraCartao)
                 end
         end
 
