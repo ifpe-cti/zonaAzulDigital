@@ -25,7 +25,7 @@ function scene:create(event)
         data={
             {text="Cartões Ativos", scene="TelaMotoristaInicial"},
             {text="Comprar cartão", scene="TelaCompraMotorista"},
-            {text="Histórico de Compras"},
+            {text="Histórico de Compras",scene = "TelaRelatorioCompras"},
             {text="Sair", callback=destroyMenu}
         }, 
         containers={
