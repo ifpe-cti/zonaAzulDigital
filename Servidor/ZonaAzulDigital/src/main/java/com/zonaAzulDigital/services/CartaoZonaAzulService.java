@@ -119,10 +119,11 @@ public class CartaoZonaAzulService {
             
             ModelCartaoZonaAzulInterface mcza = new ModelCartaoZonaAzul(new DaoMotoristaBD(), new DaoCartaoZonaAzulBD(), new DaoCompraCartaoZADB(), new DaoPlacaBD()); 
             
-            Placa p = gson.fromJson(json, Placa.class);
+            
             
             try{
                 
+                Placa p = gson.fromJson(json, Placa.class);
                 CartaoZonaAzul cza = mcza.recuperaCartaoAtivo(p);
                 
                 

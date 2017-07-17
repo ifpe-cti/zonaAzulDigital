@@ -6,6 +6,9 @@ local toast = require("plugin.toast")
 
 local composer = require("composer")
 
+local endereco = "localhost"
+local porta = "8084"
+
 local function eventoConsultarPlaca(event)
     if not event.isError then
         local response = json.decode(event.response)
@@ -31,6 +34,7 @@ local function eventoConsultarPlaca(event)
 
         end
     else
+        toast.show("Você não está conectado a internet", {duration = 'short', gravity = 'TopCenter', offset = {0, display.contentHeight/10 *9.7}})              
         print("Erro")
     end
     return
@@ -52,7 +56,7 @@ function webService:consultarPlaca(letras, numeros)
     params.headers = headers
 	params.body = placaJson
 
-	network.request("http://localhost:8084/TesteZonaAzul/rest/cartaozonaazul/buscar", "GET", eventoConsultarPlaca, params)
+	network.request("http://"..endereco..":"..porta.."/TesteZonaAzul/rest/cartaozonaazul/buscar", "GET", eventoConsultarPlaca, params)
 
 end
 
