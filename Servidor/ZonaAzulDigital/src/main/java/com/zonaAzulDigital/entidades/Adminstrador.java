@@ -67,13 +67,20 @@ public class Adminstrador implements Serializable {
         this.senha = senha;
     }
 
+    /**
+     * Quebra a string que contem o nome no primeiro caractere ' ' ( espaço ) e
+     * retorna a primeira, se não houver espaço retorna a string que contem o
+     * nome.
+     *
+     * @return String - Com um unico nome.
+     */
     public String getPrimeiroNome() {
         String pNome = "";
         if (this.nome != null && !this.nome.isEmpty()) {
             int indice = this.nome.indexOf(' ');
-            if(indice>0){
-                pNome = this.nome.substring(0 ,indice);
-            }else{
+            if (indice > 0) {
+                pNome = this.nome.substring(0, indice);
+            } else {
                 pNome = this.nome;
             }
         }

@@ -91,6 +91,15 @@ public class Motorista implements Serializable {
         this.credito = credito;
     }
 
+    /**
+     * Debita um valor do crédito atual do motorista, se o valor for maior que 0
+     * e se houver credito suficiente.
+     *
+     * @param valor - Valor maior que '0' (zero) a ser debitado
+     * @return True - Se foi possível debitar; False - Se não foi possível
+     * debitar
+     *
+     */
     public boolean debitar(BigDecimal valor) {
         if (credito.compareTo(valor) > -1) {
             this.credito = this.credito.subtract(valor);
@@ -101,6 +110,15 @@ public class Motorista implements Serializable {
         }
     }
 
+    /**
+     * Credita um valor no crédito atual do motorista, se o valor for maior que
+     * 0.
+     *
+     * @param valor Valor maior que '0' (zero) a ser creditado
+     * @return True - Se foi possível debitar; False - Se não foi possível
+     * debitar
+     *
+     */
     public boolean creditar(BigDecimal valor) {
         BigDecimal creditoAnt = this.credito;
         this.credito = this.credito.add(valor);
