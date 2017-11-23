@@ -32,6 +32,19 @@ public class AdminstradorTest {
     }
     
     @Test
+    public void testGetPrimeiroNome_NomeSemEspaco() {
+    
+        Adminstrador admin = new Adminstrador();
+
+        admin.setNome("Adonis");
+
+        String pNome = admin.getPrimeiroNome();
+        
+        assertEquals(pNome, "Adonis");
+        
+    }
+    
+    @Test
     public void testGetPrimeiroNome_NomeNull() {
         
         Adminstrador admin = new Adminstrador();
@@ -42,6 +55,28 @@ public class AdminstradorTest {
         
         assertEquals(pNome, "");
         
+    }
+    
+    @Test
+    public void testGetPrimeiroNome_NomeCompostoApenasPorEspacos() {
+       Adminstrador admin = new Adminstrador();
+       
+       admin.setNome("   ");
+       
+       String pNome = admin.getPrimeiroNome();
+       
+       assertEquals(pNome, "   ");
+    }
+    
+    @Test
+    public void testGetPrimeiroNome_NomeIsEmpty() {
+       Adminstrador admin = new Adminstrador();
+       
+       admin.setNome("");
+       
+       String pNome = admin.getPrimeiroNome();
+       
+       assertEquals(pNome, "");
     }
     
 }
