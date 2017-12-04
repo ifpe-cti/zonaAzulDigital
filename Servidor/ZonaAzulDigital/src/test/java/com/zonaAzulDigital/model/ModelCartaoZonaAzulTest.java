@@ -27,8 +27,13 @@ import com.zonaAzulDigital.tests.DAO.base.Compras;
 import com.zonaAzulDigital.tests.DAO.base.Motoristas;
 import com.zonaAzulDigital.tests.DAO.base.Placas;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import static org.hamcrest.Matchers.greaterThan;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -167,5 +172,32 @@ public class ModelCartaoZonaAzulTest {
         modelCarttaoZA = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
         List<CartaoZonaAzul> lista = modelCarttaoZA.CartoesAtivosPor(motoristas.get(0));
         assertEquals(3, lista.size());
+    }
+    @Test
+    public void testaOCalculaTempoRestanteQuandoCartaoQuandoNaoFoiExpirado() throws ParseException{
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String dataDeExpirar = "04/12/20 23:59";
+        Date data = formato.parse(dataDeExpirar);
+        LocalTime _match = LocalTime.ofSecondOfDay(0);
+        ModelCartaoZonaAzul modelCartaoZonaAzul = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
+        assertThat(modelCartaoZonaAzul.calculaTempoRestante(data), greaterThan(_match));
+    }
+    @Test
+    public void testaOCalculaTempoRestanteQuandoCartaoQuandoFoiExpirado() throws ParseException{
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String dataDeExpirar = "04/12/2017 00:01";
+        Date data = formato.parse(dataDeExpirar);
+        LocalTime _match = LocalTime.ofSecondOfDay(0);
+        ModelCartaoZonaAzul modelCartaoZonaAzul = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
+        assertEquals(modelCartaoZonaAzul.calculaTempoRestante(data), _match);
+    }
+    @Test
+    public void testaSeOCartaoFoiExpiradoNaHoraExata() throws ParseException{
+        Date dataHoraAtual = new Date();
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+        String hora = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+        LocalTime _match = LocalTime.ofSecondOfDay(0);
+        ModelCartaoZonaAzul modelCartaoZonaAzul = new ModelCartaoZonaAzul(dAOMotorista, dAOCartaoZonaAzul, dAOCompraCartaoZA, dAOPlaca);
+        assertEquals(modelCartaoZonaAzul.calculaTempoRestante(dataHoraAtual), _match);
     }
 }
