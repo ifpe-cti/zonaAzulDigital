@@ -28,6 +28,7 @@ public class ModelMotoristaTest {
     Motorista motorista5;
     Motorista motorista6;
     Motorista motorista7;
+    Motorista motorista8;
     
     @Test(expected = MotoristaException.class)
     public void testValidarMotoristaNull(){
@@ -75,5 +76,15 @@ public class ModelMotoristaTest {
         motorista7.setSenha("123");
         motorista7.setCredito(new BigDecimal("-1"));
         ModelMotorista.validar(motorista7);
+    }
+    
+    @Test
+    public void testRetornoValidarTrue(){
+        motorista8.setNome("Luci");
+        motorista8.setSenha("123");
+        motorista8.setCredito("1000");
+        boolean a = ModelMotorista.validar(motorista8);
+        
+        assertEquals(true, a);
     }
 }
