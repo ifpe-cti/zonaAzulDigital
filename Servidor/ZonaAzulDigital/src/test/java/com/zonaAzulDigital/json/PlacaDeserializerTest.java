@@ -11,6 +11,7 @@ import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.PlacaException;
 import com.zonaAzulDigital.Excecao.PlacaInvalidaException;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.model.ModelPlaca;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -45,30 +46,28 @@ public class PlacaDeserializerTest {
     public void tearDown() {
     }
     
-    //Verificar se o metodo não está alterando nada
-    @Test public void PlacaDeveTer3LetrasE4Numeros() {
-        String numeros = "1234";
-        String letras ="abc";
-        Placa p = new Placa(letras, numeros);
-        Placa p2 = new Placa("abc","1234");        
-        Assert.assertEquals(p, p2);
+    Placa p1;
+    Placa p2;
+    Placa p3;
+    ModelPlaca x1;
+    @Test(expected =  PlacaException.class)
+    public void testValidarPlacaNull() throws java.lang.NullPointerException, PlacaException{
+        p1 = null;
+        x1.validar(p1);
+        
     }
     
-    @Test(expected = PlacaException.class)
-    public void PlacaDeveTer4Numeros() throws PlacaException {
-        String numeros = "12345";
-        if(numeros.length() > 4);  
-    }
+   // @Test(expected = MotoristaException.class)
+  // public void testValidarMotoristaNull(){
+   //   motorista = null;
+   //     ModelMotorista.validar(motorista)
+}
     
-    @Test(expected = PlacaException.class)
-    public void PlacaDeveTer3Letras() throws PlacaException {
-        String letras = "abcd";
-        if(letras.length() > 3);  
-    }
+    
     
     
         
         
 
     
-}
+
