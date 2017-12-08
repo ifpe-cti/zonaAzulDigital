@@ -70,7 +70,7 @@ public class CartaoZonaAzulService {
                 Motorista m = gson.fromJson(json, Motorista.class);
                 Placa p = gson.fromJson(json, Placa.class);
 
-                
+
                 Motorista motorista = mc.login(m.getCpf(), m.getSenha());
                 
                 mcza.comprar(motorista, p);
