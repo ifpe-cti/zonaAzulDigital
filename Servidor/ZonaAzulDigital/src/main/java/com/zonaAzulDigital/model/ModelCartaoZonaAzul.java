@@ -64,6 +64,19 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         return daoCartaoZonaAzul.cadastrar(cartaoZonaAzulInfo);
     }
 
+    /**
+     * Dado um motorista cadastrado e com credito suficiente, debita o valor do
+     * cartão dos creditos do motorista, cria um novo cartao com a placa passada
+     * e define a hora de inicio com a hora atual do sistema.
+     *
+     * @param motorista Motorista que compra o cartão
+     * @param placa Veiculo para o qual sera ativado o cartão
+     * @return Um cartão valido e ativo.
+     * @throws MotoristaException - Se o motorista nao for valido, se não tiver
+     * cridito suficiente
+     * @throws DaoException
+     * @throws PlacaException - Se a placa nao for valida
+     */
     @Override
     public CartaoZonaAzul comprar(Motorista motorista, Placa placa) throws MotoristaException, DaoException, PlacaException {
         try {
@@ -127,10 +140,10 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         placa = daoPlaca.recuperar(placa.getLetras(), placa.getNumeros());
 
         CartaoZonaAzul cartaoAtivo = daoCartaoZonaAzul.recuperaCartaoAtivo(placa);
-        if (cartaoAtivo.getNumero()!=0){
+        if (cartaoAtivo.getNumero() != 0) {
             cartaoAtivo.setTempoRestante(calculaTempoRestante(cartaoAtivo.getDataFim()).toString());;
         }
-        
+
         return cartaoAtivo;
     }
 
@@ -146,6 +159,11 @@ public class ModelCartaoZonaAzul implements ModelCartaoZonaAzulInterface {
         return cartaoZonaAzuls;
     }
 
+    /**
+     * Passada a data e hora que o cartao expira
+     * @param dataFim
+     * @return
+     */
     public LocalTime calculaTempoRestante(Date dataFim) {
         LocalTime horaExpirar = LocalDateTime.ofInstant(dataFim.toInstant(), ZoneId.systemDefault()).toLocalTime();
         long tempoEmSegundos = ChronoUnit.SECONDS.between(LocalTime.now(), horaExpirar);
