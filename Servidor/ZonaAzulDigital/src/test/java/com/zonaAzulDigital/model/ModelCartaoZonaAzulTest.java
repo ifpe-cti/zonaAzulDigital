@@ -6,6 +6,7 @@
 package com.zonaAzulDigital.model;
 
 import com.zonaAzulDigital.DAO.DaoPlacaBD;
+import com.zonaAzulDigital.Excecao.CartaoZAException;
 import com.zonaAzulDigital.Excecao.DaoException;
 import com.zonaAzulDigital.Excecao.MotoristaException;
 import com.zonaAzulDigital.Excecao.PlacaException;
@@ -13,6 +14,7 @@ import com.zonaAzulDigital.entidades.CartaoZonaAzul;
 import com.zonaAzulDigital.entidades.CartaoZonaAzulInfo;
 import com.zonaAzulDigital.entidades.Motorista;
 import com.zonaAzulDigital.entidades.Placa;
+import com.zonaAzulDigital.entidades.VendaMes;
 import com.zonaAzulDigital.interfaces.DAOCartaoZonaAzul;
 import com.zonaAzulDigital.interfaces.DAOCompraCartaoZA;
 import com.zonaAzulDigital.interfaces.DAOMotorista;
@@ -28,6 +30,8 @@ import com.zonaAzulDigital.tests.DAO.base.Motoristas;
 import com.zonaAzulDigital.tests.DAO.base.Placas;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -161,6 +165,28 @@ public class ModelCartaoZonaAzulTest {
         assertEquals(ultimo.getPlaca().getNumeros(), ca.getPlaca().getNumeros());
 
     }
+    
+    // O teste não passa
+    @Test(expected = IllegalArgumentException.class)
+    public void deveLancarExcecaoAnoMaiorQueAtual() throws DaoException{
+        modelCarttaoZA.vendasNoMes(2018);
+    }
+    
+    // O teste passa
+    @Test(expected = NullPointerException.class)
+    public void deverLancarExcecaoAnoNulo() throws DaoException{
+        modelCarttaoZA.vendasNoMes(0);
+    }
+    
+    // O teste não passa
+    @Test
+    public void deveLancarExcecaoCartaoZonaAzulNulo() throws DaoException{
+        excption.expect(CartaoZAException.class);
+        excption.expectMessage(CartaoZAException.NULL);
+        dAOCartaoZonaAzul = null;
+        dAOCartaoZonaAzul.vendasPorMes(1);
+    }
+    
     @Ignore
     @Test
     public void recuperarCartoesAtivosDoMotorista() throws DaoException, MotoristaException, PlacaException {
