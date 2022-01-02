@@ -1,5 +1,0 @@
-MYSQL 5.7
-
-Usuario: root
-Senha:	1234
-Porta: 3306
